@@ -2,26 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 40 15% 93%;
+    /* Bone #F2F0E9 */
+    --foreground: 0 0% 10%;
+    /* Soft Black #1A1A1A */
+
+    --card: 40 15% 93%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 40 15% 93%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 0 100% 60%;
+    /* International Orange #FF3333 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 10% 85%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 40 10% 85%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 40 10% 85%;
+    --accent-foreground: 0 0% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 100% 60%;
+
+    --radius: 0px;
+  }
+
+  .dark {
+    --background: 0 0% 10%;
+    --foreground: 40 15% 93%;
+    --card: 0 0% 10%;
+    --card-foreground: 40 15% 93%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 40 15% 93%;
+    --primary: 0 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 40 15% 93%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 40 15% 60%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 40 15% 93%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 100% 60%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .font-display {
+    font-family: var(--font-display), serif;
+  }
+}
+
+@layer utilities {
+  .animate-aurora-1 {
+    animation: aurora 20s infinite alternate;
+  }
+
+  .animate-aurora-2 {
+    animation: aurora 25s infinite alternate-reverse;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes aurora {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+      transform: translate(10%, 10%) rotate(5deg);
+    }
   }
 }
