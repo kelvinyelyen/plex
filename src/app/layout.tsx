@@ -10,7 +10,7 @@ const cormorantGaramond = Cormorant_Garamond({ weight: ["300", "400", "500", "60
 const spaceMono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-mono" })
 
 export const metadata: Metadata = {
-  title: "PLEX EXHIBITION",
+  title: "Plex",
   description: "A curated collection of digital experiences.",
 }
 

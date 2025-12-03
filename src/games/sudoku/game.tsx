@@ -221,7 +221,7 @@ export function SudokuGame() {
 
             <div className="flex flex-col md:flex-row justify-center items-start gap-8 md:gap-12 w-full p-6 md:p-10">
                 {/* Board */}
-                <div className="w-full max-w-[500px] flex-1">
+                <div className="w-full flex-1">
                     <Board
                         board={board}
                         selectedCell={selectedCell}

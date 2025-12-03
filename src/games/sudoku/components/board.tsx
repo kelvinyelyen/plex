@@ -20,7 +20,7 @@ export function Board({ board, selectedCell, onCellClick }: BoardProps) {
             transition={{ duration: 0.5 }}
             className="relative group"
         >
-            <div className="relative grid grid-cols-9 border-[3px] border-black bg-white shadow-2xl max-w-md mx-auto w-full aspect-square">
+            <div className="relative grid grid-cols-9 border-[3px] border-black bg-white shadow-2xl mx-auto w-full aspect-square">
                 {board.map((row, rowIndex) =>
                     row.map((cell, colIndex) => {
                         const isSelected =
