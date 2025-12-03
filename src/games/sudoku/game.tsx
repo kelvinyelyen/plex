@@ -9,6 +9,7 @@ import { Board as BoardType, Difficulty, CellValue } from "./types"
 import { Button } from "@/components/ui/button"
 import { CompletionDialog } from "./components/completion-dialog"
 import { GameOverDialog } from "./components/game-over-dialog"
+import { InstructionsDialog } from "./components/instructions-dialog"
 import { toast } from "sonner"
 
 import {
@@ -284,6 +285,8 @@ export function SudokuGame() {
                     <Button variant="ghost" size="sm" onClick={handleHint} className="text-muted-foreground hover:text-foreground">
                         Reveal
                     </Button>
+                    <div className="h-4 w-px bg-border mx-1" />
+                    <InstructionsDialog />
                 </div>
             </div>
 

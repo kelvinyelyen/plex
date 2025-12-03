@@ -87,9 +87,9 @@ export default async function LeaderboardPage({ params }: { params: { slug: stri
                                             <div className="flex items-center gap-3">
                                                 <Avatar className="h-8 w-8 border border-foreground/10">
                                                     <AvatarImage src={score.user.image || ""} />
-                                                    <AvatarFallback className="bg-background text-xs font-mono">{score.user.name?.[0] || "U"}</AvatarFallback>
+                                                    <AvatarFallback className="bg-background text-xs font-mono">{score.user.name?.[0] || score.user.username?.[0] || "U"}</AvatarFallback>
                                                 </Avatar>
-                                                <span className="font-mono text-sm">{score.user.name || "Anonymous"}</span>
+                                                <span className="font-mono text-sm">{score.user.name || score.user.username || "Anonymous"}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell className="font-mono text-sm text-muted-foreground uppercase">{score.difficulty}</TableCell>

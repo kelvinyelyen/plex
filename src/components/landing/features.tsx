@@ -28,7 +28,7 @@ const exhibits = [
     {
         id: "002",
         title: "Hierarchy",
-        subtitle: "Global Ranking System",
+        subtitle: "ACity Campus Ranking System",
         href: "/leaderboard",
         // Abstract representation of Ranking
         visual: (
@@ -82,7 +82,39 @@ export function Features() {
     return (
         <section className="min-h-screen flex flex-col lg:flex-row relative bg-background">
 
-            {/* Left Panel - Catalog List */}
+            {/* Left Panel - Visual Preview Area */}
+            <div className="w-full lg:w-1/2 relative bg-[#EAE8E0] hidden lg:flex items-center justify-center overflow-hidden">
+                {/* Grid Background to match Hero */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+                <div className="relative w-full h-full p-16 flex items-center justify-center">
+                    <div className="relative w-full max-w-lg aspect-square border border-foreground/10 bg-background/50 backdrop-blur-sm">
+                        {activeExhibit !== null ? (
+                            <motion.div
+                                key={activeExhibit}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="w-full h-full"
+                            >
+                                {exhibits[activeExhibit].visual}
+                            </motion.div>
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center font-mono text-xs text-muted-foreground tracking-widest">
+                                SELECT AN EXHIBIT
+                            </div>
+                        )}
+
+                        {/* Decorative Corners */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-foreground" />
+                        <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-foreground" />
+                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-foreground" />
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-foreground" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Panel - Catalog List */}
             <div className="w-full lg:w-1/2 p-8 md:p-16 border-r border-foreground/10">
                 <div className="space-y-0 max-w-xl">
                     <div className="border-b border-foreground/10 pb-4 mb-8 flex justify-between items-end">
@@ -113,38 +145,6 @@ export function Features() {
                             </div>
                         </Link>
                     ))}
-                </div>
-            </div>
-
-            {/* Right Panel - Visual Preview Area */}
-            <div className="w-full lg:w-1/2 relative bg-[#EAE8E0] hidden lg:flex items-center justify-center overflow-hidden">
-                {/* Grid Background to match Hero */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-                <div className="relative w-full h-full p-16 flex items-center justify-center">
-                    <div className="relative w-full max-w-lg aspect-square border border-foreground/10 bg-background/50 backdrop-blur-sm">
-                        {activeExhibit !== null ? (
-                            <motion.div
-                                key={activeExhibit}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="w-full h-full"
-                            >
-                                {exhibits[activeExhibit].visual}
-                            </motion.div>
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center font-mono text-xs text-muted-foreground tracking-widest">
-                                SELECT AN EXHIBIT
-                            </div>
-                        )}
-
-                        {/* Decorative Corners */}
-                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-foreground" />
-                        <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-foreground" />
-                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-foreground" />
-                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-foreground" />
-                    </div>
                 </div>
             </div>
 
