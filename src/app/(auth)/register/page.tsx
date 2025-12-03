@@ -32,7 +32,7 @@ export default function RegisterPage() {
                 </p>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-                <UserAuthForm />
+                <UserAuthForm mode="register" />
             </Suspense>
             <p className="px-8 text-center text-sm text-muted-foreground">
                 <Link

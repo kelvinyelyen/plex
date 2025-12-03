@@ -4,6 +4,7 @@ import "./globals.css"
 import { Providers } from "@/components/providers"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
+import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
 
 const cormorantGaramond = Cormorant_Garamond({ weight: ["300", "400", "500", "600", "700"], subsets: ["latin"], style: ["normal", "italic"], variable: "--font-display" })
@@ -36,6 +37,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
+            <Toaster />
           </div>
         </Providers>
       </body>

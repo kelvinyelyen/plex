@@ -26,11 +26,12 @@ export function UserNav({ user }: UserNavProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Button variant="ghost" className="relative h-8 flex items-center gap-2 rounded-full">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={user.image || ""} alt={user.name || ""} />
                         <AvatarFallback>{user.name?.[0] || "U"}</AvatarFallback>
                     </Avatar>
+                    <span className="hidden md:inline-block font-medium">{user.name}</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -44,13 +45,17 @@ export function UserNav({ user }: UserNavProps) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        Profile
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    <DropdownMenuItem asChild>
+                        <a href="/profile" className="w-full cursor-pointer">
+                            Profile
+                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                        </a>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                    <DropdownMenuItem asChild>
+                        <a href="/leaderboard" className="w-full cursor-pointer">
+                            Metrics
+                            <DropdownMenuShortcut>⌘M</DropdownMenuShortcut>
+                        </a>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

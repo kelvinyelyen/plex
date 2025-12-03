@@ -50,8 +50,11 @@ function isSafeInBox(board: Board, startRow: number, startCol: number, num: numb
 }
 
 // Remove numbers to create a puzzle
-export function generatePuzzle(difficulty: Difficulty): Board {
-    const board = generateFullBoard()
+export function generatePuzzle(difficulty: Difficulty): { puzzle: Board, solution: Board } {
+    const solution = generateFullBoard()
+    // Deep copy for puzzle
+    const puzzle = JSON.parse(JSON.stringify(solution)) as Board
+
     const attempts = difficulty === "Easy" ? 30 : difficulty === "Medium" ? 40 : difficulty === "Hard" ? 50 : 60
 
     let count = attempts
@@ -59,30 +62,23 @@ export function generatePuzzle(difficulty: Difficulty): Board {
         let row = Math.floor(Math.random() * 9)
         let col = Math.floor(Math.random() * 9)
 
-        while (board[row][col].value === null) {
+        while (puzzle[row][col].value === null) {
             row = Math.floor(Math.random() * 9)
             col = Math.floor(Math.random() * 9)
         }
 
-        // Backup
-        // const backup = board[row][col].value
-        board[row][col].value = null
-
-        // Check if unique solution exists (simplified: just remove for now, proper uniqueness check is expensive but better)
-        // For a real app, we should check uniqueness.
-        // I'll skip deep uniqueness check for MVP speed, but ideally we'd run the solver and count solutions.
-
+        puzzle[row][col].value = null
         count--
     }
 
     // Set isFixed
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-            if (board[i][j].value !== null) {
-                board[i][j].isFixed = true
+            if (puzzle[i][j].value !== null) {
+                puzzle[i][j].isFixed = true
             }
         }
     }
 
-    return board
+    return { puzzle, solution }
 }

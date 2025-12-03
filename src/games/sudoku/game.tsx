@@ -7,6 +7,9 @@ import { generatePuzzle } from "./generator"
 import { getHint } from "./hints"
 import { Board as BoardType, Difficulty, CellValue } from "./types"
 import { Button } from "@/components/ui/button"
+import { CompletionDialog } from "./components/completion-dialog"
+import { GameOverDialog } from "./components/game-over-dialog"
+import { toast } from "sonner"
 
 import {
     Select,
@@ -19,21 +22,27 @@ import {
 export function SudokuGame() {
     const [difficulty, setDifficulty] = useState<Difficulty>("Easy")
     const [board, setBoard] = useState<BoardType | null>(null)
+    const [solution, setSolution] = useState<BoardType | null>(null)
     const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null)
     const [isNoteMode, setIsNoteMode] = useState(false)
     const [history, setHistory] = useState<BoardType[]>([])
     const [mistakes, setMistakes] = useState(0)
     const [timer, setTimer] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [isComplete, setIsComplete] = useState(false)
+    const [isGameOver, setIsGameOver] = useState(false)
 
     const startNewGame = useCallback((diff: Difficulty) => {
-        const newBoard = generatePuzzle(diff)
-        setBoard(newBoard)
+        const { puzzle, solution } = generatePuzzle(diff)
+        setBoard(puzzle)
+        setSolution(solution)
         setDifficulty(diff)
         setMistakes(0)
         setTimer(0)
         setHistory([])
         setIsPlaying(true)
+        setIsComplete(false)
+        setIsGameOver(false)
         setSelectedCell(null)
     }, [])
 
@@ -45,21 +54,55 @@ export function SudokuGame() {
     // Timer
     useEffect(() => {
         let interval: NodeJS.Timeout
-        if (isPlaying) {
+        if (isPlaying && !isComplete && !isGameOver) {
             interval = setInterval(() => {
                 setTimer((prev) => prev + 1)
             }, 1000)
         }
         return () => clearInterval(interval)
-    }, [isPlaying])
+    }, [isPlaying, isComplete, isGameOver])
 
     const handleCellClick = (row: number, col: number) => {
         setSelectedCell({ row, col })
     }
 
+    const checkCompletion = useCallback((currentBoard: BoardType) => {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                if (currentBoard[i][j].value === null) return false
+                // We assume if it's filled and mistakes are checked on entry, it's correct.
+                // But strictly we should check against solution if we allow filling without checking.
+                // In this implementation, we check on entry, so if it's filled, it's correct (unless we allow wrong moves).
+                // Let's verify against solution to be safe.
+                if (solution && currentBoard[i][j].value !== solution[i][j].value) return false
+            }
+        }
+        return true
+    }, [solution])
+
+    const handleGameComplete = useCallback(async () => {
+        setIsPlaying(false)
+        setIsComplete(true)
+
+        try {
+            await fetch("/api/games/sudoku/score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    score: timer,
+                    difficulty,
+                }),
+            })
+            toast.success("Score saved!")
+        } catch (error) {
+            console.error("Failed to save score:", error)
+            toast.error("Failed to save score")
+        }
+    }, [timer, difficulty])
+
     const handleNumberClick = useCallback(
         (num: number) => {
-            if (!board || !selectedCell || !isPlaying) return
+            if (!board || !selectedCell || !isPlaying || !solution || isGameOver) return
 
             const { row, col } = selectedCell
             const cell = board[row][col]
@@ -78,32 +121,43 @@ export function SudokuGame() {
                 } else {
                     newBoard[row][col].notes = [...newBoard[row][col].notes, num]
                 }
+                setBoard(newBoard)
             } else {
                 // Set value
                 if (newBoard[row][col].value === num) {
                     newBoard[row][col].value = null // Toggle off if same
+                    setBoard(newBoard)
                 } else {
+                    // Check for mistake
+                    if (solution[row][col].value !== num) {
+                        const newMistakes = mistakes + 1
+                        setMistakes(newMistakes)
+
+                        if (newMistakes >= 3) {
+                            setIsGameOver(true)
+                            setIsPlaying(false)
+                            toast.error("Game Over! Too many mistakes.")
+                        } else {
+                            toast.error("Incorrect move!")
+                        }
+                        return
+                    }
+
                     newBoard[row][col].value = num as CellValue
                     newBoard[row][col].notes = [] // Clear notes
+                    setBoard(newBoard)
 
-                    // Check for error (simple check against rules, ideally check against solution)
-                    // For now, let's just check if it violates basic rules
-                    // Real validation should check against the actual solution
-                    // But we don't store the solution in state currently.
-                    // We can generate it or just check validity.
-                    // Let's assume validity check is enough for "Mistakes" if it conflicts with existing fixed cells?
-                    // Actually, standard Sudoku apps check against the solution.
-                    // I'll skip mistake counting for now unless I store solution.
+                    if (checkCompletion(newBoard)) {
+                        handleGameComplete()
+                    }
                 }
             }
-
-            setBoard(newBoard)
         },
-        [board, selectedCell, isPlaying, isNoteMode]
+        [board, selectedCell, isPlaying, isNoteMode, solution, checkCompletion, handleGameComplete, mistakes, isGameOver]
     )
 
     const handleDelete = useCallback(() => {
-        if (!board || !selectedCell || !isPlaying) return
+        if (!board || !selectedCell || !isPlaying || isGameOver) return
         const { row, col } = selectedCell
         if (board[row][col].isFixed) return
 
@@ -112,41 +166,43 @@ export function SudokuGame() {
         newBoard[row][col].value = null
         newBoard[row][col].notes = []
         setBoard(newBoard)
-    }, [board, selectedCell, isPlaying])
+    }, [board, selectedCell, isPlaying, isGameOver])
 
     const handleUndo = useCallback(() => {
-        if (history.length === 0) return
+        if (history.length === 0 || isGameOver) return
         const previousBoard = history[history.length - 1]
         setBoard(previousBoard)
         setHistory((prev) => prev.slice(0, -1))
-    }, [history])
+    }, [history, isGameOver])
 
     const handleHint = useCallback(() => {
-        if (!board || !isPlaying) return
+        if (!board || !isPlaying || !solution || isGameOver) return
         const hint = getHint(board)
         if (hint) {
             const newBoard = JSON.parse(JSON.stringify(board))
             // Apply hint
             if (hint.value === null) {
-                // Suggest removing
+                // Suggest removing (shouldn't happen if we block mistakes, but possible if we change logic)
                 newBoard[hint.row][hint.col].value = null
-                // toast(`Hint: ${hint.message}`)
             } else {
                 // Suggest adding
-                newBoard[hint.row][hint.col].value = hint.value
+                // Use solution to be sure
+                const correctValue = solution[hint.row][hint.col].value
+                newBoard[hint.row][hint.col].value = correctValue
                 setSelectedCell({ row: hint.row, col: hint.col })
             }
             setBoard(newBoard)
-            // toast(`Hint: ${hint.message}`)
-        } else {
-            // toast("No hint available or puzzle solved!")
+
+            if (checkCompletion(newBoard)) {
+                handleGameComplete()
+            }
         }
-    }, [board, isPlaying])
+    }, [board, isPlaying, solution, checkCompletion, handleGameComplete, isGameOver])
 
     // Keyboard support
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isPlaying) return
+            if (!isPlaying || isGameOver) return
 
             if (e.key >= "1" && e.key <= "9") {
                 handleNumberClick(parseInt(e.key))
@@ -167,7 +223,7 @@ export function SudokuGame() {
 
         window.addEventListener("keydown", handleKeyDown)
         return () => window.removeEventListener("keydown", handleKeyDown)
-    }, [handleNumberClick, handleDelete, handleUndo, isPlaying])
+    }, [handleNumberClick, handleDelete, handleUndo, isPlaying, isGameOver])
 
     if (!board) return <div>Loading...</div>
 
@@ -179,6 +235,18 @@ export function SudokuGame() {
 
     return (
         <div className="flex flex-col items-center w-full max-w-5xl mx-auto">
+            <CompletionDialog
+                open={isComplete}
+                time={timer}
+                difficulty={difficulty}
+                mistakes={mistakes}
+                onPlayAgain={() => startNewGame(difficulty)}
+            />
+            <GameOverDialog
+                open={isGameOver}
+                onRestart={() => startNewGame(difficulty)}
+            />
+
             {/* Toolbar */}
             <div className="w-full border-b bg-card px-4 py-2 flex items-center justify-between sticky top-14 z-40 shadow-sm">
                 <div className="flex items-center gap-4">

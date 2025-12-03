@@ -30,7 +30,7 @@ export default function LoginPage() {
                 </p>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-                <UserAuthForm />
+                <UserAuthForm mode="login" />
             </Suspense>
             <p className="px-8 text-center text-sm text-muted-foreground">
                 <Link
