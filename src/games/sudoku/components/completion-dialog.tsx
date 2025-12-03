@@ -30,7 +30,7 @@ export function CompletionDialog({ open, time, difficulty, mistakes, onPlayAgain
                 <DialogHeader>
                     <DialogTitle>Puzzle Solved!</DialogTitle>
                     <DialogDescription>
-                        Great job! You've completed the {difficulty} puzzle.
+                        Great job! You&apos;ve completed the {difficulty} puzzle.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
