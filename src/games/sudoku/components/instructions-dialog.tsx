@@ -33,7 +33,7 @@ export function InstructionsDialog() {
                             The modern Sudoku was most likely designed anonymously by Howard Garns, a 74-year-old retired architect and freelance puzzle constructor from Connersville, Indiana, and first published in 1979 by Dell Magazines as Number Place (the earliest known examples of modern Sudoku).
                         </p>
                         <p className="text-sm text-muted-foreground">
-                            The puzzle was introduced in Japan by Nikoli in the paper Monthly Nikolist in April 1984 as "Sūji wa dokushin ni kagiru" (Numbers must be single), which also can be abbreviated as Sudoku.
+                            The puzzle was introduced in Japan by Nikoli in the paper Monthly Nikolist in April 1984 as &quot;Sūji wa dokushin ni kagiru&quot; (Numbers must be single), which also can be abbreviated as &quot;Sudoku&quot;.
                         </p>
                     </section>
 
@@ -161,12 +161,20 @@ export function InstructionsDialog() {
                         <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                             <li><strong>Select a cell:</strong> Click or tap on any cell on the board.</li>
                             <li><strong>Enter a number:</strong> Use the number pad or your keyboard (1-9).</li>
-                            <li><strong>Remove a number:</strong> Press Backspace, Delete, or the "Clear" button.</li>
-                            <li><strong>Notes mode:</strong> Toggle "Note" to add pencil marks for possible numbers.</li>
-                            <li><strong>Undo:</strong> Press Ctrl/Cmd + Z or use the "Undo" button.</li>
+                            <li><strong>Remove a number:</strong> Press Backspace, Delete, or the  &quot;Clear&quot; button.</li>
+                            <li><strong>Notes mode:</strong> Toggle &quot;Note&quot; to add pencil marks for possible numbers.</li>
+                            <li><strong>Undo:</strong> Press Ctrl/Cmd + Z or use the &quot;Undo&quot; button.</li>
                         </ul>
                     </section>
 
+                    {/* Gameplay Section */}
+                    <section className="space-y-2">
+                        <h3 className="text-lg font-bold font-serif">Gameplay</h3>
+                        <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                            <li><strong>Goal:</strong> Fill the board with numbers 1-9 such that each row, column, and 3x3 box contains all numbers from 1 to 9 without repetition.</li>
+                            <li><strong>Winning:</strong> Successfully complete the puzzle by following the rules.</li>
+                        </ul>
+                    </section>
 
                 </div>
 
