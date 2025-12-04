@@ -13,6 +13,22 @@ interface GameState {
     showingIndex: number // Index of the sequence currently being shown
 }
 
+// Difficulty Scaling (Pure function, moved outside hook)
+const getDifficulty = (level: number) => {
+    if (level === 1) return { gridSize: 2, sequenceLength: 1, showTime: 1500 }
+    if (level === 2) return { gridSize: 3, sequenceLength: 2, showTime: 1500 }
+    if (level === 3) return { gridSize: 4, sequenceLength: 3, showTime: 1200 }
+    if (level === 4) return { gridSize: 5, sequenceLength: 5, showTime: 1000 }
+
+    // Level 5+ (Challenge Mode)
+    const baseGrid = Math.min(7, 5 + Math.floor((level - 4) / 2)) // Cap at 7x7 for now
+    const totalCells = baseGrid * baseGrid
+    const sequenceLength = Math.floor(totalCells * 0.4) // 40% of grid
+    const showTime = Math.max(500, 800 - (level * 50)) // Speed up
+
+    return { gridSize: baseGrid, sequenceLength, showTime }
+}
+
 export function useMemoryGame() {
     const [gameState, setGameState] = useState<GameState>({
         level: 1,
@@ -26,57 +42,11 @@ export function useMemoryGame() {
 
     const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-    // Difficulty Scaling
-    const getDifficulty = (level: number) => {
-        if (level === 1) return { gridSize: 2, sequenceLength: 1, showTime: 1500 }
-        if (level === 2) return { gridSize: 3, sequenceLength: 2, showTime: 1500 }
-        if (level === 3) return { gridSize: 4, sequenceLength: 3, showTime: 1200 }
-        if (level === 4) return { gridSize: 5, sequenceLength: 5, showTime: 1000 }
-
-        // Level 5+ (Challenge Mode)
-        const baseGrid = Math.min(7, 5 + Math.floor((level - 4) / 2)) // Cap at 7x7 for now
-        const totalCells = baseGrid * baseGrid
-        const sequenceLength = Math.floor(totalCells * 0.4) // 40% of grid
-        const showTime = Math.max(500, 800 - (level * 50)) // Speed up
-
-        return { gridSize: baseGrid, sequenceLength, showTime }
-    }
-
-    const startGame = useCallback(() => {
-        setGameState({
-            level: 1,
-            lives: 5,
-            gridSize: 2,
-            sequence: [],
-            playerInput: [],
-            phase: "IDLE",
-            showingIndex: -1,
-        })
-        // Small delay before starting first level
-        setTimeout(() => startLevel(1), 500)
-    }, [])
-
     const startLevel = useCallback((level: number) => {
         const { gridSize, sequenceLength } = getDifficulty(level)
         const totalCells = gridSize * gridSize
 
         // Generate random sequence
-        const newSequence: number[] = []
-        // Allow duplicates? "3-4 random cells light up" implies distinct cells usually, 
-        // but "sequence" implies order. 
-        // "Player selects the cell" -> "Player must click both".
-        // Usually these games are "Simon" style (sequence order matters) OR "Memory Matrix" style (order doesn't matter, just position).
-        // Request says: "1 random cell lights up... Player selects the cell."
-        // "2 random cells light up... Player must click both."
-        // "30-50% of the grid lights up."
-        // This sounds like "Memory Matrix" (spatial memory), where order DOES NOT matter, just the set of cells.
-        // "Show for 1-2 seconds." -> All at once? Or one by one?
-        // "1 random cell lights up... Show for 1-2 seconds."
-        // "2 random cells light up... Show for 1-2 seconds."
-        // This implies they light up SIMULTANEOUSLY.
-
-        // Let's assume Simultaneous Light Up (Memory Matrix style).
-
         const availableIndices = Array.from({ length: totalCells }, (_, i) => i)
         // Shuffle and take N
         for (let i = availableIndices.length - 1; i > 0; i--) {
@@ -102,6 +72,20 @@ export function useMemoryGame() {
         }, showTime)
 
     }, [])
+
+    const startGame = useCallback(() => {
+        setGameState({
+            level: 1,
+            lives: 5,
+            gridSize: 2,
+            sequence: [],
+            playerInput: [],
+            phase: "IDLE",
+            showingIndex: -1,
+        })
+        // Small delay before starting first level
+        setTimeout(() => startLevel(1), 500)
+    }, [startLevel])
 
     const handleCellClick = useCallback((index: number) => {
         setGameState(prev => {
