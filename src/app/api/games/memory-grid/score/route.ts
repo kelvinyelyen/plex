@@ -31,14 +31,30 @@ export async function POST(req: Request) {
             })
         }
 
-        await prisma.score.create({
-            data: {
+        const existingScore = await prisma.score.findFirst({
+            where: {
                 userId: session.user.id,
                 gameId: game.id,
-                score: score,
-                difficulty: "Normal", // Memory Grid doesn't have difficulty selection yet, just progressive levels
             },
         })
+
+        if (existingScore) {
+            if (score > existingScore.score) {
+                await prisma.score.update({
+                    where: { id: existingScore.id },
+                    data: { score },
+                })
+            }
+        } else {
+            await prisma.score.create({
+                data: {
+                    userId: session.user.id,
+                    gameId: game.id,
+                    score: score,
+                    difficulty: "Normal",
+                },
+            })
+        }
 
         return NextResponse.json({ success: true })
     } catch (error) {

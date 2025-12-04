@@ -15,16 +15,17 @@ interface GameState {
 
 // Difficulty Scaling (Pure function, moved outside hook)
 const getDifficulty = (level: number) => {
-    if (level === 1) return { gridSize: 2, sequenceLength: 1, showTime: 1500 }
-    if (level === 2) return { gridSize: 3, sequenceLength: 2, showTime: 1500 }
-    if (level === 3) return { gridSize: 4, sequenceLength: 3, showTime: 1200 }
-    if (level === 4) return { gridSize: 5, sequenceLength: 5, showTime: 1000 }
+    if (level === 1) return { gridSize: 2, sequenceLength: 1, showTime: 800 }
+    if (level === 2) return { gridSize: 3, sequenceLength: 2, showTime: 1200 }
+    if (level === 3) return { gridSize: 4, sequenceLength: 3, showTime: 1600 }
+    if (level === 4) return { gridSize: 5, sequenceLength: 5, showTime: 2400 }
 
     // Level 5+ (Challenge Mode)
     const baseGrid = Math.min(7, 5 + Math.floor((level - 4) / 2)) // Cap at 7x7 for now
     const totalCells = baseGrid * baseGrid
     const sequenceLength = Math.floor(totalCells * 0.4) // 40% of grid
-    const showTime = Math.max(500, 800 - (level * 50)) // Speed up
+    // More generous time for larger sequences: ~500ms per cell in sequence, capped at reasonable max
+    const showTime = Math.min(5000, Math.max(2000, sequenceLength * 500))
 
     return { gridSize: baseGrid, sequenceLength, showTime }
 }

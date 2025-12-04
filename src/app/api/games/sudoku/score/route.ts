@@ -33,14 +33,36 @@ export async function POST(req: Request) {
     })
 
     // Create score
-    const newScore = await prisma.score.create({
-        data: {
+    // Check for existing score
+    const existingScore = await prisma.score.findFirst({
+        where: {
             userId: user.id,
             gameId: game.id,
-            score: parseInt(score),
-            difficulty,
+            difficulty: difficulty,
         },
     })
 
-    return NextResponse.json(newScore)
+    let finalScore;
+
+    if (existingScore) {
+        if (parseInt(score) < existingScore.score) {
+            finalScore = await prisma.score.update({
+                where: { id: existingScore.id },
+                data: { score: parseInt(score) },
+            })
+        } else {
+            finalScore = existingScore
+        }
+    } else {
+        finalScore = await prisma.score.create({
+            data: {
+                userId: user.id,
+                gameId: game.id,
+                score: parseInt(score),
+                difficulty,
+            },
+        })
+    }
+
+    return NextResponse.json(finalScore)
 }

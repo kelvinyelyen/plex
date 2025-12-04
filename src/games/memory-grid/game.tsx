@@ -12,23 +12,33 @@ export function MemoryGame() {
     const { level, lives, gridSize, sequence, playerInput, phase } = gameState
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-2xl mx-auto">
-            <h1 className="text-4xl font-bold mb-8 font-serif">Memory Grid</h1>
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-2xl mx-auto relative">
+            {/* Background Elements */}
+            <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+            <div className="mb-12 text-center space-y-2">
+                <div className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase">Protocol: Visual_Recall</div>
+                <h1 className="text-5xl md:text-6xl font-display italic font-bold">Memory Grid</h1>
+            </div>
 
             <GameInfo level={level} lives={lives} />
 
-            <div className="relative w-full flex justify-center">
+            <div className="relative w-full flex justify-center min-h-[400px] items-center">
                 {phase === "IDLE" ? (
-                    <div className="flex flex-col items-center gap-6 p-12 bg-card rounded-xl shadow-lg border text-center">
-                        <div className="space-y-2">
-                            <h2 className="text-2xl font-bold">Ready to play?</h2>
-                            <p className="text-muted-foreground max-w-xs">
-                                Memorize the pattern of lit cells, then repeat it. The grid gets larger and faster as you progress!
+                    <div className="flex flex-col items-center gap-8 p-12 bg-background/50 backdrop-blur-sm rounded-xl border border-foreground/10 text-center max-w-md w-full">
+                        <div className="space-y-4">
+                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Play className="w-8 h-8 text-primary" />
+                            </div>
+                            <h2 className="text-2xl font-display font-bold">System Ready</h2>
+                            <p className="font-mono text-sm text-muted-foreground leading-relaxed">
+                                Initialize visual pattern retention sequence.
+                                <br />
+                                Observe. Memorize. Replicate.
                             </p>
                         </div>
-                        <Button size="lg" onClick={startGame} className="gap-2 text-lg px-8">
-                            <Play className="w-5 h-5" />
-                            Start Game
+                        <Button size="lg" onClick={startGame} className="w-full font-mono uppercase tracking-widest text-xs h-12">
+                            Initialize Sequence
                         </Button>
                     </div>
                 ) : (
@@ -42,10 +52,13 @@ export function MemoryGame() {
                 )}
             </div>
 
-            <div className="mt-8 text-sm text-muted-foreground text-center h-6">
-                {phase === "SHOWING" && "Watch the pattern..."}
-                {phase === "INPUT" && "Repeat the pattern!"}
-                {phase === "VICTORY" && "Level Complete!"}
+            <div className="mt-12 h-8 flex items-center justify-center">
+                <div className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                    {phase === "SHOWING" && <span className="animate-pulse text-primary">&gt;&gt; RECORDING PATTERN...</span>}
+                    {phase === "INPUT" && <span className="text-foreground">&gt;&gt; AWAITING INPUT...</span>}
+                    {phase === "VICTORY" && <span className="text-green-500">&gt;&gt; SEQUENCE VERIFIED</span>}
+                    {phase === "GAME_OVER" && <span className="text-red-500">&gt;&gt; CRITICAL FAILURE</span>}
+                </div>
             </div>
 
             <GameOverDialog
