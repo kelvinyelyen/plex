@@ -58,6 +58,43 @@ export default function GamesPage() {
                         </div>
                     </Link>
 
+                    {/* Memory Grid Module Card */}
+                    <Link href="/games/memory-grid" className="group relative block h-[400px] border border-foreground/10 bg-background hover:border-foreground/30 transition-colors overflow-hidden">
+                        {/* Card Header */}
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="font-mono text-xs text-muted-foreground">
+                                MOD_02 :: MEMORY
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+
+                        {/* Abstract Visual */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="grid grid-cols-4 gap-2 w-48 h-48">
+                                {[...Array(16)].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="bg-foreground w-full h-full rounded-sm"
+                                        style={{ opacity: Math.random() * 0.5 + 0.2 }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Card Footer / Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <h2 className="font-display text-3xl font-bold">Memory Grid</h2>
+                            <p className="font-mono text-xs text-muted-foreground leading-relaxed">
+                                Visual pattern retention protocol. Enhances short-term memory and spatial recall capabilities.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono text-xs uppercase tracking-widest">
+                                    Initialize
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
+
                     {/* Placeholder for Future Modules */}
                     <div className="h-[400px] border border-foreground/5 bg-foreground/5 flex items-center justify-center">
                         <div className="text-center space-y-2">

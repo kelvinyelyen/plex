@@ -54,17 +54,7 @@ export function Hero() {
                     </div>
                 </motion.div>
 
-                {/* Technical Footer */}
-                <div className="absolute bottom-8 left-8 md:bottom-16 md:left-16 grid grid-cols-2 gap-8 text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
-                    <div>
-                        <span className="block text-foreground mb-1">Latency</span>
-                        12ms
-                    </div>
-                    <div>
-                        <span className="block text-foreground mb-1">Status</span>
-                        Optimal
-                    </div>
-                </div>
+
             </div>
 
             {/* Right Panel - Visualization */}

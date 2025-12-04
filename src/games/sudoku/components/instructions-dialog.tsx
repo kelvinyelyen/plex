@@ -170,10 +170,12 @@ export function InstructionsDialog() {
                     {/* Gameplay Section */}
                     <section className="space-y-2">
                         <h3 className="text-lg font-bold font-serif">Gameplay</h3>
-                        <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                            <li><strong>Goal:</strong> Fill the board with numbers 1-9 such that each row, column, and 3x3 box contains all numbers from 1 to 9 without repetition.</li>
-                            <li><strong>Winning:</strong> Successfully complete the puzzle by following the rules.</li>
-                        </ul>
+                        <div className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                            <strong>Goal:</strong> Fill the board with numbers 1-9 such that each row, column, and 3x3 box contains all numbers from 1 to 9 without repetition.
+                            <br />
+                            <br />
+                            <strong>Winning:</strong> Successfully complete the puzzle by following the rules.
+                        </div>
                     </section>
 
                 </div>

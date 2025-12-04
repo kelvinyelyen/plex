@@ -31,12 +31,12 @@ export function Controls({
             </div>
 
             {/* Number Pad */}
-            <div className="grid grid-cols-3 gap-2 w-full aspect-square">
+            <div className="grid grid-cols-9 md:grid-cols-3 gap-1 md:gap-2 w-full md:aspect-square">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                     <Button
                         key={num}
                         variant="outline"
-                        className="h-full w-full text-3xl font-light hover:bg-primary/5 hover:text-primary hover:border-primary/50 transition-all duration-200"
+                        className="h-12 md:h-full w-full text-xl md:text-3xl font-light hover:bg-primary/5 hover:text-primary hover:border-primary/50 transition-all duration-200 p-0"
                         onClick={() => onNumberClick(num)}
                     >
                         {num}

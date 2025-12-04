@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { Lightbulb } from "lucide-react"
 import { Board } from "./components/board"
 import { Controls } from "./components/controls"
 import { generatePuzzle } from "./generator"
@@ -32,6 +33,7 @@ export function SudokuGame() {
     const [isPlaying, setIsPlaying] = useState(false)
     const [isComplete, setIsComplete] = useState(false)
     const [isGameOver, setIsGameOver] = useState(false)
+    const [hintsUsed, setHintsUsed] = useState(0)
 
     const startNewGame = useCallback((diff: Difficulty) => {
         const { puzzle, solution } = generatePuzzle(diff)
@@ -44,6 +46,7 @@ export function SudokuGame() {
         setIsPlaying(true)
         setIsComplete(false)
         setIsGameOver(false)
+        setHintsUsed(0)
         setSelectedCell(null)
     }, [])
 
@@ -178,6 +181,10 @@ export function SudokuGame() {
 
     const handleHint = useCallback(() => {
         if (!board || !isPlaying || !solution || isGameOver) return
+        if (hintsUsed >= 3) {
+            toast.error("No more reveals available!")
+            return
+        }
         const hint = getHint(board)
         if (hint) {
             const newBoard = JSON.parse(JSON.stringify(board))
@@ -193,12 +200,13 @@ export function SudokuGame() {
                 setSelectedCell({ row: hint.row, col: hint.col })
             }
             setBoard(newBoard)
+            setHintsUsed(prev => prev + 1)
 
             if (checkCompletion(newBoard)) {
                 handleGameComplete()
             }
         }
-    }, [board, isPlaying, solution, checkCompletion, handleGameComplete, isGameOver])
+    }, [board, isPlaying, solution, checkCompletion, handleGameComplete, isGameOver, hintsUsed])
 
     // Keyboard support
     useEffect(() => {
@@ -277,22 +285,34 @@ export function SudokuGame() {
 
                 <div className="flex items-center gap-2">
                     <Button variant="ghost" size="sm" onClick={handleUndo} disabled={history.length === 0} className="text-muted-foreground hover:text-foreground">
-                        Undo
+                        <span className="hidden sm:inline">Undo</span>
+                        <span className="sm:hidden">↩</span>
                     </Button>
                     <Button variant="ghost" size="sm" onClick={handleDelete} className="text-muted-foreground hover:text-foreground">
-                        Clear
+                        <span className="hidden sm:inline">Clear</span>
+                        <span className="sm:hidden">⌫</span>
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={handleHint} className="text-muted-foreground hover:text-foreground">
-                        Reveal
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleHint}
+                        disabled={hintsUsed >= 3}
+                        className="text-muted-foreground hover:text-foreground relative"
+                        title="Reveal Hint"
+                    >
+                        <Lightbulb className="h-5 w-5" />
+                        <span className="absolute top-0 right-0 text-[10px] font-bold leading-none translate-x-1/4 -translate-y-1/4">
+                            {3 - hintsUsed}
+                        </span>
                     </Button>
                     <div className="h-4 w-px bg-border mx-1" />
                     <InstructionsDialog />
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-start gap-8 md:gap-12 w-full p-6 md:p-10">
+            <div className="flex flex-col md:flex-row justify-center items-start gap-6 md:gap-12 w-full p-2 md:p-10">
                 {/* Board */}
-                <div className="w-full flex-1">
+                <div className="w-full flex-1 max-w-xl mx-auto">
                     <Board
                         board={board}
                         selectedCell={selectedCell}
@@ -301,7 +321,7 @@ export function SudokuGame() {
                 </div>
 
                 {/* Controls */}
-                <div className="w-full max-w-[300px] flex flex-col gap-8 pt-4">
+                <div className="w-full md:max-w-[300px] flex flex-col gap-6 pt-0 md:pt-4">
                     <div className="flex flex-col gap-2">
                         <div className="flex justify-between items-center">
                             <h3 className="font-serif text-xl font-bold">Controls</h3>

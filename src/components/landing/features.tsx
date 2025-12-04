@@ -47,6 +47,34 @@ const exhibits = [
     },
     {
         id: "003",
+        title: "Memory",
+        subtitle: "Visual Pattern Recall",
+        href: "/games/memory-grid",
+        // Abstract representation of Memory Grid
+        visual: (
+            <div className="w-full h-full grid grid-cols-4 gap-2 p-12">
+                {[...Array(16)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0.2 }}
+                        animate={{
+                            opacity: [0.2, 1, 0.2],
+                            scale: [1, 1.1, 1]
+                        }}
+                        transition={{
+                            duration: 2,
+                            delay: Math.random() * 2,
+                            repeat: Infinity,
+                            repeatDelay: Math.random() * 3
+                        }}
+                        className="bg-primary/20 rounded-sm w-full h-full"
+                    />
+                ))}
+            </div>
+        )
+    },
+    {
+        id: "004",
         title: "Network",
         subtitle: "Community Protocol",
         href: "/register",

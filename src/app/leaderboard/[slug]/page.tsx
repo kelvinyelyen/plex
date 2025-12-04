@@ -16,10 +16,13 @@ import { Button } from "@/components/ui/button"
 export const dynamic = "force-dynamic"
 
 export default async function LeaderboardPage({ params }: { params: { slug: string } }) {
+    const isTimeBased = params.slug === "sudoku"
+    const sortOrder = isTimeBased ? "asc" : "desc"
+
     const scores = await prisma.score.findMany({
         take: 20,
         orderBy: {
-            score: "asc", // Lower time is better
+            score: sortOrder,
         },
         include: {
             user: true,
@@ -33,7 +36,7 @@ export default async function LeaderboardPage({ params }: { params: { slug: stri
     })
 
     // Capitalize slug for display
-    const gameName = params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
+    const gameName = params.slug.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
 
     return (
         <div className="min-h-screen bg-background py-16 px-8 md:px-16">
@@ -67,7 +70,9 @@ export default async function LeaderboardPage({ params }: { params: { slug: stri
                                 <TableHead className="w-[100px] font-mono text-xs uppercase tracking-wider text-muted-foreground">Rank</TableHead>
                                 <TableHead className="font-mono text-xs uppercase tracking-wider text-muted-foreground">User</TableHead>
                                 <TableHead className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Difficulty</TableHead>
-                                <TableHead className="text-right font-mono text-xs uppercase tracking-wider text-muted-foreground">Time</TableHead>
+                                <TableHead className="text-right font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                    {isTimeBased ? "Time" : "Level"}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -94,7 +99,10 @@ export default async function LeaderboardPage({ params }: { params: { slug: stri
                                         </TableCell>
                                         <TableCell className="font-mono text-sm text-muted-foreground uppercase">{score.difficulty}</TableCell>
                                         <TableCell className="text-right font-mono text-sm font-bold">
-                                            {Math.floor(score.score / 60)}:{(score.score % 60).toString().padStart(2, '0')}
+                                            {isTimeBased
+                                                ? `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
+                                                : score.score
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 ))
