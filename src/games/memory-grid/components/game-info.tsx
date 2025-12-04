@@ -1,5 +1,3 @@
-import { Heart } from "lucide-react"
-
 interface GameInfoProps {
     level: number
     lives: number
@@ -22,8 +20,8 @@ export function GameInfo({ level, lives }: GameInfoProps) {
                         <div
                             key={i}
                             className={`w-8 h-1.5 rounded-full transition-all duration-300 ${i < lives
-                                    ? "bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]"
-                                    : "bg-foreground/10"
+                                ? "bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]"
+                                : "bg-foreground/10"
                                 }`}
                         />
                     ))}
