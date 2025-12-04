@@ -7,7 +7,7 @@ import Link from "next/link"
 const exhibits = [
     {
         id: "001",
-        title: "Play",
+        title: "Logic",
         subtitle: "Sudoku Logic Framework",
         href: "/games/sudoku",
         // Abstract representation of Sudoku
@@ -27,26 +27,6 @@ const exhibits = [
     },
     {
         id: "002",
-        title: "Hierarchy",
-        subtitle: "ACity Campus Ranking System",
-        href: "/leaderboard",
-        // Abstract representation of Ranking
-        visual: (
-            <div className="w-full h-full flex items-end justify-center gap-4 p-12">
-                {[40, 80, 60, 90, 50].map((h, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h}%` }}
-                        transition={{ duration: 1.5, delay: i * 0.1 }}
-                        className="w-8 bg-primary/20"
-                    />
-                ))}
-            </div>
-        )
-    },
-    {
-        id: "003",
         title: "Memory",
         subtitle: "Visual Pattern Recall",
         href: "/games/memory-grid",
@@ -73,6 +53,27 @@ const exhibits = [
             </div>
         )
     },
+    {
+        id: "003",
+        title: "Hierarchy",
+        subtitle: "ACity MPRC Campus Ranking System",
+        href: "/leaderboard",
+        // Abstract representation of Ranking
+        visual: (
+            <div className="w-full h-full flex items-end justify-center gap-4 p-12">
+                {[40, 80, 60, 90, 50].map((h, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ height: 0 }}
+                        animate={{ height: `${h}%` }}
+                        transition={{ duration: 1.5, delay: i * 0.1 }}
+                        className="w-8 bg-primary/20"
+                    />
+                ))}
+            </div>
+        )
+    },
+
     {
         id: "004",
         title: "Network",

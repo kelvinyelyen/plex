@@ -31,18 +31,35 @@ export async function POST(req: Request) {
             })
         }
 
-        const existingScore = await prisma.score.findFirst({
+        // Find ALL existing scores for this user and game
+        const existingScores = await prisma.score.findMany({
             where: {
                 userId: session.user.id,
                 gameId: game.id,
             },
+            orderBy: {
+                score: 'desc'
+            }
         })
 
-        if (existingScore) {
-            if (score > existingScore.score) {
-                await prisma.score.update({
-                    where: { id: existingScore.id },
-                    data: { score },
+        if (existingScores.length > 0) {
+            // Determine the best score among existing and new
+            const currentBest = existingScores[0].score
+            const newBest = Math.max(currentBest, score)
+
+            // Update the first record to the new best score
+            await prisma.score.update({
+                where: { id: existingScores[0].id },
+                data: { score: newBest },
+            })
+
+            // Delete any other duplicate records if they exist
+            if (existingScores.length > 1) {
+                const idsToDelete = existingScores.slice(1).map(s => s.id)
+                await prisma.score.deleteMany({
+                    where: {
+                        id: { in: idsToDelete }
+                    }
                 })
             }
         } else {

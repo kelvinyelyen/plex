@@ -5,7 +5,7 @@ export function Footer() {
                 <div className="flex items-center gap-2">
                     <span className="w-2 h-2 border border-foreground/20" />
                     <p>
-                        PLEX © 2025
+                        PLEX © 2025 (ACity Math & Programming Resource Center)
                     </p>
                 </div>
 
