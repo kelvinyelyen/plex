@@ -28,7 +28,7 @@ export function GameOverDialog({ open, onRestart, onClose, onQuit }: GameOverDia
                     <div className="space-y-1 text-center">
                         <DialogTitle className="text-2xl font-bold">Game Over</DialogTitle>
                         <DialogDescription>
-                            You've reached the maximum number of mistakes.
+                            You&apos;ve reached the maximum number of mistakes.
                         </DialogDescription>
                     </div>
                 </DialogHeader>

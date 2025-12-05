@@ -38,7 +38,7 @@ export function CompletionDialog({ open, time, difficulty, mistakes, onPlayAgain
                     <div className="space-y-1 text-center">
                         <DialogTitle className="text-2xl font-bold">Puzzle Solved!</DialogTitle>
                         <DialogDescription>
-                            Excellent work! You've mastered this puzzle.
+                            Excellent work! You&apos;ve mastered this puzzle.
                         </DialogDescription>
                     </div>
                 </DialogHeader>
