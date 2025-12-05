@@ -14,8 +14,6 @@ const SquarePatternBackground = () => {
         for (let i = 0; i < cols * rows; i++) {
             // Use deterministic values based on index instead of Math.random()
             // This ensures the pattern remains identical across re-renders/navigation
-            const randomX = ((i * 13 + 7) % 100) / 100
-            const randomY = ((i * 29 + 11) % 100) / 100
             const randomDelay = ((i * 17) % 500) / 100
 
             newSquares.push({

@@ -97,9 +97,9 @@ export function SudokuGuide() {
                 <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                     <li><strong>Select a cell:</strong> Click or tap on any cell on the board.</li>
                     <li><strong>Enter a number:</strong> Use the number pad or your keyboard (1-9).</li>
-                    <li><strong>Remove a number:</strong> Press Backspace, Delete, or the "Clear" button.</li>
-                    <li><strong>Notes mode:</strong> Toggle "Note" to add pencil marks for possible numbers.</li>
-                    <li><strong>Undo:</strong> Press Ctrl/Cmd + Z or use the "Undo" button.</li>
+                    <li><strong>Remove a number:</strong> Press Backspace, Delete, or the &quot;Clear&quot; button.</li>
+                    <li><strong>Notes mode:</strong> Toggle &quot;Note&quot; to add pencil marks for possible numbers.</li>
+                    <li><strong>Undo:</strong> Press Ctrl/Cmd + Z or use the &quot;Undo&quot; button.</li>
                 </ul>
             </section>
 
@@ -107,7 +107,7 @@ export function SudokuGuide() {
             <section className="space-y-2 pt-4 border-t">
                 <h3 className="text-lg font-bold">History</h3>
                 <p className="text-xs text-muted-foreground">
-                    The modern Sudoku was most likely designed anonymously by Howard Garns, a 74-year-old retired architect and freelance puzzle constructor from Connersville, Indiana, and first published in 1979 by Dell Magazines as Number Place. The puzzle was introduced in Japan by Nikoli in the paper Monthly Nikolist in April 1984 as "Sūji wa dokushin ni kagiru" (Numbers must be single), which also can be abbreviated as "Sudoku".
+                    The modern Sudoku was most likely designed anonymously by Howard Garns, a 74-year-old retired architect and freelance puzzle constructor from Connersville, Indiana, and first published in 1979 by Dell Magazines as Number Place. The puzzle was introduced in Japan by Nikoli in the paper Monthly Nikolist in April 1984 as &quot;Sūji wa dokushin ni kagiru&quot; (Numbers must be single), which also can be abbreviated as &quot;Sudoku&quot;.
                 </p>
             </section>
         </div>

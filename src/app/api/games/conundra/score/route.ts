@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json()
-        const { score, difficulty, moves } = scoreSchema.parse(body)
+        const { score, difficulty } = scoreSchema.parse(body)
 
         // Ensure Game record exists
         const game = await prisma.game.upsert({

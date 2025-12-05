@@ -1,12 +1,9 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { Suspense } from "react"
-import { ArrowLeft } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/auth/user-auth-form"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 
 export const metadata: Metadata = {
     title: "Login",
