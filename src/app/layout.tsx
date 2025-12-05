@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Cormorant_Garamond, Space_Mono } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { Providers } from "@/components/providers"
 import { Header } from "@/components/layout/header"
@@ -7,8 +7,7 @@ import { Footer } from "@/components/layout/footer"
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
 
-const cormorantGaramond = Cormorant_Garamond({ weight: ["300", "400", "500", "600", "700"], subsets: ["latin"], style: ["normal", "italic"], variable: "--font-display" })
-const spaceMono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-mono" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
   title: "Plex",
@@ -23,9 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(
-        "min-h-screen bg-background font-mono antialiased selection:bg-primary selection:text-white",
-        cormorantGaramond.variable,
-        spaceMono.variable
+        "min-h-screen bg-background font-sans antialiased",
+        inter.variable
       )}>
         <Providers
           attribute="class"

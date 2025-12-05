@@ -1,10 +1,12 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { Suspense } from "react"
+import { ArrowLeft } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/auth/user-auth-form"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
     title: "Create an account",
@@ -14,34 +16,23 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
     return (
         <>
-            <Link
-                href="/"
-                className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    "absolute right-4 top-4 md:right-8 md:top-8"
-                )}
-            >
-                Back to Home
-            </Link>
-            <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold tracking-tight">
-                    Create an account
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                    Enter your email below to create your account
-                </p>
-            </div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <UserAuthForm mode="register" />
-            </Suspense>
-            <p className="px-8 text-center text-sm text-muted-foreground">
-                <Link
-                    href="/login"
-                    className="hover:text-brand underline underline-offset-4"
-                >
-                    Already have an account? Sign In
-                </Link>
-            </p>
+            <Card className="border-none shadow-none sm:border sm:shadow-sm">
+                <CardContent>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <UserAuthForm mode="register" />
+                    </Suspense>
+                </CardContent>
+                <CardFooter>
+                    <p className="text-center text-sm text-muted-foreground w-full">
+                        <Link
+                            href="/login"
+                            className="hover:text-primary underline underline-offset-4"
+                        >
+                            Already have an account? Sign In
+                        </Link>
+                    </p>
+                </CardFooter>
+            </Card>
         </>
     )
 }

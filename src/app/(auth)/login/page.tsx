@@ -1,10 +1,12 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { Suspense } from "react"
+import { ArrowLeft } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/auth/user-auth-form"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
     title: "Login",
@@ -14,32 +16,23 @@ export const metadata: Metadata = {
 export default function LoginPage() {
     return (
         <>
-            <Link
-                href="/"
-                className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    "absolute right-4 top-4 md:right-8 md:top-8"
-                )}
-            >
-                Back to Home
-            </Link>
-            <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-                <p className="text-sm text-muted-foreground">
-                    Enter your email below to login to your account
-                </p>
-            </div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <UserAuthForm mode="login" />
-            </Suspense>
-            <p className="px-8 text-center text-sm text-muted-foreground">
-                <Link
-                    href="/register"
-                    className="hover:text-brand underline underline-offset-4"
-                >
-                    Don&apos;t have an account? Sign Up
-                </Link>
-            </p>
+            <Card className="border-none shadow-none sm:border sm:shadow-sm">
+                <CardContent>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <UserAuthForm mode="login" />
+                    </Suspense>
+                </CardContent>
+                <CardFooter>
+                    <p className="text-center text-sm text-muted-foreground w-full">
+                        <Link
+                            href="/register"
+                            className="hover:text-primary underline underline-offset-4"
+                        >
+                            Don&apos;t have an account? Sign Up
+                        </Link>
+                    </p>
+                </CardFooter>
+            </Card>
         </>
     )
 }

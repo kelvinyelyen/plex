@@ -24,7 +24,7 @@ interface UserNavProps {
 
 export function UserNav({ user }: UserNavProps) {
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 flex items-center gap-2 rounded-full">
                     <Avatar className="h-8 w-8">

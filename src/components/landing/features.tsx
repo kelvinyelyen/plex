@@ -1,182 +1,52 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
 import Link from "next/link"
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { SudokuAnimation, MemoryAnimation, LeaderboardAnimation, ConundraAnimation } from "@/components/ui/game-animations"
 
-const exhibits = [
+const features = [
     {
-        id: "001",
-        title: "Logic",
-        subtitle: "Sudoku Logic Framework",
+        title: "Sudoku",
+        description: "Classic logic-based number placement puzzle.",
         href: "/games/sudoku",
-        // Abstract representation of Sudoku
-        visual: (
-            <div className="w-full h-full grid grid-cols-3 gap-4 p-8">
-                {[...Array(9)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0.2 }}
-                        animate={{ opacity: [0.2, 0.5, 0.2] }}
-                        transition={{ duration: 2, delay: i * 0.1, repeat: Infinity }}
-                        className="bg-black/10 w-full h-full"
-                    />
-                ))}
-            </div>
-        )
+        animation: <div className="mx-auto mb-4"><SudokuAnimation /></div>,
     },
     {
-        id: "002",
-        title: "Memory",
-        subtitle: "Visual Pattern Recall",
+        title: "Memory Grid",
+        description: "Test your visual memory and pattern recognition.",
         href: "/games/memory-grid",
-        // Abstract representation of Memory Grid
-        visual: (
-            <div className="w-full h-full grid grid-cols-4 gap-2 p-12">
-                {[...Array(16)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0.2 }}
-                        animate={{
-                            opacity: [0.2, 1, 0.2],
-                            scale: [1, 1.1, 1]
-                        }}
-                        transition={{
-                            duration: 2,
-                            delay: Math.random() * 2,
-                            repeat: Infinity,
-                            repeatDelay: Math.random() * 3
-                        }}
-                        className="bg-primary/20 rounded-sm w-full h-full"
-                    />
-                ))}
-            </div>
-        )
+        animation: <div className="mx-auto mb-4"><MemoryAnimation /></div>,
     },
     {
-        id: "003",
-        title: "Hierarchy",
-        subtitle: "ACity MPRC Campus Ranking System",
+        title: "Conundra",
+        description: "Arithmetic puzzle challenge. Combine numbers to reach the target.",
+        href: "/games/conundra",
+        animation: <div className="mx-auto mb-4"><ConundraAnimation /></div>,
+    },
+    {
+        title: "Leaderboard",
+        description: "See how you stack up against other players.",
         href: "/leaderboard",
-        // Abstract representation of Ranking
-        visual: (
-            <div className="w-full h-full flex items-end justify-center gap-4 p-12">
-                {[40, 80, 60, 90, 50].map((h, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h}%` }}
-                        transition={{ duration: 1.5, delay: i * 0.1 }}
-                        className="w-8 bg-primary/20"
-                    />
-                ))}
-            </div>
-        )
+        animation: <div className="mx-auto mb-4"><LeaderboardAnimation /></div>,
     },
-
-    {
-        id: "004",
-        title: "Network",
-        subtitle: "Community Protocol",
-        href: "/register",
-        // Abstract representation of Network
-        visual: (
-            <div className="w-full h-full relative p-8">
-                {[...Array(5)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute border border-black/10 rounded-full"
-                        style={{
-                            top: '50%',
-                            left: '50%',
-                            width: `${(i + 1) * 20}%`,
-                            height: `${(i + 1) * 20}%`,
-                            x: '-50%',
-                            y: '-50%'
-                        }}
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "linear" }}
-                    >
-                        <div className="w-2 h-2 bg-primary rounded-full absolute top-0 left-1/2 -translate-x-1/2" />
-                    </motion.div>
-                ))}
-            </div>
-        )
-    }
 ]
 
 export function Features() {
-    const [activeExhibit, setActiveExhibit] = useState<number | null>(null)
-
     return (
-        <section className="min-h-screen flex flex-col lg:flex-row relative bg-background">
-
-            {/* Left Panel - Visual Preview Area */}
-            <div className="w-full lg:w-1/2 relative bg-[#EAE8E0] hidden lg:flex items-center justify-center overflow-hidden">
-                {/* Grid Background to match Hero */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-                <div className="relative w-full h-full p-16 flex items-center justify-center">
-                    <div className="relative w-full max-w-lg aspect-square border border-foreground/10 bg-background/50 backdrop-blur-sm">
-                        {activeExhibit !== null ? (
-                            <motion.div
-                                key={activeExhibit}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="w-full h-full"
-                            >
-                                {exhibits[activeExhibit].visual}
-                            </motion.div>
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center font-mono text-xs text-muted-foreground tracking-widest">
-                                SELECT AN EXHIBIT
-                            </div>
-                        )}
-
-                        {/* Decorative Corners */}
-                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-foreground" />
-                        <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-foreground" />
-                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-foreground" />
-                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-foreground" />
-                    </div>
-                </div>
+        <section className="container my-4 lg:-my-20 py-8 md:py-12 lg:py-24">
+            <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-4 w-full">
+                {features.map((feature) => (
+                    <Link key={feature.title} href={feature.href}>
+                        <Card className="h-full transition-all hover:bg-muted/50 hover:border-primary/50 group overflow-hidden">
+                            <CardHeader className="relative z-10">
+                                {feature.animation}
+                                <CardTitle className="text-center group-hover:text-primary transition-colors">{feature.title}</CardTitle>
+                                <CardDescription className="text-center">{feature.description}</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                ))}
             </div>
-
-            {/* Right Panel - Catalog List */}
-            <div className="w-full lg:w-1/2 p-8 md:p-16 border-r border-foreground/10">
-                <div className="space-y-0 max-w-xl">
-                    <div className="border-b border-foreground/10 pb-4 mb-8 flex justify-between items-end">
-                        <h2 className="font-display italic text-4xl">Catalog</h2>
-                        <span className="font-mono text-xs text-muted-foreground">VOL. 1</span>
-                    </div>
-
-                    {exhibits.map((exhibit, index) => (
-                        <Link
-                            key={index}
-                            href={exhibit.href}
-                            onMouseEnter={() => setActiveExhibit(index)}
-                            onMouseLeave={() => setActiveExhibit(null)}
-                            className="group block border-b border-foreground/5 py-12 relative"
-                        >
-                            <div className="flex items-baseline gap-8">
-                                <span className="font-mono text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {exhibit.id}
-                                </span>
-                                <div className="space-y-2">
-                                    <h3 className="font-display text-5xl md:text-6xl group-hover:italic transition-all duration-300">
-                                        {exhibit.title}
-                                    </h3>
-                                    <p className="font-mono text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                                        {exhibit.subtitle}
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
-
         </section>
     )
 }

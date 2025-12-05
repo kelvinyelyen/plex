@@ -1,66 +1,41 @@
-"use client"
-
 import { motion } from "framer-motion"
+import { Brain } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Activity, Brain, Zap } from "lucide-react"
 
 export function Hero() {
     return (
-        <section className="min-h-screen flex flex-col lg:flex-row relative overflow-hidden border-b border-foreground/10">
-            {/* Left Panel - Control Interface */}
-            <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center relative border-r border-foreground/10 bg-background z-10">
+        <section className="container relative flex flex-col lg:flex-row my-20 py-2 md:py-6 overflow-hidden">
+            {/* Grid Background */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] pointer-events-none -z-10" />
 
-                {/* Technical Header */}
-                <div className="absolute top-8 left-8 md:top-16 md:left-16 flex items-center gap-4 text-xs font-mono text-muted-foreground tracking-widest">
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                        <span>SYS.ONLINE</span>
-                    </div>
-                    <span>{"//"}</span>
-                    <span>V.2.0.4</span>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="space-y-8 mt-12"
-                >
-                    <h1 className="font-display italic text-6xl md:text-8xl leading-[0.9] text-foreground">
-                        Calibrate
-                        <br />
-                        <span className="not-italic font-light text-muted-foreground">Your Mind.</span>
+            {/* Left Panel - Content */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 z-10">
+                <div className="flex flex-col items-start gap-4 max-w-xl">
+                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-left">
+                        Calibrate Your Mind
                     </h1>
-
-                    <p className="font-mono text-sm md:text-base text-muted-foreground max-w-md leading-relaxed border-l-2 border-primary/50 pl-6">
-                        :: INITIATE PROTOCOL <br />
+                    <p className="leading-normal text-muted-foreground sm:text-xl sm:leading-8 text-left">
                         Enhance cognitive latency and pattern recognition through structured competitive frameworks.
+                        Simple, clean, and effective.
                     </p>
-
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <div className="flex gap-4">
                         <Link href="/games">
-                            <Button size="lg" className="w-full sm:w-auto">
-                                <Zap className="w-4 h-4 mr-2" />
-                                INITIATE
+                            <Button size="lg">
+                                Start Playing
                             </Button>
                         </Link>
                         <Link href="/leaderboard">
-                            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                                <Activity className="w-4 h-4 mr-2" />
-                                ANALYSIS
+                            <Button variant="outline" size="lg">
+                                View Leaderboard
                             </Button>
                         </Link>
                     </div>
-                </motion.div>
-
-
+                </div>
             </div>
 
             {/* Right Panel - Visualization */}
-            <div className="w-full lg:w-1/2 relative bg-[#EAE8E0] overflow-hidden flex items-center justify-center min-h-[50vh] lg:min-h-auto">
-                {/* Grid Background */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+            <div className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center z-10">
 
                 {/* Central Node Graphic */}
                 <div className="relative w-64 h-64 md:w-96 md:h-96">
@@ -104,9 +79,7 @@ export function Hero() {
                     ))}
                 </div>
 
-                {/* Corner Accents */}
-                <div className="absolute top-8 right-8 w-16 h-16 border-t-2 border-r-2 border-foreground/20" />
-                <div className="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-foreground/20" />
+
             </div>
         </section>
     )

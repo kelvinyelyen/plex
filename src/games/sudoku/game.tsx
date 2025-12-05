@@ -1,5 +1,9 @@
 "use client"
 
+import { GameStartScreen } from "@/components/game/start-screen"
+import { SudokuGuide } from "@/components/game/game-guides"
+import { SudokuAnimation } from "@/components/ui/game-animations"
+
 import { useState, useEffect, useCallback } from "react"
 import { Lightbulb } from "lucide-react"
 import { Board } from "./components/board"
@@ -10,7 +14,6 @@ import { Board as BoardType, Difficulty, CellValue } from "./types"
 import { Button } from "@/components/ui/button"
 import { CompletionDialog } from "./components/completion-dialog"
 import { GameOverDialog } from "./components/game-over-dialog"
-import { InstructionsDialog } from "./components/instructions-dialog"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
@@ -235,7 +238,21 @@ export function SudokuGame() {
         return () => window.removeEventListener("keydown", handleKeyDown)
     }, [handleNumberClick, handleDelete, handleUndo, isPlaying, isGameOver])
 
+    const [hasStarted, setHasStarted] = useState(false)
+
     if (!board) return <div>Loading...</div>
+
+    if (!hasStarted) {
+        return (
+            <GameStartScreen
+                title="Sudoku"
+                description="Fill the 9x9 grid with digits so that each column, each row, and each of the nine 3x3 subgrids that compose the grid contain all of the digits from 1 to 9."
+                onStart={() => setHasStarted(true)}
+                instructions={<SudokuGuide />}
+                icon={<SudokuAnimation />}
+            />
+        )
+    }
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60)
@@ -244,10 +261,7 @@ export function SudokuGame() {
     }
 
     return (
-        <div className="flex flex-col items-center w-full max-w-5xl mx-auto relative min-h-screen p-4">
-            {/* Background Elements */}
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
+        <div className="flex flex-col items-center w-full max-w-5xl mx-auto min-h-screen p-4">
             <CompletionDialog
                 open={isComplete}
                 time={timer}
@@ -261,20 +275,19 @@ export function SudokuGame() {
             />
 
             <div className="mb-8 text-center space-y-2">
-                <div className="font-mono text-xs text-muted-foreground tracking-[0.2em] uppercase">Protocol: Logic_Matrix</div>
-                <h1 className="text-5xl md:text-6xl font-display italic font-bold">Sudoku</h1>
+                <h1 className="text-4xl font-bold">Sudoku</h1>
             </div>
 
-            {/* HUD Toolbar */}
-            <div className="w-full max-w-4xl border-y border-foreground/10 bg-background/50 backdrop-blur-sm px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8 sticky top-0 z-40">
+            {/* Toolbar */}
+            <div className="w-full max-w-4xl border rounded-lg bg-background px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-start">
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Difficulty</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Difficulty</span>
                         <Select
                             value={difficulty}
                             onValueChange={(val: string) => startNewGame(val as Difficulty)}
                         >
-                            <SelectTrigger className="w-[120px] h-8 border-none shadow-none p-0 text-xl font-display font-bold italic focus:ring-0 bg-transparent hover:bg-transparent">
+                            <SelectTrigger className="w-[120px] h-8 border-none shadow-none p-0 text-lg font-bold focus:ring-0 bg-transparent hover:bg-transparent">
                                 <SelectValue placeholder="Difficulty" />
                             </SelectTrigger>
                             <SelectContent>
@@ -286,19 +299,19 @@ export function SudokuGame() {
                         </Select>
                     </div>
 
-                    <div className="h-8 w-px bg-foreground/10 hidden md:block" />
+                    <div className="h-8 w-px bg-border hidden md:block" />
 
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Timer</span>
-                        <span className="text-xl font-mono font-medium">{formatTime(timer)}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Timer</span>
+                        <span className="text-lg font-medium">{formatTime(timer)}</span>
                     </div>
 
-                    <div className="h-8 w-px bg-foreground/10 hidden md:block" />
+                    <div className="h-8 w-px bg-border hidden md:block" />
 
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Mistakes</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Mistakes</span>
                         <div className="flex items-center gap-1 h-7">
-                            <span className={cn("text-xl font-mono font-medium", mistakes >= 3 ? "text-red-500" : "")}>
+                            <span className={cn("text-lg font-medium", mistakes >= 3 ? "text-destructive" : "")}>
                                 {mistakes}/3
                             </span>
                         </div>
@@ -306,29 +319,22 @@ export function SudokuGame() {
                 </div>
 
                 <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                    <Button variant="outline" size="sm" onClick={handleUndo} disabled={history.length === 0} className="font-mono text-xs uppercase tracking-wider border-foreground/20 hover:bg-foreground/5">
-                        <span className="hidden sm:inline">Undo</span>
-                        <span className="sm:hidden">↩</span>
+                    <Button variant="outline" size="sm" onClick={handleUndo} disabled={history.length === 0}>
+                        Undo
                     </Button>
-                    <Button variant="outline" size="sm" onClick={handleDelete} className="font-mono text-xs uppercase tracking-wider border-foreground/20 hover:bg-foreground/5">
-                        <span className="hidden sm:inline">Clear</span>
-                        <span className="sm:hidden">⌫</span>
+                    <Button variant="outline" size="sm" onClick={handleDelete}>
+                        Clear
                     </Button>
                     <Button
                         variant="outline"
                         size="icon"
                         onClick={handleHint}
                         disabled={hintsUsed >= 3}
-                        className="border-foreground/20 hover:bg-foreground/5 relative"
                         title="Reveal Hint"
                     >
                         <Lightbulb className="h-4 w-4" />
-                        <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                            {3 - hintsUsed}
-                        </span>
                     </Button>
-                    <div className="h-4 w-px bg-foreground/10 mx-2" />
-                    <InstructionsDialog />
+                    <div className="h-4 w-px bg-border mx-2" />
                 </div>
             </div>
 
@@ -344,11 +350,11 @@ export function SudokuGame() {
 
                 {/* Controls */}
                 <div className="w-full max-w-sm mx-auto lg:mx-0 flex flex-col gap-8 pt-4">
-                    <div className="bg-background/50 backdrop-blur-sm border border-foreground/10 rounded-xl p-6">
+                    <div className="bg-card border rounded-xl p-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-display font-bold italic text-lg">Input Control</h3>
-                            <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                                Status: {isNoteMode ? "ANNOTATION" : "ENTRY"}
+                            <h3 className="font-bold text-lg">Controls</h3>
+                            <div className="text-xs text-muted-foreground uppercase tracking-widest">
+                                Mode: {isNoteMode ? "Notes" : "Normal"}
                             </div>
                         </div>
 
@@ -360,11 +366,11 @@ export function SudokuGame() {
                     </div>
 
                     <Button
-                        className="w-full h-12 font-mono uppercase tracking-widest text-xs border border-foreground/20"
+                        className="w-full h-12"
                         variant="outline"
                         onClick={() => startNewGame(difficulty)}
                     >
-                        Initialize New Matrix
+                        New Game
                     </Button>
                 </div>
             </div>
