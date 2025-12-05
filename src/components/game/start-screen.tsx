@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Play, HelpCircle, Trophy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,7 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Card } from "@/components/ui/card"
 
 interface GameStartScreenProps {
     title: string

@@ -6,7 +6,7 @@ import { ConundraAnimation } from "@/components/ui/game-animations"
 
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { RefreshCw, RotateCcw, Trophy } from "lucide-react"
+import { RefreshCw, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {

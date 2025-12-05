@@ -1,4 +1,4 @@
-import { Building2, Globe } from "lucide-react"
+import Image from "next/image"
 
 export function Initiative() {
     return (
@@ -11,15 +11,17 @@ export function Initiative() {
                     {/* Logo 1 - Academic City University */}
                     <div className="flex-1 flex justify-center md:justify-end px-8 md:px-12">
                         <div className="relative h-24 w-64 md:h-32 md:w-80 opacity-80 hover:opacity-100 transition-opacity">
-                            <img
+                            <Image
                                 src="/logos/academic-city-new.png"
                                 alt="Academic City University Logo"
-                                className="absolute inset-0 h-full w-full object-contain dark:hidden"
+                                fill
+                                className="object-contain dark:hidden"
                             />
-                            <img
+                            <Image
                                 src="/logos/academic-city-new.png"
                                 alt="Academic City University Logo"
-                                className="absolute inset-0 h-full w-full object-contain hidden dark:block brightness-0 invert"
+                                fill
+                                className="object-contain hidden dark:block brightness-0 invert"
                             />
                         </div>
                     </div>
@@ -30,15 +32,17 @@ export function Initiative() {
                     {/* Logo 2 - Maths & Programming Resource Center */}
                     <div className="flex-1 flex justify-center md:justify-start px-8 md:px-12">
                         <div className="relative h-20 w-56 md:h-24 md:w-72 opacity-80 hover:opacity-100 transition-opacity">
-                            <img
+                            <Image
                                 src="/logos/math-resource-center.png"
                                 alt="Maths & Programming Resource Center Logo"
-                                className="absolute inset-0 h-full w-full object-contain dark:hidden"
+                                fill
+                                className="object-contain dark:hidden"
                             />
-                            <img
+                            <Image
                                 src="/logos/math-resource-center.png"
                                 alt="Maths & Programming Resource Center Logo"
-                                className="absolute inset-0 h-full w-full object-contain hidden dark:block brightness-0 invert"
+                                fill
+                                className="object-contain hidden dark:block brightness-0 invert"
                             />
                         </div>
                     </div>

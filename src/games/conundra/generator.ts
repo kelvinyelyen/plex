@@ -27,7 +27,7 @@ export const generateTarget = (difficulty: Difficulty): { target: number; number
     const numbers = Array.from({ length: count }, () => Math.floor(Math.random() * range) + 1)
 
     // Generate a reachable target by simulating operations
-    let current = [...numbers]
+    const current = [...numbers]
     while (current.length > 1) {
         const idx1 = Math.floor(Math.random() * current.length)
         const val1 = current[idx1]

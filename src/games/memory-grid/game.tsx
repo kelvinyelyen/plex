@@ -8,8 +8,6 @@ import { useMemoryGame } from "./use-memory-game"
 import { Grid } from "./components/grid"
 import { GameInfo } from "./components/game-info"
 import { GameOverDialog } from "./components/game-over-dialog"
-import { Button } from "@/components/ui/button"
-import { Play } from "lucide-react"
 
 export function MemoryGame() {
     const { gameState, startGame, handleCellClick } = useMemoryGame()
