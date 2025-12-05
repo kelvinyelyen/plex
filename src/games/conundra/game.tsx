@@ -10,12 +10,12 @@ import { RefreshCw, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
 import { toast } from "sonner"
 import { generateTarget } from "./generator"
 import { Difficulty, GameState } from "./types"
@@ -179,6 +179,8 @@ export function ConundraGame() {
                 difficulty={difficulty}
                 moves={moves}
                 onPlayAgain={() => startNewGame(difficulty)}
+                onClose={() => setIsComplete(false)}
+                onQuit={() => setHasStarted(false)}
             />
 
             <div className="mb-8 text-center space-y-2">
@@ -191,17 +193,20 @@ export function ConundraGame() {
                 <div className="flex items-center gap-8">
                     <div className="flex flex-col">
                         <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Difficulty</span>
-                        <Select value={difficulty} onValueChange={(val: string) => startNewGame(val as Difficulty)}>
-                            <SelectTrigger className="w-[120px] h-8 border-none shadow-none p-0 text-lg font-bold focus:ring-0 bg-transparent">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="Easy">Easy</SelectItem>
-                                <SelectItem value="Medium">Medium</SelectItem>
-                                <SelectItem value="Hard">Hard</SelectItem>
-                                <SelectItem value="Expert">Expert</SelectItem>
-                            </SelectContent>
-                        </Select>
+                        <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="w-[120px] h-8 border-none shadow-none p-0 text-lg font-bold focus:ring-0 bg-transparent hover:bg-transparent justify-between">
+                                    {difficulty}
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem onClick={() => startNewGame("Easy")}>Easy</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => startNewGame("Medium")}>Medium</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => startNewGame("Hard")}>Hard</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => startNewGame("Expert")}>Expert</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                     <div className="h-8 w-px bg-border hidden md:block" />
                     <div className="flex flex-col">

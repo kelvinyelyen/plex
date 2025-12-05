@@ -135,9 +135,22 @@ export function useMemoryGame() {
         }
     }, [])
 
+    const resetToIdle = useCallback(() => {
+        setGameState({
+            level: 1,
+            lives: 5,
+            gridSize: 2,
+            sequence: [],
+            playerInput: [],
+            phase: "IDLE",
+            showingIndex: -1,
+        })
+    }, [])
+
     return {
         gameState,
         startGame,
-        handleCellClick
+        handleCellClick,
+        resetToIdle
     }
 }

@@ -10,7 +10,7 @@ import { GameInfo } from "./components/game-info"
 import { GameOverDialog } from "./components/game-over-dialog"
 
 export function MemoryGame() {
-    const { gameState, startGame, handleCellClick } = useMemoryGame()
+    const { gameState, startGame, handleCellClick, resetToIdle } = useMemoryGame()
     const { level, lives, gridSize, sequence, playerInput, phase } = gameState
 
     const [hasStarted, setHasStarted] = useState(false)
@@ -61,6 +61,8 @@ export function MemoryGame() {
                 open={phase === "GAME_OVER"}
                 level={level}
                 onRestart={startGame}
+                onClose={resetToIdle}
+                onQuit={() => setHasStarted(false)}
             />
         </div>
     )

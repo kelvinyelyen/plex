@@ -8,31 +8,46 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-
 interface GameOverDialogProps {
     open: boolean
     onRestart: () => void
+    onClose: () => void
+    onQuit: () => void
 }
 
-export function GameOverDialog({ open, onRestart }: GameOverDialogProps) {
-    const router = useRouter()
+import { XCircle, RotateCcw, Home } from "lucide-react"
 
+export function GameOverDialog({ open, onRestart, onClose, onQuit }: GameOverDialogProps) {
     return (
-        <Dialog open={open} onOpenChange={() => { }}>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle className="text-destructive">Game Over</DialogTitle>
-                    <DialogDescription>
-                        You have made 3 mistakes. Better luck next time!
-                    </DialogDescription>
+        <Dialog open={open} onOpenChange={(open) => !open && onClose()} modal={false}>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader className="flex flex-col items-center gap-4 pb-2">
+                    <div className="p-4 rounded-full bg-destructive/10 text-destructive ring-1 ring-destructive/20">
+                        <XCircle className="w-8 h-8" />
+                    </div>
+                    <div className="space-y-1 text-center">
+                        <DialogTitle className="text-2xl font-bold">Game Over</DialogTitle>
+                        <DialogDescription>
+                            You've reached the maximum number of mistakes.
+                        </DialogDescription>
+                    </div>
                 </DialogHeader>
-                <DialogFooter className="flex gap-2 sm:gap-0">
-                    <Button variant="outline" onClick={() => router.push("/")}>
+
+                <div className="py-6 flex justify-center">
+                    <div className="text-center space-y-1 p-4 bg-muted/50 rounded-lg w-full">
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Mistakes</span>
+                        <div className="text-2xl font-bold text-destructive">3 / 3</div>
+                    </div>
+                </div>
+
+                <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3 sm:justify-center">
+                    <Button variant="outline" size="lg" onClick={onQuit} className="w-full sm:w-auto gap-2">
+                        <Home className="w-4 h-4" />
                         Quit
                     </Button>
-                    <Button onClick={onRestart}>
-                        Restart
+                    <Button size="lg" onClick={onRestart} className="w-full sm:w-auto gap-2">
+                        <RotateCcw className="w-4 h-4" />
+                        Try Again
                     </Button>
                 </DialogFooter>
             </DialogContent>
