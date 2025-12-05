@@ -184,7 +184,7 @@ export function ConundraGuide() {
             <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                 <li>Combine the given numbers using basic arithmetic (+, -, ×, ÷).</li>
                 <li>Reach the exact target number to win.</li>
-                <li>You can use each number only once, but you don't have to use all of them.</li>
+                <li>You can use each number only once, but you don&apos;t have to use all of them.</li>
             </ul>
         </div>
     )
