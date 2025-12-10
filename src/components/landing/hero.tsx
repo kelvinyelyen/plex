@@ -10,7 +10,7 @@ export function Hero() {
             <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] pointer-events-none -z-10" />
 
             {/* Left Panel - Content */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 z-10">
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-0 lg:p-8 z-10">
                 <div className="flex flex-col items-start gap-6 max-w-xl">
                     <h1 className="text-4xl font-mono font-bold uppercase tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-left">
                         Calibrate
@@ -36,7 +36,7 @@ export function Hero() {
             </div>
 
             {/* Right Panel - Visualization */}
-            <div className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center z-10">
+            <div className="hidden lg:flex w-full lg:w-1/2 relative overflow-hidden items-center justify-center z-10">
 
                 {/* Central Node Graphic */}
                 <div className="relative w-64 h-64 md:w-96 md:h-96">
