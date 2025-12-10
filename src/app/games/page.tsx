@@ -122,6 +122,67 @@ export default function GamesPage() {
                             </div>
                         </div>
                     </Link>
+                    {/* Pulse Reaction Module Card */}
+                    <Link href="/games/pulse-reaction" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        {/* Card Header */}
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Latency
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+
+                        {/* Abstract Visual */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="w-32 h-32 rounded-full border-[16px] border-foreground/50" />
+                        </div>
+
+                        {/* Card Footer / Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Pulse Rxn</h2>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Cognitive latency calibration. Sync with optimal brightness.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    Play Now
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Split Decision Module Card */}
+                    <Link href="/games/split-decision" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        {/* Card Header */}
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Attention
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+
+                        {/* Abstract Visual */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="relative w-32 h-48">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 border-2 border-foreground" />
+                                <div className="absolute bottom-0 left-0 w-8 h-1 bg-foreground" />
+                                <div className="absolute bottom-0 right-0 w-8 h-1 bg-foreground" />
+                            </div>
+                        </div>
+
+                        {/* Card Footer / Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Split Dec</h2>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Rapid categorization protocols. Test mental flexibility.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    Play Now
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -100,3 +100,58 @@ export const ConundraAnimation = () => {
         </div>
     )
 }
+
+export const PulseAnimation = () => {
+    return (
+        <div className="flex items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md">
+            <motion.div
+                className="w-12 h-12 bg-primary rounded-full"
+                animate={{
+                    opacity: [0.1, 1, 0.1],
+                    scale: [0.8, 1, 0.8]
+                }}
+                transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            />
+        </div>
+    )
+}
+
+export const SplitAnimation = () => {
+    return (
+        <div className="flex items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md overflow-hidden relative">
+            <motion.div
+                className="w-10 h-14 border-2 border-primary bg-background rounded-sm flex items-center justify-center"
+                animate={{
+                    x: [0, -40, 0, 0, 40, 0], // Center -> Left -> Center -> Center -> Right -> Center
+                    opacity: [1, 0, 0, 1, 0, 0, 1],
+                    scale: [1, 0.8, 0.8, 1, 0.8, 0.8, 1],
+                    rotate: [0, -10, 0, 0, 10, 0, 0]
+                }}
+                transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    times: [0, 0.2, 0.25, 0.5, 0.7, 0.75, 1]
+                }}
+            >
+                <div className="w-1/2 h-0.5 bg-primary/50" />
+            </motion.div>
+
+            {/* Left/Right Pulse Indicators */}
+            <motion.div
+                className="absolute left-1 top-1/2 w-1 h-8 bg-primary/20 rounded-full"
+                animate={{ opacity: [0, 1, 0, 0, 0, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, times: [0, 0.1, 0.3, 1] }}
+            />
+            <motion.div
+                className="absolute right-1 top-1/2 w-1 h-8 bg-primary/20 rounded-full"
+                animate={{ opacity: [0, 0, 0, 0, 1, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, times: [0, 0.5, 0.6, 1] }}
+            />
+        </div>
+    )
+}

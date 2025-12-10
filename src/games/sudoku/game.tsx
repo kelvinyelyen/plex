@@ -5,7 +5,6 @@ import { SudokuGuide } from "@/components/game/game-guides"
 import { SudokuAnimation } from "@/components/ui/game-animations"
 
 import { useState, useEffect, useCallback } from "react"
-import { Lightbulb } from "lucide-react"
 import { Board } from "./components/board"
 import { Controls } from "./components/controls"
 import { generatePuzzle } from "./generator"

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { Score, User, Game } from "@prisma/client"
+import { Score, User, Game, Prisma } from "@prisma/client"
 import {
     Table,
     TableBody,
@@ -16,11 +16,13 @@ import { Button } from "@/components/ui/button"
 export const dynamic = "force-dynamic"
 
 export default async function LeaderboardPage({ params, searchParams }: { params: { slug: string }, searchParams: { difficulty?: string } }) {
-    const isTimeBased = params.slug === "sudoku" || params.slug === "conundra"
+    const isTimeBased = params.slug === "sudoku" || params.slug === "conundra" || params.slug === "pulse-reaction"
     const sortOrder = isTimeBased ? "asc" : "desc"
     const currentDifficulty = searchParams.difficulty
 
-    const whereClause: any = {
+
+
+    const whereClause: Prisma.ScoreWhereInput = {
         game: {
             slug: params.slug
         }
@@ -46,9 +48,15 @@ export default async function LeaderboardPage({ params, searchParams }: { params
     const gameName = params.slug.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
 
     // Determine available difficulties based on game type
-    const difficulties = params.slug === "memory-grid"
-        ? []
-        : ["All", "Easy", "Medium", "Hard", "Expert"]
+    let difficulties: string[] = []
+
+    if (params.slug === "memory-grid" || params.slug === "pulse-reaction") {
+        difficulties = []
+    } else if (params.slug === "split-decision") {
+        difficulties = ["All", "Standard", "Comparison", "Divisibility", "Pattern", "Advanced"]
+    } else {
+        difficulties = ["Easy", "Medium", "Hard", "Expert"]
+    }
 
     return (
         <div className="min-h-screen bg-background py-16 px-8 md:px-16">

@@ -144,6 +144,89 @@ export default function LeaderboardIndexPage() {
                             </div>
                         </div>
                     </Link>
+
+                    {/* Pulse Reaction Archive Card */}
+                    <Link href="/leaderboard/pulse-reaction" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        {/* Card Header */}
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Ranking
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+
+                        {/* Abstract Visual - Pulse Wave */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="flex items-center gap-1">
+                                {[...Array(9)].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="w-4 bg-foreground rounded-full"
+                                        style={{
+                                            height: i === 4 ? '64px' : i === 3 || i === 5 ? '48px' : i === 2 || i === 6 ? '32px' : '16px',
+                                            opacity: 0.2 + (i === 4 ? 0.8 : 0.4)
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Card Footer / Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <div className="flex items-center gap-2">
+                                <Trophy className="w-5 h-5 text-primary" />
+                                <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Pulse_Rxn</h2>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Cognitive latency metrics. Reaction precision analysis.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    View Leaderboard
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Split Decision Archive Card */}
+                    <Link href="/leaderboard/split-decision" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        {/* Card Header */}
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Ranking
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+
+                        {/* Abstract Visual - Split/Diverge */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="relative w-32 h-32">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-foreground rounded-full" />
+                                <div className="absolute top-1/2 left-0 w-4 h-4 bg-foreground rounded-full" />
+                                <div className="absolute top-1/2 right-0 w-4 h-4 bg-foreground rounded-full" />
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-foreground rounded-full" />
+                                {/* Cross lines */}
+                                <div className="absolute top-2 left-1/2 w-0.5 h-28 bg-foreground -translate-x-1/2 rotate-45 origin-center" />
+                                <div className="absolute top-2 left-1/2 w-0.5 h-28 bg-foreground -translate-x-1/2 -rotate-45 origin-center" />
+                            </div>
+                        </div>
+
+                        {/* Card Footer / Content */}
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <div className="flex items-center gap-2">
+                                <Trophy className="w-5 h-5 text-primary" />
+                                <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Split_Dec</h2>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Sorting efficiency index. Cognitive branch analysis.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    View Leaderboard
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

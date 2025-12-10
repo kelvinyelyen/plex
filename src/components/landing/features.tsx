@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { SudokuAnimation, MemoryAnimation, LeaderboardAnimation, ConundraAnimation } from "@/components/ui/game-animations"
+import { ConundraAnimation, LeaderboardAnimation, MemoryAnimation, SudokuAnimation, PulseAnimation, SplitAnimation } from "@/components/ui/game-animations"
 
 const features = [
     {
@@ -22,6 +22,18 @@ const features = [
         description: "Arithmetic puzzle challenge. Combine numbers to reach the target.",
         href: "/games/conundra",
         animation: <div className="mx-auto mb-4"><ConundraAnimation /></div>
+    },
+    {
+        title: "Pulse Reaction",
+        description: "Cognitive latency test.",
+        href: "/games/pulse-reaction",
+        animation: <div className="mx-auto mb-4"><PulseAnimation /></div>
+    },
+    {
+        title: "Split Decision",
+        description: "Attention-switching challenge.",
+        href: "/games/split-decision",
+        animation: <div className="mx-auto mb-4"><SplitAnimation /></div>
     },
     {
         title: "Leaderboard",
