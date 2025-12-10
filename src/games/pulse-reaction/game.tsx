@@ -2,14 +2,12 @@
 
 import { useState } from "react"
 import { GameStartScreen } from "@/components/game/start-screen"
-import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 import { usePulseGame } from "./use-pulse-game"
-import { cn } from "@/lib/utils"
 import { PulseCompletionDialog } from "./components/completion-dialog"
 
 export function PulseReactionGame() {
-    const { gameState, startGame, resetGame, handleTap } = usePulseGame()
+    const { gameState, startGame, handleTap } = usePulseGame()
     const { phase, round, totalRounds, scores, averageScore } = gameState
     const [hasStarted, setHasStarted] = useState(false)
 

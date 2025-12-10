@@ -23,7 +23,7 @@ interface SplitCompletionDialogProps {
     onClose: () => void
 }
 
-export function SplitCompletionDialog({ open, stats, mode, onPlayAgain, onChangeProtocol, onClose }: SplitCompletionDialogProps) {
+export function SplitCompletionDialog({ open, stats, onPlayAgain, onChangeProtocol, onClose }: SplitCompletionDialogProps) {
     const netScore = Math.max(0, stats.correct - stats.incorrect)
 
     return (
@@ -34,7 +34,7 @@ export function SplitCompletionDialog({ open, stats, mode, onPlayAgain, onChange
                         <Activity className="w-8 h-8" />
                     </div>
                     <div className="space-y-1 text-center">
-                        <DialogTitle className="text-2xl font-bold font-mono uppercase tracking-widest">Time's Up</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold font-mono uppercase tracking-widest">Time&apos;s Up</DialogTitle>
                         <DialogDescription>
                             Sorting protocol complete.
                         </DialogDescription>

@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback, useEffect } from "react"
-import { toast } from "sonner"
 
 export type GamePhase = "IDLE" | "WAITING" | "PULSING" | "RESULT" | "COMPLETE"
 

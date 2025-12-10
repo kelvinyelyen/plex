@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { useSplitDecision, GameMode } from "./use-split-decision"
 import { cn } from "@/lib/utils"
 import { Activity } from "lucide-react"
