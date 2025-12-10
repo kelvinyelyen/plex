@@ -6,7 +6,6 @@ import { MemoryGuide } from "@/components/game/game-guides"
 import { MemoryAnimation } from "@/components/ui/game-animations"
 import { useMemoryGame } from "./use-memory-game"
 import { Grid } from "./components/grid"
-import { GameInfo } from "./components/game-info"
 import { GameOverDialog } from "./components/game-over-dialog"
 
 export function MemoryGame() {
@@ -31,12 +30,31 @@ export function MemoryGame() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center p-4 max-w-2xl mx-auto">
-            <div className="mb-12 text-center space-y-2">
-                <h1 className="text-4xl font-bold">Memory Grid</h1>
+        <div className="flex flex-col items-center justify-center max-w-2xl mx-auto">
+            <div className="w-full text-left mb-6 ">
+                <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Memory Grid</span>
             </div>
 
-            <GameInfo level={level} lives={lives} />
+            {/* Minimal Header */}
+            <div className="w-full flex items-center justify-between border-b pb-4 border-border/50 mb-12">
+                <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Level</span>
+                    <span className="text-2xl font-mono font-bold">{level}</span>
+                </div>
+
+                <div className="flex flex-col items-end">
+                    <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Lives</span>
+                    <div className="flex gap-1">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className={`w-3 h-3 rounded-full transition-all ${i < lives ? "bg-primary" : "bg-muted"
+                                    }`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
 
             <div className="relative w-full flex justify-center min-h-[400px] items-center">
                 <Grid
@@ -49,8 +67,8 @@ export function MemoryGame() {
             </div>
 
             <div className="mt-12 h-8 flex items-center justify-center">
-                <div className="text-xs tracking-widest text-muted-foreground uppercase">
-                    {phase === "SHOWING" && <span className="text-primary">Watching...</span>}
+                <div className="text-sm tracking-widest font-mono uppercase">
+                    {phase === "SHOWING" && <span className="text-primary animate-pulse">Watching Pattern...</span>}
                     {phase === "INPUT" && <span className="text-foreground">Your Turn</span>}
                     {phase === "VICTORY" && <span className="text-green-500">Correct!</span>}
                     {phase === "GAME_OVER" && <span className="text-destructive">Game Over</span>}

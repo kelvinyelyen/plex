@@ -13,17 +13,17 @@ export const metadata: Metadata = {
 export default function LoginPage() {
     return (
         <>
-            <Card className="border-none shadow-none sm:border sm:shadow-sm">
+            <Card className="border-none shadow-none sm:border-border/50 sm:shadow-sm rounded-none w-full max-w-[350px]">
                 <CardContent>
                     <Suspense fallback={<div>Loading...</div>}>
                         <UserAuthForm mode="login" />
                     </Suspense>
                 </CardContent>
                 <CardFooter>
-                    <p className="text-center text-sm text-muted-foreground w-full">
+                    <p className="text-center text-xs text-muted-foreground w-full">
                         <Link
                             href="/register"
-                            className="hover:text-primary underline underline-offset-4"
+                            className="hover:text-primary transition-colors"
                         >
                             Don&apos;t have an account? Sign Up
                         </Link>

@@ -29,17 +29,39 @@ export async function POST(req: Request) {
             }
         })
 
-        await prisma.score.create({
-            data: {
+        // Check for existing score
+        const existingScore = await prisma.score.findFirst({
+            where: {
                 userId: session.user.id,
                 gameId: game.id,
-                score: score, // Time in seconds
-                difficulty,
-                // Metadata is not in schema, so we can't save moves unless we add it to schema or ignore it.
-                // The schema showed: score Int, difficulty String. No metadata.
-                // We'll just save score and difficulty for now.
-            },
+                difficulty: difficulty
+            }
         })
+
+        if (existingScore) {
+            // Only update if new score is lower (better)
+            if (score < existingScore.score) {
+                await prisma.score.update({
+                    where: { id: existingScore.id },
+                    data: {
+                        score: score,
+                        // We could also update moves if we were storing them, but schema limits us.
+                        createdAt: new Date() // Update timestamp
+                    }
+                })
+            }
+            // If new score is not better, do nothing (or return success without update)
+        } else {
+            // Create new score
+            await prisma.score.create({
+                data: {
+                    userId: session.user.id,
+                    gameId: game.id,
+                    score: score, // Time in seconds
+                    difficulty,
+                },
+            })
+        }
 
         return new Response("OK")
     } catch (error) {

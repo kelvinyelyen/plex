@@ -11,23 +11,24 @@ export function Hero() {
 
             {/* Left Panel - Content */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 z-10">
-                <div className="flex flex-col items-start gap-4 max-w-xl">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-left">
-                        Calibrate Your Mind
+                <div className="flex flex-col items-start gap-6 max-w-xl">
+                    <h1 className="text-4xl font-mono font-bold uppercase tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-left">
+                        Calibrate
+                        <br />
+                        Your Mind
                     </h1>
-                    <p className="leading-normal text-muted-foreground sm:text-xl sm:leading-8 text-left">
+                    <p className="leading-relaxed text-muted-foreground sm:text-lg sm:leading-6 text-left">
                         Enhance cognitive latency and pattern recognition through structured competitive frameworks.
-                        Simple, clean, and effective.
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 pt-4">
                         <Link href="/games">
-                            <Button size="lg">
+                            <Button size="lg" className="rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
                                 Start Playing
                             </Button>
                         </Link>
                         <Link href="/leaderboard">
-                            <Button variant="outline" size="lg">
-                                View Leaderboard
+                            <Button variant="outline" size="lg" className="rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
+                                View Data
                             </Button>
                         </Link>
                     </div>

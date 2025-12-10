@@ -7,9 +7,9 @@ export default function LeaderboardIndexPage() {
         <div className="min-h-screen bg-background py-16 px-8 md:px-16">
             <div className="max-w-7xl mx-auto space-y-12">
                 <div className="flex items-end justify-between border-b pb-8">
-                    <div className="space-y-2">
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">Archives</h1>
-                        <p className="text-muted-foreground max-w-md">
+                    <div className="space-y-4">
+                        <h1 className="text-4xl md:text-6xl font-mono font-bold uppercase tracking-tight">Archives</h1>
+                        <p className="text-muted-foreground max-w-md text-lg leading-relaxed">
                             Review global performance metrics and rankings.
                         </p>
                     </div>
@@ -17,10 +17,10 @@ export default function LeaderboardIndexPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Sudoku Archive Card */}
-                    <Link href="/leaderboard/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/leaderboard/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Ranking
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -46,13 +46,13 @@ export default function LeaderboardIndexPage() {
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
                             <div className="flex items-center gap-2">
                                 <Trophy className="w-5 h-5 text-primary" />
-                                <h2 className="text-3xl font-bold">Sudoku</h2>
+                                <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Sudoku</h2>
                             </div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Global performance index for Sudoku. Top percentile analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -60,10 +60,10 @@ export default function LeaderboardIndexPage() {
                     </Link>
 
                     {/* Memory Grid Archive Card */}
-                    <Link href="/leaderboard/memory-grid" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/leaderboard/memory-grid" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Ranking
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -89,13 +89,13 @@ export default function LeaderboardIndexPage() {
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
                             <div className="flex items-center gap-2">
                                 <Trophy className="w-5 h-5 text-primary" />
-                                <h2 className="text-3xl font-bold">Memory Grid</h2>
+                                <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Memory Grid</h2>
                             </div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Retention capacity metrics. Level progression analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -103,10 +103,10 @@ export default function LeaderboardIndexPage() {
                     </Link>
 
                     {/* Conundra Archive Card */}
-                    <Link href="/leaderboard/conundra" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/leaderboard/conundra" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Ranking
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -132,13 +132,13 @@ export default function LeaderboardIndexPage() {
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
                             <div className="flex items-center gap-2">
                                 <Trophy className="w-5 h-5 text-primary" />
-                                <h2 className="text-3xl font-bold">Conundra</h2>
+                                <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Conundra</h2>
                             </div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Arithmetic efficiency ratings. Solution speed analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     View Leaderboard
                                 </Button>
                             </div>

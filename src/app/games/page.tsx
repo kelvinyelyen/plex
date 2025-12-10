@@ -7,9 +7,9 @@ export default function GamesPage() {
         <div className="min-h-screen bg-background py-16 px-8 md:px-16">
             <div className="max-w-7xl mx-auto space-y-12">
                 <div className="flex items-end justify-between border-b pb-8">
-                    <div className="space-y-2">
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">Games</h1>
-                        <p className="text-muted-foreground max-w-md">
+                    <div className="space-y-4">
+                        <h1 className="text-4xl md:text-6xl font-mono font-bold uppercase tracking-tight">Games</h1>
+                        <p className="text-muted-foreground max-w-md text-lg leading-relaxed">
                             Choose a game to begin training.
                         </p>
                     </div>
@@ -17,10 +17,10 @@ export default function GamesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Sudoku Module Card */}
-                    <Link href="/games/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/games/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Logic
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -32,7 +32,7 @@ export default function GamesPage() {
                                 {[...Array(9)].map((_, i) => (
                                     <div
                                         key={i}
-                                        className="bg-foreground w-full h-full rounded-sm"
+                                        className="bg-foreground w-full h-full"
                                         style={{ opacity: Math.random() * 0.5 + 0.2 }}
                                     />
                                 ))}
@@ -41,12 +41,12 @@ export default function GamesPage() {
 
                         {/* Card Footer / Content */}
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-bold">Sudoku</h2>
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Sudoku</h2>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Classic numerical placement puzzle. Optimizes pattern recognition and logical deduction.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     Play Now
                                 </Button>
                             </div>
@@ -54,10 +54,10 @@ export default function GamesPage() {
                     </Link>
 
                     {/* Memory Grid Module Card */}
-                    <Link href="/games/memory-grid" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/games/memory-grid" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Memory
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -69,7 +69,7 @@ export default function GamesPage() {
                                 {[...Array(16)].map((_, i) => (
                                     <div
                                         key={i}
-                                        className="bg-foreground w-full h-full rounded-sm"
+                                        className="bg-foreground w-full h-full"
                                         style={{ opacity: Math.random() * 0.5 + 0.2 }}
                                     />
                                 ))}
@@ -78,12 +78,12 @@ export default function GamesPage() {
 
                         {/* Card Footer / Content */}
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-bold">Memory Grid</h2>
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Memory Grid</h2>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Visual pattern retention game. Enhances short-term memory and spatial recall.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     Play Now
                                 </Button>
                             </div>
@@ -91,10 +91,10 @@ export default function GamesPage() {
                     </Link>
 
                     {/* Conundra Module Card */}
-                    <Link href="/games/conundra" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden rounded-lg">
+                    <Link href="/games/conundra" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
                         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
                                 Math
                             </div>
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -111,12 +111,12 @@ export default function GamesPage() {
 
                         {/* Card Footer / Content */}
                         <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-bold">Conundra</h2>
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Conundra</h2>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 Arithmetic puzzle challenge. Combine numbers to reach the target.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
                                     Play Now
                                 </Button>
                             </div>

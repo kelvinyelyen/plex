@@ -20,6 +20,7 @@ import { toast } from "sonner"
 import { generateTarget } from "./generator"
 import { Difficulty, GameState } from "./types"
 import { CompletionDialog } from "./components/completion-dialog"
+import { cn } from "@/lib/utils"
 
 export function ConundraGame() {
     const [difficulty, setDifficulty] = useState<Difficulty>("Medium")
@@ -172,7 +173,7 @@ export function ConundraGame() {
     }
 
     return (
-        <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4">
+        <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto gap-8">
             <CompletionDialog
                 open={isComplete}
                 time={timer}
@@ -183,72 +184,66 @@ export function ConundraGame() {
                 onQuit={() => setHasStarted(false)}
             />
 
-            <div className="mb-8 text-center space-y-2">
-                <h1 className="text-4xl font-bold">Conundra</h1>
-                <p className="text-muted-foreground">Combine numbers to reach the target.</p>
+            <div className="w-full text-left">
+                <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Conundra</span>
             </div>
 
-            {/* Toolbar */}
-            <div className="w-full border rounded-lg bg-background px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-                <div className="flex items-center gap-8">
-                    <div className="flex flex-col">
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Difficulty</span>
-                        <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="w-[120px] h-8 border-none shadow-none p-0 text-lg font-bold focus:ring-0 bg-transparent hover:bg-transparent justify-between">
-                                    {difficulty}
-                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => startNewGame("Easy")}>Easy</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Medium")}>Medium</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Hard")}>Hard</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Expert")}>Expert</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                    <div className="h-8 w-px bg-border hidden md:block" />
-                    <div className="flex flex-col">
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Timer</span>
-                        <span className="text-lg font-medium">{formatTime(timer)}</span>
-                    </div>
+            {/* Minimal Header */}
+            <div className="w-full flex items-center justify-between border-b pb-4 border-border/50">
+                <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="font-mono text-sm hover:bg-transparent px-0 h-auto py-0">
+                            {difficulty} <ChevronDown className="ml-1 h-3 w-3 opacity-50" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                        <DropdownMenuItem onClick={() => startNewGame("Easy")}>Easy</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Medium")}>Medium</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Hard")}>Hard</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Expert")}>Expert</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
+                <div className="font-mono text-xl tabular-nums tracking-wider">
+                    {formatTime(timer)}
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={handleUndo} disabled={gameState.history.length <= 1}>
-                        <RotateCcw className="w-4 h-4 mr-2" /> Undo
+                    <Button variant="ghost" size="sm" onClick={handleUndo} disabled={gameState.history.length <= 1} className="font-mono text-xs uppercase">
+                        Undo
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => startNewGame(difficulty)}>
-                        <RefreshCw className="w-4 h-4 mr-2" /> Restart
+                    <div className="h-4 w-px bg-border/50" />
+                    <Button variant="ghost" size="sm" onClick={() => startNewGame(difficulty)} className="font-mono text-xs uppercase">
+                        Restart
                     </Button>
                 </div>
             </div>
 
             {/* Game Area */}
-            <div className="w-full grid md:grid-cols-2 gap-8">
+            <div className="w-full grid md:grid-cols-2 gap-12 items-start">
                 {/* Target & Numbers */}
                 <div className="space-y-8">
-                    <Card className="p-8 flex flex-col items-center justify-center bg-primary/5 border-primary/20">
-                        <span className="text-sm text-muted-foreground uppercase tracking-widest mb-2">Target</span>
-                        <span className="text-6xl font-bold text-primary">{gameState.target}</span>
-                    </Card>
+                    <div className="p-8 flex flex-col items-center justify-center border rounded-xl bg-muted/20">
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-2 font-mono">Target</span>
+                        <span className="text-6xl font-mono font-bold tracking-tighter">{gameState.target}</span>
+                    </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 min-h-[20rem] sm:min-h-[13rem]">
-                        <AnimatePresence>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-[20rem] sm:h-[13rem] content-start">
+                        <AnimatePresence mode="popLayout">
                             {gameState.numbers.map((num, idx) => (
                                 <motion.button
+                                    layout
                                     key={`${idx}-${num}`}
                                     initial={{ scale: 0.8, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0.8, opacity: 0 }}
                                     onClick={() => handleNumberSelect(idx)}
-                                    className={`
-                                        h-24 rounded-xl text-3xl font-bold transition-all border
-                                        ${selectedIndices.includes(idx)
-                                            ? "bg-primary text-primary-foreground shadow-lg scale-105 ring-2 ring-primary ring-offset-2 border-primary"
-                                            : "bg-card hover:bg-accent border-input shadow-sm"}
-                                    `}
+                                    className={cn(
+                                        "h-24 rounded-lg text-3xl font-mono font-bold transition-all border",
+                                        selectedIndices.includes(idx)
+                                            ? "bg-primary text-primary-foreground border-primary"
+                                            : "bg-background hover:bg-muted border-border"
+                                    )}
                                 >
                                     {num}
                                 </motion.button>
@@ -258,13 +253,13 @@ export function ConundraGame() {
                 </div>
 
                 {/* Operators */}
-                <div className="flex flex-col justify-start gap-4">
-                    <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col justify-start gap-6">
+                    <div className="grid grid-cols-2 gap-3">
                         {["+", "-", "*", "/"].map((op) => (
                             <Button
                                 key={op}
                                 variant="outline"
-                                className="h-20 text-3xl"
+                                className="h-24 text-4xl font-mono hover:bg-muted/50 transition-colors"
                                 disabled={selectedIndices.length !== 2}
                                 onClick={() => applyOperation(op)}
                             >
@@ -272,8 +267,8 @@ export function ConundraGame() {
                             </Button>
                         ))}
                     </div>
-                    <div className="text-center text-sm text-muted-foreground mt-4">
-                        Select two numbers, then an operator.
+                    <div className="text-center text-xs text-muted-foreground font-mono uppercase tracking-widest">
+                        {selectedIndices.length === 0 ? "Select 1st Number" : selectedIndices.length === 1 ? "Select 2nd Number" : "Select Operator"}
                     </div>
                 </div>
             </div>

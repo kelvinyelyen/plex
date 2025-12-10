@@ -31,42 +31,42 @@ export function GameStartScreen({
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[60vh] w-full max-w-2xl mx-auto p-4 text-center space-y-8">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] w-full max-w-2xl mx-auto p-4 text-center space-y-12">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="space-y-6"
+                className="space-y-8"
             >
                 <div className="flex justify-center">
-                    <div className="p-6 rounded-2xl bg-primary/5 ring-1 ring-primary/20">
-                        {icon || <Trophy className="w-16 h-16 text-primary" />}
+                    <div className="p-4">
+                        {icon || <Trophy className="w-12 h-12 text-foreground" />}
                     </div>
                 </div>
 
-                <div className="space-y-2">
-                    <h1 className="text-4xl font-bold tracking-tight">{title}</h1>
-                    <p className="text-xl text-muted-foreground max-w-lg mx-auto">
+                <div className="space-y-4">
+                    <h1 className="text-3xl font-mono font-bold uppercase tracking-[0.2em]">{title}</h1>
+                    <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
                         {description}
                     </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                    <Button size="lg" className="w-full sm:w-auto text-lg px-8 h-12 gap-2" onClick={onStart}>
-                        <Play className="w-5 h-5" />
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
+                    <Button size="lg" className="w-full sm:w-auto font-mono uppercase text-xs tracking-wider h-12 px-8 rounded-none border border-primary bg-primary text-primary-foreground hover:bg-primary/90" onClick={onStart}>
+                        <Play className="w-4 h-4 mr-2" />
                         Start Game
                     </Button>
 
                     <Dialog open={isOpen} onOpenChange={setIsOpen} modal={false}>
                         <DialogTrigger asChild>
-                            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 h-12 gap-2">
-                                <HelpCircle className="w-5 h-5" />
+                            <Button variant="outline" size="lg" className="w-full sm:w-auto font-mono uppercase text-xs tracking-wider h-12 px-8 rounded-none border-border hover:bg-accent">
+                                <HelpCircle className="w-4 h-4 mr-2" />
                                 How to Play
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[500px] max-h-[60vh] overflow-y-auto">
+                        <DialogContent className="sm:max-w-[500px] max-h-[60vh] overflow-y-auto rounded-none border-border">
                             <DialogHeader>
-                                <DialogTitle>How to Play {title}</DialogTitle>
+                                <DialogTitle className="font-mono uppercase tracking-widest text-lg">How to Play {title}</DialogTitle>
                                 <DialogDescription>
                                     Follow these instructions to master the game.
                                 </DialogDescription>
@@ -75,7 +75,7 @@ export function GameStartScreen({
                                 {instructions}
                             </div>
                             <div className="flex justify-end">
-                                <Button onClick={() => setIsOpen(false)}>Got it</Button>
+                                <Button className="font-mono uppercase text-xs tracking-wider rounded-none" onClick={() => setIsOpen(false)}>Got it</Button>
                             </div>
                         </DialogContent>
                     </Dialog>

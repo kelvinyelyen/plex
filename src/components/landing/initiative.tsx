@@ -4,8 +4,8 @@ export function Initiative() {
     return (
         <section className="container py-12 md:py-16">
             <div className="flex flex-col items-center justify-center gap-8 text-center">
-                <p className="text-sm text-muted-foreground uppercase tracking-widest">
-                    An initiative of
+                <p className="text-xs text-muted-foreground uppercase tracking-[0.2em]">
+                    AN INITIATIVE OF
                 </p>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 w-full max-w-5xl mx-auto">
                     {/* Logo 1 - Academic City University */}

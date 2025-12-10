@@ -112,66 +112,69 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid gap-2">
                     {mode === "register" && (
-                        <div className="grid gap-1">
-                            <Label className="sr-only" htmlFor="username">
+                        <div className="grid gap-1 space-y-2 mb-2">
+                            <Label className="font-mono text-xs uppercase tracking-wider text-muted-foreground" htmlFor="username">
                                 Username
                             </Label>
                             <Input
                                 id="username"
-                                placeholder="Username"
+                                placeholder="USERNAME"
                                 type="text"
                                 autoCapitalize="none"
                                 autoCorrect="off"
                                 disabled={isLoading || isGoogleLoading}
+                                className="rounded-none font-mono placeholder:text-muted-foreground/50"
                                 {...register("username")}
                             />
                             {errors?.username && (
-                                <p className="px-1 text-xs text-red-600">
+                                <p className="px-1 text-xs text-red-600 font-mono">
                                     {errors.username.message}
                                 </p>
                             )}
                         </div>
                     )}
-                    <div className="grid gap-1">
-                        <Label className="sr-only" htmlFor="email">
+                    <div className="grid gap-1 space-y-2 mb-2">
+                        <Label className="font-mono text-xs uppercase tracking-wider text-muted-foreground" htmlFor="email">
                             Email
                         </Label>
                         <Input
                             id="email"
-                            placeholder="name@example.com"
+                            placeholder="NAME@EXAMPLE.COM"
                             type="email"
                             autoCapitalize="none"
                             autoComplete="email"
                             autoCorrect="off"
                             disabled={isLoading || isGoogleLoading}
+                            className="rounded-none font-mono placeholder:text-muted-foreground/50"
                             {...register("email")}
                         />
                         {errors?.email && (
-                            <p className="px-1 text-xs text-red-600">
+                            <p className="px-1 text-xs text-red-600 font-mono">
                                 {errors.email.message}
                             </p>
                         )}
                     </div>
-                    <div className="grid gap-1">
-                        <Label className="sr-only" htmlFor="password">
+                    <div className="grid gap-1 space-y-2 mb-4">
+                        <Label className="font-mono text-xs uppercase tracking-wider text-muted-foreground" htmlFor="password">
                             Password
                         </Label>
                         <Input
                             id="password"
-                            placeholder="Password"
+                            placeholder="PASSWORD"
                             type="password"
                             autoCapitalize="none"
                             autoCorrect="off"
                             disabled={isLoading || isGoogleLoading}
+                            className="rounded-none font-mono placeholder:text-muted-foreground/50"
                             {...register("password")}
                         />
                         {errors?.password && (
-                            <p className="px-1 text-xs text-red-600">
+                            <p className="px-1 text-xs text-red-600 font-mono">
                                 {errors.password.message}
                             </p>
                         )}
                     </div>
-                    <Button disabled={isLoading}>
+                    <Button disabled={isLoading} className="rounded-none font-mono uppercase tracking-wider text-xs h-10">
                         {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )}
@@ -181,10 +184,10 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
             </form>
             <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
+                    <span className="w-full border-t border-border/50" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
+                    <span className="bg-background px-2 text-muted-foreground font-mono text-[10px] tracking-widest">
                         Or continue with
                     </span>
                 </div>
@@ -197,6 +200,7 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
                     setIsGoogleLoading(true)
                     signIn("google")
                 }}
+                className="rounded-none font-mono uppercase tracking-wider text-xs h-10"
             >
                 {isGoogleLoading ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

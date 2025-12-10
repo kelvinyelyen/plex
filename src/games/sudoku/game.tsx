@@ -261,7 +261,7 @@ export function SudokuGame() {
     }
 
     return (
-        <div className="flex flex-col items-center w-full max-w-5xl mx-auto min-h-screen p-4">
+        <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto gap-8">
             <CompletionDialog
                 open={isComplete}
                 time={timer}
@@ -278,73 +278,38 @@ export function SudokuGame() {
                 onQuit={() => setHasStarted(false)}
             />
 
-            <div className="mb-8 text-center space-y-2">
-                <h1 className="text-4xl font-bold">Sudoku</h1>
+            <div className="w-full max-w-4xl text-left">
+                <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Sudoku</span>
             </div>
 
-            {/* Toolbar */}
-            <div className="w-full max-w-4xl border rounded-lg bg-background px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-                <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-start">
-                    <div className="flex flex-col">
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Difficulty</span>
-                        <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="w-[120px] h-8 border-none shadow-none p-0 text-lg font-bold focus:ring-0 bg-transparent hover:bg-transparent justify-between">
-                                    {difficulty}
-                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => startNewGame("Easy")}>Easy</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Medium")}>Medium</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Hard")}>Hard</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => startNewGame("Expert")}>Expert</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+            {/* Minimal Header */}
+            <div className="w-full max-w-4xl flex items-center justify-between border-b pb-4 border-border/50">
+                <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="font-mono text-sm hover:bg-transparent px-0 h-auto py-0">
+                            {difficulty} <ChevronDown className="ml-1 h-3 w-3 opacity-50" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                        <DropdownMenuItem onClick={() => startNewGame("Easy")}>Easy</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Medium")}>Medium</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Hard")}>Hard</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => startNewGame("Expert")}>Expert</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
 
-                    <div className="h-8 w-px bg-border hidden md:block" />
-
-                    <div className="flex flex-col">
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Timer</span>
-                        <span className="text-lg font-medium">{formatTime(timer)}</span>
-                    </div>
-
-                    <div className="h-8 w-px bg-border hidden md:block" />
-
-                    <div className="flex flex-col">
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Mistakes</span>
-                        <div className="flex items-center gap-1 h-7">
-                            <span className={cn("text-lg font-medium", mistakes >= 3 ? "text-destructive" : "")}>
-                                {mistakes}/3
-                            </span>
-                        </div>
-                    </div>
+                <div className="font-mono text-xl tabular-nums tracking-wider">
+                    {formatTime(timer)}
                 </div>
 
-                <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                    <Button variant="outline" size="sm" onClick={handleUndo} disabled={history.length === 0}>
-                        Undo
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={handleDelete}>
-                        Clear
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={handleHint}
-                        disabled={hintsUsed >= 3}
-                        title="Reveal Hint"
-                    >
-                        <Lightbulb className="h-4 w-4" />
-                    </Button>
-                    <div className="h-4 w-px bg-border mx-2" />
+                <div className={cn("font-mono text-sm", mistakes >= 3 ? "text-destructive" : "text-muted-foreground")}>
+                    Err: {mistakes}/3
                 </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row justify-center items-start gap-8 lg:gap-16 w-full max-w-6xl">
+            <div className="flex flex-col md:flex-row items-start justify-center gap-12 w-full">
                 {/* Board */}
-                <div className="w-full max-w-xl mx-auto lg:mx-0">
+                <div className="w-full max-w-xl">
                     <Board
                         board={board}
                         selectedCell={selectedCell}
@@ -352,25 +317,36 @@ export function SudokuGame() {
                     />
                 </div>
 
-                {/* Controls */}
-                <div className="w-full max-w-sm mx-auto lg:mx-0 flex flex-col gap-8 pt-4">
-                    <div className="bg-card border rounded-xl p-6">
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-lg">Controls</h3>
-                            <div className="text-xs text-muted-foreground uppercase tracking-widest">
-                                Mode: {isNoteMode ? "Notes" : "Normal"}
-                            </div>
-                        </div>
+                {/* Controls Side */}
+                <div className="w-full max-w-[280px] flex flex-col gap-8 self-center md:self-start md:pt-4">
+                    <Controls
+                        onNumberClick={handleNumberClick}
+                        onNoteToggle={() => setIsNoteMode(!isNoteMode)}
+                        isNoteMode={isNoteMode}
+                    />
 
-                        <Controls
-                            onNumberClick={handleNumberClick}
-                            onNoteToggle={() => setIsNoteMode(!isNoteMode)}
-                            isNoteMode={isNoteMode}
-                        />
+                    <div className="flex justify-between gap-2">
+                        <Button variant="ghost" size="sm" onClick={handleUndo} disabled={history.length === 0} className="flex-1 font-mono text-xs uppercase tracking-wider">
+                            Undo
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={handleDelete} className="flex-1 font-mono text-xs uppercase tracking-wider">
+                            Clear
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleHint}
+                            disabled={hintsUsed >= 3}
+                            className="flex-1 font-mono text-xs uppercase tracking-wider"
+                        >
+                            Hint
+                        </Button>
                     </div>
 
+                    <div className="h-px bg-border/50 w-full my-2" />
+
                     <Button
-                        className="w-full h-12"
+                        className="w-full"
                         variant="outline"
                         onClick={() => startNewGame(difficulty)}
                     >
