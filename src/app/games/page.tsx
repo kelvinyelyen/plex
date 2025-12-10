@@ -4,8 +4,8 @@ import { ArrowUpRight } from "lucide-react"
 
 export default function GamesPage() {
     return (
-        <div className="min-h-screen bg-background py-16 px-8 md:px-16">
-            <div className="max-w-7xl mx-auto space-y-12">
+        <div className="container min-h-screen bg-background py-16">
+            <div className="space-y-12">
                 <div className="flex items-end justify-between border-b pb-8">
                     <div className="space-y-4">
                         <h1 className="text-4xl md:text-6xl font-mono font-bold uppercase tracking-tight">Games</h1>
