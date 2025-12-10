@@ -59,8 +59,8 @@ export default async function LeaderboardPage({ params, searchParams }: { params
     }
 
     return (
-        <div className="min-h-screen bg-background py-16 px-8 md:px-16">
-            <div className="max-w-7xl mx-auto space-y-12">
+        <div className="container min-h-screen bg-background py-16">
+            <div className="space-y-12">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between border-b pb-8 gap-8">
                     <div className="space-y-4">
@@ -104,7 +104,7 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                     {difficulties.length > 0 ? "Difficulty" : ""}
                                 </TableHead>
                                 <TableHead className="text-right uppercase tracking-wider text-muted-foreground font-mono text-xs">
-                                    {isTimeBased ? "Time" : "Level"}
+                                    {isTimeBased ? (params.slug === "pulse-reaction" ? "Reaction Time" : "Time") : "Level"}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -134,9 +134,11 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                             {difficulties.length > 0 ? score.difficulty : ""}
                                         </TableCell>
                                         <TableCell className="text-right text-sm font-bold font-mono">
-                                            {isTimeBased
-                                                ? `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
-                                                : score.score
+                                            {params.slug === "pulse-reaction"
+                                                ? `${(score.score / 1000).toFixed(3)}s`
+                                                : isTimeBased
+                                                    ? `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
+                                                    : score.score
                                             }
                                         </TableCell>
                                     </TableRow>
