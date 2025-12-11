@@ -60,8 +60,8 @@ export default function AuthLayout({
     return (
         <div className="my-32 flex flex-col items-center justify-center relative bg-background overflow-hidden">
             <SquarePatternBackground />
-            <div className="container relative z-10 flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-1 lg:px-0">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="container relative z-10 flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-1 lg:px-0">
+                <div className="mx-auto flex w-full flex-col justify-center items-center space-y-6 sm:w-[350px]">
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
                             Welcome to Plex

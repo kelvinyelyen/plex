@@ -146,19 +146,24 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                         </TableCell>
                                         <TableCell className="text-right text-sm font-bold font-mono">
                                             {isTimeBased ? (() => {
-                                                // Sudoku stores in seconds
-                                                if (params.slug === "sudoku") {
-                                                    return `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
+                                                // Sudoku stores in seconds, others in ms
+                                                let msValue = score.score
+                                                if (params.slug === "sudoku" || params.slug === "conundra") {
+                                                    msValue = score.score * 1000
                                                 }
-                                                // Schulte and others in ms (now including Pulse)
-                                                // Schulte: mm:ss.SS
 
-                                                const totalSeconds = Math.floor(score.score / 1000)
-                                                const mins = Math.floor(totalSeconds / 60)
-                                                const secs = totalSeconds % 60
-                                                const ms = Math.floor((score.score % 1000) / 10) // show 2 digits for ms
+                                                // Special case for Pulse Reaction which needs precision
+                                                if (params.slug === "pulse-reaction") {
+                                                    return `${msValue}ms`
+                                                }
 
-                                                return `${mins}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`
+                                                const minutes = Math.floor(msValue / 60000)
+                                                const seconds = Math.floor((msValue % 60000) / 1000)
+
+                                                if (minutes > 0) {
+                                                    return `${minutes}min ${seconds}s`
+                                                }
+                                                return `${seconds}s`
                                             })() : score.score}
                                         </TableCell>
                                     </TableRow>
