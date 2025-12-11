@@ -111,7 +111,7 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                     {difficulties.length > 0 ? "Difficulty" : ""}
                                 </TableHead>
                                 <TableHead className="text-right uppercase tracking-wider text-muted-foreground font-mono text-xs">
-                                    {isTimeBased ? (params.slug === "pulse-reaction" ? "Reaction Time" : "Time") : "Level"}
+                                    {isTimeBased ? (params.slug === "pulse-reaction" ? "Reaction Time" : "Time") : (params.slug === "chimp" ? "Score" : "Level")}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
