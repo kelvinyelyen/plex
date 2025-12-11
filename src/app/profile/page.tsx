@@ -38,7 +38,6 @@ export default async function ProfilePage() {
 
             // Determine best score logic
             const isTimeBased = ["sudoku", "conundra", "pulse-reaction", "schulte"].includes(game.slug)
-            const sortOrder = isTimeBased ? "asc" : "desc"
 
             const bestScoreFn = (a: number, b: number) => isTimeBased ? a - b : b - a
             const bestScoreVal = scoresForDiff.map(s => s.score).sort(bestScoreFn)[0]
