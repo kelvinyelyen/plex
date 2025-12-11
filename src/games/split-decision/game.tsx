@@ -125,7 +125,7 @@ export function SplitDecisionGame() {
                                 drag="x"
                                 dragConstraints={{ left: 0, right: 0 }}
                                 dragElastic={0.2}
-                                onDragEnd={(e, { offset, velocity }) => {
+                                onDragEnd={(e, { offset }) => {
                                     const swipe = offset.x
                                     if (swipe < -100) handleAction("left")
                                     else if (swipe > 100) handleAction("right")

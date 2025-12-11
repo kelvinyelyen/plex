@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Grid3X3, RotateCcw, Home, Trophy, Settings2 } from "lucide-react"
+import { Grid3X3, RotateCcw, Home, Trophy } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -221,7 +221,7 @@ export function SchulteGame() {
                     instructions={<div className="space-y-2 text-sm text-muted-foreground">
                         <p>Grid stops at 25.</p>
                         <p>Use peripheral vision.</p>
-                        <p>Don't scan with eyes, stare at center.</p>
+                        <p>Don&apos;t scan with eyes, stare at center.</p>
                     </div>}
                     icon={<Grid3X3 className="w-16 h-16 text-primary" />}
                 />

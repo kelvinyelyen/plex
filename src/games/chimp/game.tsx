@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
@@ -22,13 +22,11 @@ export function ChimpGame() {
     const [lives, setLives] = useState(3)
     const [cells, setCells] = useState<CellData[]>([])
     const [nextExpected, setNextExpected] = useState(1)
-    const [isHiddenMode, setIsHiddenMode] = useState(false)
     const [score, setScore] = useState(0)
 
     const startLevel = useCallback((lvl: number) => {
         const count = 4 + lvl // Level 1 = 5 nums, Level 2 = 6...
         const newCells: CellData[] = []
-        const positions: { x: number, y: number }[] = []
 
         // Generate positions avoiding overlap
         // Simple grid bucket approach? Or random with dist check?
@@ -59,7 +57,6 @@ export function ChimpGame() {
 
         setCells(newCells)
         setNextExpected(1)
-        setIsHiddenMode(false)
     }, [])
 
     const startGame = () => {
@@ -77,7 +74,6 @@ export function ChimpGame() {
             // Correct
             if (cell.num === 1) {
                 // First click -> HIDE ALL others
-                setIsHiddenMode(true)
                 setCells(prev => prev.map(c => c.num === 1 ? { ...c, state: "solved" } : { ...c, state: "hidden" }))
             } else {
                 setCells(prev => prev.map(c => c.id === cell.id ? { ...c, state: "solved" } : c))
