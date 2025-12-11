@@ -48,7 +48,7 @@ export function MemoryGame() {
                         {Array.from({ length: 5 }).map((_, i) => (
                             <div
                                 key={i}
-                                className={`w-3 h-3 rounded-full transition-all ${i < lives ? "bg-primary" : "bg-muted"
+                                className={`w-3 h-3 rounded-none transition-all ${i < lives ? "bg-primary" : "bg-muted"
                                     }`}
                             />
                         ))}

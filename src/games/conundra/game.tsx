@@ -190,7 +190,7 @@ export function ConundraGame() {
             <div className="w-full flex items-center justify-between border-b pb-4 border-border/50">
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="font-mono text-sm hover:bg-transparent px-0 h-auto py-0">
+                        <Button variant="ghost" className="font-mono text-sm hover:bg-transparent px-0 h-auto py-0 rounded-none">
                             {difficulty} <ChevronDown className="ml-1 h-3 w-3 opacity-50" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -202,16 +202,16 @@ export function ConundraGame() {
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <div className="font-mono text-xl tabular-nums tracking-wider">
+                <div className="font-mono text-sm tabular-nums tracking-wider">
                     {formatTime(timer)}
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" onClick={handleUndo} disabled={gameState.history.length <= 1} className="font-mono text-xs uppercase">
+                    <Button variant="ghost" size="sm" onClick={handleUndo} disabled={gameState.history.length <= 1} className="font-mono text-xs uppercase rounded-none">
                         Undo
                     </Button>
                     <div className="h-4 w-px bg-border/50" />
-                    <Button variant="ghost" size="sm" onClick={() => startNewGame(difficulty)} className="font-mono text-xs uppercase">
+                    <Button variant="ghost" size="sm" onClick={() => startNewGame(difficulty)} className="font-mono text-xs uppercase rounded-none">
                         Restart
                     </Button>
                 </div>
@@ -221,12 +221,12 @@ export function ConundraGame() {
             <div className="w-full grid md:grid-cols-2 gap-12 items-start">
                 {/* Target & Numbers */}
                 <div className="space-y-8">
-                    <div className="p-8 flex flex-col items-center justify-center border rounded-xl bg-muted/20">
+                    <div className="p-4 md:p-8 flex flex-col items-center justify-center border rounded-none bg-muted/20">
                         <span className="text-xs text-muted-foreground uppercase tracking-widest mb-2 font-mono">Target</span>
                         <span className="text-6xl font-mono font-bold tracking-tighter">{gameState.target}</span>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-[20rem] sm:h-[13rem] content-start">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-[14rem] content-start">
                         <AnimatePresence mode="popLayout">
                             {gameState.numbers.map((num, idx) => (
                                 <motion.button
@@ -237,7 +237,7 @@ export function ConundraGame() {
                                     exit={{ scale: 0.8, opacity: 0 }}
                                     onClick={() => handleNumberSelect(idx)}
                                     className={cn(
-                                        "h-24 rounded-lg text-3xl font-mono font-bold transition-all border",
+                                        "h-16 md:h-24 rounded-none text-3xl font-mono font-bold transition-all border",
                                         selectedIndices.includes(idx)
                                             ? "bg-primary text-primary-foreground border-primary"
                                             : "bg-background hover:bg-muted border-border"
@@ -257,7 +257,7 @@ export function ConundraGame() {
                             <Button
                                 key={op}
                                 variant="outline"
-                                className="h-24 text-4xl font-mono hover:bg-muted/50 transition-colors"
+                                className="h-16 md:h-24 text-4xl font-mono hover:bg-muted/50 transition-colors rounded-none"
                                 disabled={selectedIndices.length !== 2}
                                 onClick={() => applyOperation(op)}
                             >

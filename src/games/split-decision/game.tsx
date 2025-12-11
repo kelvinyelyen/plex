@@ -60,7 +60,7 @@ export function SplitDecisionGame() {
                         <div
                             key={m.id}
                             onClick={() => startGame(m.id)}
-                            className="group cursor-pointer border border-border/50 hover:border-primary/50 bg-card p-6 flex flex-col items-center justify-center transition-all hover:scale-[1.02]"
+                            className="group cursor-pointer border border-border/50 hover:border-primary/50 bg-card p-6 flex flex-col items-center justify-center transition-all hover:scale-[1.02] rounded-none"
                         >
                             <span className="text-lg font-mono font-bold uppercase tracking-widest group-hover:text-primary transition-colors">{m.label}</span>
                             <span className="text-xs text-muted-foreground mt-2">{m.desc}</span>
@@ -90,7 +90,7 @@ export function SplitDecisionGame() {
 
                 <div className="flex flex-col items-center">
                     <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Time</span>
-                    <span className={cn("text-3xl font-mono font-bold tabular-nums", timeLeft < 10 && "text-red-500 animate-pulse")}>
+                    <span className={cn("text-sm font-mono tabular-nums", timeLeft < 10 && "text-red-500 animate-pulse")}>
                         {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
                     </span>
                 </div>
@@ -104,37 +104,50 @@ export function SplitDecisionGame() {
             <div className="relative w-full flex-1 flex flex-col items-center justify-center">
                 {/* Rules Overlay Indicators (Background) */}
                 {/* Minimal Side Indicators */}
-                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-8 md:px-24 pointer-events-none z-0">
-                    <div className="flex flex-col items-center gap-2 opacity-30">
-                        <span className="text-4xl">←</span>
-                        <span className="text-xs font-mono font-bold uppercase tracking-widest">{config.leftLabel}</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-2 opacity-30">
-                        <span className="text-4xl">→</span>
-                        <span className="text-xs font-mono font-bold uppercase tracking-widest">{config.rightLabel}</span>
-                    </div>
-                </div>
+
 
                 {/* Central Item Area */}
-                <div className="relative z-10 flex items-center justify-center w-full h-full">
+                <div className="relative z-10 flex flex-1 items-center justify-center w-full min-h-[300px]">
                     <AnimatePresence mode="popLayout">
                         {currentItem && (
                             <motion.div
                                 key={currentItem.id}
-                                initial={{ scale: 0.8, opacity: 0, y: 20 }}
-                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                initial={{ scale: 0.5, opacity: 0, filter: "blur(10px)" }}
+                                animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                                 exit={{
                                     x: feedback === "correct" ? -200 : feedback === "incorrect" ? 200 : 0,
                                     opacity: 0,
-                                    scale: 0.8,
-                                    rotate: feedback === "correct" ? -10 : feedback === "incorrect" ? 10 : 0
+                                    scale: 0.5,
+                                    filter: "blur(10px)",
+                                    rotate: feedback === "correct" ? -15 : feedback === "incorrect" ? 15 : 0
                                 }}
-                                className="w-64 h-80 bg-card border-4 border-primary flex items-center justify-center shadow-2xl rounded-xl relative overflow-hidden"
+                                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                                drag="x"
+                                dragConstraints={{ left: 0, right: 0 }}
+                                dragElastic={0.2}
+                                onDragEnd={(e, { offset, velocity }) => {
+                                    const swipe = offset.x
+                                    if (swipe < -100) handleAction("left")
+                                    else if (swipe > 100) handleAction("right")
+                                }}
+                                className="w-64 h-64 md:w-96 md:h-96 flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-105 transition-transform"
                             >
-                                <span className="font-mono text-7xl font-bold">{currentItem.value}</span>
+                                <span className="font-mono text-[10rem] md:text-[14rem] font-bold select-none text-foreground leading-none tracking-tighter drop-shadow-2xl">{currentItem.value}</span>
                             </motion.div>
                         )}
                     </AnimatePresence>
+                </div>
+
+                {/* Rules Footer */}
+                <div className="w-full flex justify-between px-8 md:px-24 pb-8 md:pb-16 pointer-events-none">
+                    <div className="flex flex-col items-start gap-1">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">Swipe Left</span>
+                        <span className="text-xl md:text-2xl font-mono font-bold uppercase tracking-widest text-primary">{config.leftLabel}</span>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">Swipe Right</span>
+                        <span className="text-xl md:text-2xl font-mono font-bold uppercase tracking-widest text-primary">{config.rightLabel}</span>
+                    </div>
                 </div>
             </div>
 

@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button"
 export const dynamic = "force-dynamic"
 
 export default async function LeaderboardPage({ params, searchParams }: { params: { slug: string }, searchParams: { difficulty?: string } }) {
-    const isTimeBased = params.slug === "sudoku" || params.slug === "conundra" || params.slug === "pulse-reaction"
+    const isTimeBased = params.slug === "sudoku" || params.slug === "conundra" || params.slug === "pulse-reaction" || params.slug === "schulte"
     const sortOrder = isTimeBased ? "asc" : "desc"
     const currentDifficulty = searchParams.difficulty
 
@@ -50,10 +50,17 @@ export default async function LeaderboardPage({ params, searchParams }: { params
     // Determine available difficulties based on game type
     let difficulties: string[] = []
 
-    if (params.slug === "memory-grid" || params.slug === "pulse-reaction") {
+    if (params.slug === "memory-grid" || params.slug === "pulse-reaction" || params.slug === "chimp") {
         difficulties = []
     } else if (params.slug === "split-decision") {
         difficulties = ["All", "Standard", "Comparison", "Divisibility", "Pattern", "Advanced"]
+    } else if (params.slug === "schulte") {
+        difficulties = [
+            "All",
+            "digits-direct", "digits-reverse", "digits-random",
+            "letters-direct", "letters-reverse", "letters-random",
+            "gorbov"
+        ]
     } else {
         difficulties = ["Easy", "Medium", "Hard", "Expert"]
     }
@@ -86,7 +93,7 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                     variant={(!currentDifficulty && diff === "All") || currentDifficulty === diff ? "default" : "outline"}
                                     className="rounded-none font-mono uppercase text-xs h-8 px-4 border-foreground/20 hover:border-foreground/50"
                                 >
-                                    {diff}
+                                    {diff.includes('-') ? diff.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : diff}
                                 </Button>
                             </Link>
                         ))}
@@ -131,15 +138,28 @@ export default async function LeaderboardPage({ params, searchParams }: { params
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-sm text-muted-foreground uppercase font-mono tracking-wider">
-                                            {difficulties.length > 0 ? score.difficulty : ""}
+                                            {difficulties.length > 0 ? (
+                                                score.difficulty.includes('-')
+                                                    ? score.difficulty.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+                                                    : score.difficulty
+                                            ) : ""}
                                         </TableCell>
                                         <TableCell className="text-right text-sm font-bold font-mono">
-                                            {params.slug === "pulse-reaction"
-                                                ? `${(score.score / 1000).toFixed(3)}s`
-                                                : isTimeBased
-                                                    ? `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
-                                                    : score.score
-                                            }
+                                            {isTimeBased ? (() => {
+                                                // Sudoku stores in seconds
+                                                if (params.slug === "sudoku") {
+                                                    return `${Math.floor(score.score / 60)}:${(score.score % 60).toString().padStart(2, '0')}`
+                                                }
+                                                // Schulte and others in ms (now including Pulse)
+                                                // Schulte: mm:ss.SS
+
+                                                const totalSeconds = Math.floor(score.score / 1000)
+                                                const mins = Math.floor(totalSeconds / 60)
+                                                const secs = totalSeconds % 60
+                                                const ms = Math.floor((score.score % 1000) / 10) // show 2 digits for ms
+
+                                                return `${mins}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`
+                                            })() : score.score}
                                         </TableCell>
                                     </TableRow>
                                 ))

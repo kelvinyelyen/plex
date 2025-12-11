@@ -297,12 +297,12 @@ export function SudokuGame() {
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <div className="font-mono text-xl tabular-nums tracking-wider">
+                <div className="font-mono text-sm tabular-nums tracking-wider">
                     {formatTime(timer)}
                 </div>
 
                 <div className={cn("font-mono text-sm", mistakes >= 3 ? "text-destructive" : "text-muted-foreground")}>
-                    Err: {mistakes}/3
+                    Mistakes: {mistakes}/3
                 </div>
             </div>
 
@@ -317,7 +317,7 @@ export function SudokuGame() {
                 </div>
 
                 {/* Controls Side */}
-                <div className="w-full max-w-[280px] flex flex-col gap-8 self-center md:self-start md:pt-4">
+                <div className="w-full md:max-w-[280px] flex flex-col gap-8 self-center md:self-start md:pt-4">
                     <Controls
                         onNumberClick={handleNumberClick}
                         onNoteToggle={() => setIsNoteMode(!isNoteMode)}
@@ -325,18 +325,18 @@ export function SudokuGame() {
                     />
 
                     <div className="flex justify-between gap-2">
-                        <Button variant="ghost" size="sm" onClick={handleUndo} disabled={history.length === 0} className="flex-1 font-mono text-xs uppercase tracking-wider">
+                        <Button variant="outline" size="sm" onClick={handleUndo} disabled={history.length === 0} className="flex-1 font-mono text-xs uppercase tracking-wider rounded-none">
                             Undo
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={handleDelete} className="flex-1 font-mono text-xs uppercase tracking-wider">
+                        <Button variant="outline" size="sm" onClick={handleDelete} className="flex-1 font-mono text-xs uppercase tracking-wider rounded-none">
                             Clear
                         </Button>
                         <Button
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
                             onClick={handleHint}
                             disabled={hintsUsed >= 3}
-                            className="flex-1 font-mono text-xs uppercase tracking-wider"
+                            className="flex-1 font-mono text-xs uppercase tracking-wider rounded-none"
                         >
                             Hint
                         </Button>
@@ -345,7 +345,7 @@ export function SudokuGame() {
                     <div className="h-px bg-border/50 w-full my-2" />
 
                     <Button
-                        className="w-full"
+                        className="w-full rounded-none"
                         variant="outline"
                         onClick={() => startNewGame(difficulty)}
                     >

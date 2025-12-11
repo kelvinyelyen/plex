@@ -15,7 +15,7 @@ export default function GamesPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Sudoku Module Card */}
                     <Link href="/games/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}
@@ -122,6 +122,63 @@ export default function GamesPage() {
                             </div>
                         </div>
                     </Link>
+
+                    {/* Schulte Table Module Card */}
+                    <Link href="/games/schulte" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Focus
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="grid grid-cols-5 gap-1 w-48 h-48">
+                                {[...Array(25)].map((_, i) => (
+                                    <div key={i} className="bg-foreground w-full h-full" style={{ opacity: Math.random() > 0.5 ? 0.8 : 0.2 }} />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Schulte</h2>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Peripheral vision trainer. Find numbers 1-25 in ascending order.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    Play Now
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Chimp Test Module Card */}
+                    <Link href="/games/chimp" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
+                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
+                                Working Memory
+                            </div>
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                            <div className="grid grid-cols-3 gap-4 w-48 h-48">
+                                {[...Array(9)].map((_, i) => (
+                                    <div key={i} className="bg-foreground w-full h-full" style={{ opacity: i % 2 === 0 ? 1 : 0 }} />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
+                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Chimp</h2>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Primate-level memory test. Recall hidden variances.
+                            </p>
+                            <div className="pt-4">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                    Play Now
+                                </Button>
+                            </div>
+                        </div>
+                    </Link>
+
                     {/* Pulse Reaction Module Card */}
                     <Link href="/games/pulse-reaction" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
                         {/* Card Header */}

@@ -18,7 +18,7 @@ export function Cell({ isLit, isSelected, isCorrect, isWrong, onClick, disabled 
             onClick={onClick}
             disabled={disabled}
             className={cn(
-                "w-full h-full rounded-lg transition-all duration-300 border border-transparent",
+                "w-full h-full rounded-none transition-all duration-300 border border-transparent",
                 // Default state
                 "bg-foreground/5 hover:bg-foreground/10",
 

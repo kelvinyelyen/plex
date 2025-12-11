@@ -14,7 +14,7 @@ export function Grid({ gridSize, sequence, playerInput, phase, onCellClick }: Gr
 
     return (
         <div
-            className="grid gap-3 w-full max-w-md aspect-square mx-auto p-6 bg-background/30 backdrop-blur-md rounded-xl border border-foreground/10 shadow-2xl"
+            className="grid gap-3 w-full max-w-md aspect-square mx-auto p-6 bg-background/30 backdrop-blur-md rounded-none border border-foreground/10 shadow-2xl"
             style={{
                 gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
             }}

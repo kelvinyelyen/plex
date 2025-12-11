@@ -155,3 +155,45 @@ export const SplitAnimation = () => {
         </div>
     )
 }
+
+export const SchulteAnimation = () => {
+    return (
+        <div className="grid grid-cols-3 gap-1 w-24 h-24 p-2 bg-muted/20 rounded-md">
+            {[1, 5, 3, 8, 2, 7, 4, 9, 6].map((n, i) => (
+                <div key={i} className="flex items-center justify-center bg-background border border-border/50 text-[10px] font-bold text-foreground">
+                    {n}
+                </div>
+            ))}
+            <motion.div
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                animate={{ opacity: [0, 0.5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <div className="w-1 h-1 bg-primary rounded-full" />
+            </motion.div>
+        </div>
+    )
+}
+
+
+
+export const ChimpAnimation = () => {
+    return (
+        <div className="grid grid-cols-3 gap-1 w-24 h-24 p-2 bg-muted/20 rounded-md relative">
+            {[1, 2, 3].map((n, i) => (
+                <motion.div
+                    key={i}
+                    className="flex items-center justify-center border border-primary/50 text-[10px] font-bold"
+                    animate={{
+                        backgroundColor: ["transparent", "hsl(var(--primary))", "transparent"],
+                        color: ["hsl(var(--foreground))", "transparent", "hsl(var(--foreground))"]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, times: [0, 0.3, 0.8] }}
+                >
+                    {n}
+                </motion.div>
+            ))}
+            {[...Array(6)].map((_, i) => <div key={i + 3} className="bg-transparent" />)} {/* Spacer */}
+        </div>
+    )
+}
