@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/plex
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - plex-network
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: plex
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - plex-network
+
+volumes:
+  db-data:
+
+networks:
+  plex-network:
+    driver: bridge
