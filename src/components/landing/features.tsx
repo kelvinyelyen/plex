@@ -64,7 +64,7 @@ export function Features() {
             </div>
             <div className="mx-auto flex w-full gap-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar sm:grid sm:overflow-visible sm:pb-0 sm:justify-center sm:grid-cols-2 lg:grid-cols-4">
                 {features.map((feature) => (
-                    <Link key={feature.title} href={feature.href} className="flex-shrink-0 w-[60vw] sm:w-auto snap-center">
+                    <Link key={feature.title} href={feature.href} className="flex-shrink-0 w-[80vw] sm:w-auto snap-center">
                         <Card className="h-full transition-all hover:bg-muted/50 hover:border-primary/50 group overflow-hidden rounded-none border-foreground/10">
                             <CardHeader className="relative z-10 pt-8 pb-8">
                                 {feature.animation}

@@ -5,29 +5,29 @@ import { Button } from "@/components/ui/button"
 
 export function Hero() {
     return (
-        <section className="container relative flex flex-col lg:flex-row my-20 py-2 md:py-6 overflow-hidden">
+        <section className="container relative flex flex-col lg:flex-row my-10 lg:my-20 py-2 md:py-6 overflow-hidden">
             {/* Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] pointer-events-none -z-10" />
 
             {/* Left Panel - Content */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-0 lg:p-8 z-10">
-                <div className="flex flex-col items-start gap-6 max-w-xl">
-                    <h1 className="text-4xl font-mono font-bold uppercase tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-left">
+                <div className="flex flex-col items-start gap-4 lg:gap-6 max-w-xl">
+                    <h1 className="text-3xl font-mono font-bold uppercase tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-left">
                         Calibrate
                         <br />
                         Your Mind
                     </h1>
-                    <p className="leading-relaxed text-muted-foreground sm:text-lg sm:leading-6 text-left">
+                    <p className="leading-relaxed text-muted-foreground text-sm sm:text-lg sm:leading-6 text-left">
                         Enhance cognitive latency and pattern recognition through structured competitive frameworks.
                     </p>
-                    <div className="flex gap-4 pt-4">
-                        <Link href="/games">
-                            <Button size="lg" className="rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
+                        <Link href="/games" className="w-full sm:w-auto">
+                            <Button size="lg" className="w-full sm:w-auto rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
                                 Start Playing
                             </Button>
                         </Link>
-                        <Link href="/leaderboard">
-                            <Button variant="outline" size="lg" className="rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
+                        <Link href="/leaderboard" className="w-full sm:w-auto">
+                            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
                                 View Data
                             </Button>
                         </Link>

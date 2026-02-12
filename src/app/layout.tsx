@@ -12,6 +12,22 @@ import { cn } from "@/lib/utils"
 export const metadata: Metadata = {
   title: "Plex",
   description: "A curated collection of digital experiences.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Plex",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+}
+
+export const viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({
