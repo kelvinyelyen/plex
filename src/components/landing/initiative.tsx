@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export function Initiative() {
     return (
-        <section className="container py-12 md:py-16">
+        <section className="hidden md:block container py-12 md:py-16">
             <div className="flex flex-col items-center justify-center gap-8 text-center">
                 <p className="text-xs text-muted-foreground uppercase tracking-[0.2em]">
                     AN INITIATIVE OF

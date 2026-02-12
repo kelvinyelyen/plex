@@ -6,6 +6,7 @@ import { Providers } from "@/components/providers"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Toaster } from "@/components/ui/sonner"
+import { MobileNav } from "@/components/layout/mobile-nav"
 import { cn } from "@/lib/utils"
 
 
@@ -50,8 +51,9 @@ export default function RootLayout({
         >
           <div className="relative flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-16 md:pb-0">{children}</main>
             <Footer />
+            <MobileNav />
             <Toaster />
           </div>
         </Providers>
