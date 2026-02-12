@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { UserNav } from "@/components/layout/user-nav"
 import { useSession } from "next-auth/react"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { ConundraAnimation, LeaderboardAnimation, MemoryAnimation, SudokuAnimation, PulseAnimation, SplitAnimation, SchulteAnimation, ChimpAnimation } from "@/components/ui/game-animations"
+import { ConundraAnimation, MemoryAnimation, SudokuAnimation, PulseAnimation, SplitAnimation, SchulteAnimation, ChimpAnimation } from "@/components/ui/game-animations"
 
 const features = [
     {
