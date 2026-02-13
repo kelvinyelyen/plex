@@ -167,12 +167,7 @@ export function MultiplayerTypingGame({ onBack }: { onBack: () => void }) {
 
     if (gameState === "LOBBY") {
         return (
-            <div className="flex flex-col items-center gap-8 w-full max-w-md mx-auto">
-                <div className="w-full flex justify-start">
-                    <Button variant="ghost" onClick={onBack}>
-                        <ArrowLeft className="w-4 h-4 mr-2" /> Back
-                    </Button>
-                </div>
+            <div className="flex flex-col items-center justify-center gap-8 w-full max-w-md mx-auto min-h-[calc(100vh-14rem)]">
 
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl font-bold font-mono tracking-widest text-primary uppercase">Multiplayer Lobby</h1>

@@ -114,13 +114,16 @@ export function HanoiGame() {
                         <p>3. Larger disks cannot be placed on smaller disks.</p>
                     </div>}
                     icon={<Disc className="w-16 h-16 text-primary" />}
-                />
-
-                <div className="mt-8 flex gap-4">
-                    <Button variant="outline" onClick={() => { startGame(3); router.replace(`${pathname}?mode=play`) }}>Msg (3)</Button>
-                    <Button variant="outline" onClick={() => { startGame(4); router.replace(`${pathname}?mode=play`) }}>Avg (4)</Button>
-                    <Button variant="outline" onClick={() => { startGame(5); router.replace(`${pathname}?mode=play`) }}>Hrd (5)</Button>
-                </div>
+                >
+                    <div className="flex flex-col items-center gap-2 w-full">
+                        <span className="text-xs uppercase tracking-widest text-muted-foreground">Select Difficulty</span>
+                        <div className="flex gap-2">
+                            <Button variant="outline" size="sm" onClick={() => { startGame(3); router.replace(`${pathname}?mode=play`) }} className="font-mono rounded-none">EASY (3)</Button>
+                            <Button variant="outline" size="sm" onClick={() => { startGame(4); router.replace(`${pathname}?mode=play`) }} className="font-mono rounded-none">NORMAL (4)</Button>
+                            <Button variant="outline" size="sm" onClick={() => { startGame(5); router.replace(`${pathname}?mode=play`) }} className="font-mono rounded-none">HARD (5)</Button>
+                        </div>
+                    </div>
+                </GameStartScreen>
             </div>
         )
     }

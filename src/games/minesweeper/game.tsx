@@ -204,7 +204,7 @@ export function MinesweeperGame() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-start w-full max-w-lg mx-auto gap-8 h-full">
+        <div className="flex flex-col items-center justify-start w-full max-w-lg mx-auto gap-8 min-h-[calc(100vh-14rem)]">
             <div className="w-full flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Minesweeper</span>
                 <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>

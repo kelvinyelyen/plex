@@ -140,12 +140,12 @@ function TypingSpeedGameContent() {
                         <p>Timer starts on first keypress.</p>
                     </div>}
                     icon={<Keyboard className="w-16 h-16 text-primary" />}
-                />
-
-                <Button variant="outline" className="gap-2" onClick={() => router.push(`${pathname}?mode=multiplayer`)}>
-                    <Users className="w-4 h-4" />
-                    Multiplayer Beta
-                </Button>
+                >
+                    <Button variant="outline" className="gap-2 w-full sm:w-auto font-mono uppercase text-xs tracking-wider h-12 px-8 rounded-none border-border" onClick={() => router.push(`${pathname}?mode=multiplayer`)}>
+                        <Users className="w-4 h-4" />
+                        Multiplayer Beta
+                    </Button>
+                </GameStartScreen>
             </div>
         )
     }

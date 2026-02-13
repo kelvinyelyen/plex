@@ -19,6 +19,7 @@ interface GameStartScreenProps {
     onStart: () => void
     instructions: React.ReactNode
     icon?: React.ReactNode
+    children?: React.ReactNode
 }
 
 export function GameStartScreen({
@@ -27,11 +28,12 @@ export function GameStartScreen({
     onStart,
     instructions,
     icon,
+    children,
 }: GameStartScreenProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[60vh] w-full max-w-2xl mx-auto p-4 text-center space-y-12">
+        <div className="flex flex-col items-center justify-center h-full w-full max-w-2xl mx-auto p-4 text-center space-y-12">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -80,6 +82,12 @@ export function GameStartScreen({
                         </DialogContent>
                     </Dialog>
                 </div>
+
+                {children && (
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                        {children}
+                    </div>
+                )}
             </motion.div>
         </div>
     )
