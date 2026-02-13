@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { prisma } from "@/lib/prisma"
 
