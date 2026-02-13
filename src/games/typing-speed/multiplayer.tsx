@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Copy, ArrowLeft } from "lucide-react"
+import { Copy } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
@@ -26,7 +26,7 @@ type PlayerState = {
     username: string
 }
 
-export function MultiplayerTypingGame({ onBack }: { onBack: () => void }) {
+export function MultiplayerTypingGame() {
     const [gameState, setGameState] = useState<"LOBBY" | "PLAYING" | "GAME_OVER">("LOBBY")
     const [roomId, setRoomId] = useState("")
     const [username, setUsername] = useState("")
