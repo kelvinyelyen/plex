@@ -23,8 +23,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown, ArrowLeft } from "lucide-react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 export function SudokuGame() {
+    const router = useRouter()
+    const pathname = usePathname()
     const [difficulty, setDifficulty] = useState<Difficulty>("Easy")
     const [board, setBoard] = useState<BoardType | null>(null)
     const [solution, setSolution] = useState<BoardType | null>(null)
@@ -243,13 +246,18 @@ export function SudokuGame() {
 
     if (!hasStarted) {
         return (
-            <GameStartScreen
-                title="Sudoku"
-                description="Fill the 9x9 grid with digits so that each column, each row, and each of the nine 3x3 subgrids that compose the grid contain all of the digits from 1 to 9."
-                onStart={() => setHasStarted(true)}
-                instructions={<SudokuGuide />}
-                icon={<SudokuAnimation />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Sudoku"
+                    description="Fill the 9x9 grid with digits so that each column, each row, and each of the nine 3x3 subgrids that compose the grid contain all of the digits from 1 to 9."
+                    onStart={() => {
+                        setHasStarted(true)
+                        router.replace(`${pathname}?mode=play`)
+                    }}
+                    instructions={<SudokuGuide />}
+                    icon={<SudokuAnimation />}
+                />
+            </div>
         )
     }
 
@@ -259,8 +267,13 @@ export function SudokuGame() {
         return `${mins}:${secs.toString().padStart(2, "0")}`
     }
 
+    const handleQuit = () => {
+        setHasStarted(false)
+        router.replace(pathname)
+    }
+
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto gap-8">
+        <div className="flex flex-col items-center justify-start w-full max-w-5xl mx-auto gap-8">
             <CompletionDialog
                 open={isComplete}
                 time={timer}
@@ -268,18 +281,18 @@ export function SudokuGame() {
                 mistakes={mistakes}
                 onPlayAgain={() => startNewGame(difficulty)}
                 onClose={() => setIsComplete(false)}
-                onQuit={() => setHasStarted(false)}
+                onQuit={handleQuit}
             />
             <GameOverDialog
                 open={isGameOver}
                 onRestart={() => startNewGame(difficulty)}
                 onClose={() => setIsGameOver(false)}
-                onQuit={() => setHasStarted(false)}
+                onQuit={handleQuit}
             />
 
             <div className="w-full max-w-4xl flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Sudoku</span>
-                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={() => setHasStarted(false)}>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
                     <ArrowLeft className="h-4 w-4" />
                 </Button>
             </div>

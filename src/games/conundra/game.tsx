@@ -13,7 +13,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, ArrowLeft } from "lucide-react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { toast } from "sonner"
 import { generateTarget } from "./generator"
 import { Difficulty, GameState } from "./types"
@@ -154,24 +155,36 @@ export function ConundraGame() {
         return `${mins}:${secs.toString().padStart(2, "0")}`
     }
 
+    const router = useRouter()
+    const pathname = usePathname()
     const [hasStarted, setHasStarted] = useState(false)
+
+    const handleQuit = () => {
+        setHasStarted(false)
+        router.replace(pathname)
+    }
 
     if (!gameState) return <div>Loading...</div>
 
     if (!hasStarted) {
         return (
-            <GameStartScreen
-                title="Conundra"
-                description="Combine the given numbers using basic arithmetic operations (+, -, ×, ÷) to reach the target number."
-                onStart={() => setHasStarted(true)}
-                instructions={<ConundraGuide />}
-                icon={<ConundraAnimation />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Conundra"
+                    description="Combine the given numbers using basic arithmetic operations (+, -, ×, ÷) to reach the target number."
+                    onStart={() => {
+                        setHasStarted(true)
+                        router.replace(`${pathname}?mode=play`)
+                    }}
+                    instructions={<ConundraGuide />}
+                    icon={<ConundraAnimation />}
+                />
+            </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto gap-8">
+        <div className="flex flex-col items-center justify-start w-full max-w-4xl mx-auto gap-8">
             <CompletionDialog
                 open={isComplete}
                 time={timer}
@@ -179,11 +192,14 @@ export function ConundraGame() {
                 moves={moves}
                 onPlayAgain={() => startNewGame(difficulty)}
                 onClose={() => setIsComplete(false)}
-                onQuit={() => setHasStarted(false)}
+                onQuit={handleQuit}
             />
 
-            <div className="w-full text-left">
+            <div className="w-full flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Conundra</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Minimal Header */}

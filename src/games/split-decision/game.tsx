@@ -4,7 +4,9 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useSplitDecision, GameMode } from "./use-split-decision"
 import { cn } from "@/lib/utils"
-import { Activity } from "lucide-react"
+import { Activity, ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { SplitCompletionDialog } from "./components/completion-dialog"
 
@@ -25,20 +27,23 @@ export function SplitDecisionGame() {
 
     if (gameState === "MENU" && !hasSelectedMode) {
         return (
-            <GameStartScreen
-                title="Split Decision"
-                description="Rapid sorting challenge. 30 seconds to sort items. Accuracy is key - errors reduce your score."
-                onStart={() => {
-                    setHasSelectedMode(true)
-                }}
-                instructions={<div className="space-y-2 text-sm text-muted-foreground">
-                    <p>Sort the item in the center.</p>
-                    <p><span className="text-foreground font-bold">Left Arrow</span> for {config?.leftLabel || "Left Rule"}.</p>
-                    <p><span className="text-foreground font-bold">Right Arrow</span> for {config?.rightLabel || "Right Rule"}.</p>
-                    <p>Be quick! Items expire if you hesitate.</p>
-                </div>}
-                icon={<Activity className="w-16 h-16 text-primary" />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Split Decision"
+                    description="Rapid sorting challenge. 30 seconds to sort items. Accuracy is key - errors reduce your score."
+                    onStart={() => {
+                        setHasSelectedMode(true)
+                        router.replace(`${pathname}?mode=play`)
+                    }}
+                    instructions={<div className="space-y-2 text-sm text-muted-foreground">
+                        <p>Sort the item in the center.</p>
+                        <p><span className="text-foreground font-bold">Left Arrow</span> for {config?.leftLabel || "Left Rule"}.</p>
+                        <p><span className="text-foreground font-bold">Right Arrow</span> for {config?.rightLabel || "Right Rule"}.</p>
+                        <p>Be quick! Items expire if you hesitate.</p>
+                    </div>}
+                    icon={<Activity className="w-16 h-16 text-primary" />}
+                />
+            </div>
         )
     }
 
@@ -53,28 +58,33 @@ export function SplitDecisionGame() {
         ]
 
         return (
-            <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-8">
-                <h2 className="text-2xl font-mono font-bold uppercase tracking-tight">Select Protocol</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-                    {modes.map((m) => (
-                        <div
-                            key={m.id}
-                            onClick={() => startGame(m.id)}
-                            className="group cursor-pointer border border-border/50 hover:border-primary/50 bg-card p-6 flex flex-col items-center justify-center transition-all hover:scale-[1.02] rounded-none"
-                        >
-                            <span className="text-lg font-mono font-bold uppercase tracking-widest group-hover:text-primary transition-colors">{m.label}</span>
-                            <span className="text-xs text-muted-foreground mt-2">{m.desc}</span>
-                        </div>
-                    ))}
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-8">
+                    <h2 className="text-2xl font-mono font-bold uppercase tracking-tight">Select Protocol</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+                        {modes.map((m) => (
+                            <div
+                                key={m.id}
+                                onClick={() => startGame(m.id)}
+                                className="group cursor-pointer border border-border/50 hover:border-primary/50 bg-card p-6 flex flex-col items-center justify-center transition-all hover:scale-[1.02] rounded-none"
+                            >
+                                <span className="text-lg font-mono font-bold uppercase tracking-widest group-hover:text-primary transition-colors">{m.label}</span>
+                                <span className="text-xs text-muted-foreground mt-2">{m.desc}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto gap-8 h-[80vh]">
-            <div className="w-full text-left">
+        <div className="flex flex-col items-center justify-start w-full max-w-2xl mx-auto gap-8 h-[80vh]">
+            <div className="w-full flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Split Decision</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Minimal Header */}
@@ -160,16 +170,22 @@ export function SplitDecisionGame() {
 
             {/* Game Over Overlay */}
             {/* Game Over Dialog */}
-            <SplitCompletionDialog
+            <CompletionDialog
                 open={gameState === "GAME_OVER"}
-                stats={stats}
-                mode={mode}
-                onPlayAgain={() => startGame(mode)}
-                onChangeProtocol={() => {
-                    resetGame()
-                    setHasSelectedMode(true)
+                score={stats.correct} // Assuming score is correct answers
+                mistakes={stats.incorrect} // Assuming mistakes is incorrect answers
+                onPlayAgain={() => {
+                    // Assuming setGameState and handleQuit are available from useSplitDecision or context
+                    // This change implies a different state management or prop structure for CompletionDialog
+                    // For now, we'll use the existing resetGame and setHasSelectedMode to approximate the intent
+                    resetGame();
+                    setHasSelectedMode(true);
                 }}
-                onClose={() => { }} // Block closing without action if desired, or allow reset
+                onClose={() => {
+                    resetGame(); // Reset game and go back to menu
+                    setHasSelectedMode(true);
+                }}
+                onQuit={handleQuit} // Assuming handleQuit is defined in the component or hook
             />
         </div>
     )

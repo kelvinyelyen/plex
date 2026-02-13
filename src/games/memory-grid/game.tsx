@@ -9,33 +9,44 @@ import { Grid } from "./components/grid"
 import { GameOverDialog } from "./components/game-over-dialog"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 export function MemoryGame() {
     const { gameState, startGame, handleCellClick, resetToIdle } = useMemoryGame()
     const { level, lives, gridSize, sequence, playerInput, phase } = gameState
 
+    const router = useRouter()
+    const pathname = usePathname()
     const [hasStarted, setHasStarted] = useState(false)
+
+    const handleQuit = () => {
+        setHasStarted(false)
+        router.replace(pathname)
+    }
 
     if (!hasStarted) {
         return (
-            <GameStartScreen
-                title="Memory Grid"
-                description="Watch the pattern of flashing tiles and repeat it. The sequence gets longer and faster with each round."
-                onStart={() => {
-                    setHasStarted(true)
-                    startGame()
-                }}
-                instructions={<MemoryGuide />}
-                icon={<MemoryAnimation />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Memory Grid"
+                    description="Watch the pattern of flashing tiles and repeat it. The sequence gets longer and faster with each round."
+                    onStart={() => {
+                        setHasStarted(true)
+                        router.replace(`${pathname}?mode=play`)
+                        startGame()
+                    }}
+                    instructions={<MemoryGuide />}
+                    icon={<MemoryAnimation />}
+                />
+            </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center max-w-2xl mx-auto">
+        <div className="flex flex-col items-center justify-start w-full max-w-5xl mx-auto gap-8">
             <div className="w-full flex items-center justify-between mb-6">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Memory Grid</span>
-                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={() => setHasStarted(false)}>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
                     <ArrowLeft className="h-4 w-4" />
                 </Button>
             </div>
@@ -85,7 +96,7 @@ export function MemoryGame() {
                 level={level}
                 onRestart={startGame}
                 onClose={resetToIdle}
-                onQuit={() => setHasStarted(false)}
+                onQuit={handleQuit}
             />
         </div>
     )

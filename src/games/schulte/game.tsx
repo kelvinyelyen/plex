@@ -4,10 +4,11 @@ import { useState, useEffect, useCallback } from "react"
 import { motion } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Grid3X3, RotateCcw, Home, Trophy } from "lucide-react"
+import { Grid3X3, RotateCcw, Home, Trophy, ArrowLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 type GameType = "digits" | "letters" | "gorbov"
 type GameMode = "direct" | "reverse" | "random"
@@ -209,82 +210,100 @@ export function SchulteGame() {
         return `${seconds}.${centis.toString().padStart(2, '0')}`
     }
 
+    const router = useRouter()
+    const pathname = usePathname()
 
+    const handleQuit = () => {
+        setHasSelectedPreferences(false)
+        router.replace(pathname)
+    }
 
     if (gameState === "MENU") {
         if (!hasSelectedPreferences) {
             return (
-                <GameStartScreen
-                    title="Schulte Table"
-                    description="Focus Training. Find items in the grid sequence. Keep eyes on center. Expand your peripheral vision."
-                    onStart={() => setHasSelectedPreferences(true)}
-                    instructions={<div className="space-y-2 text-sm text-muted-foreground">
-                        <p>Grid stops at 25.</p>
-                        <p>Use peripheral vision.</p>
-                        <p>Don&apos;t scan with eyes, stare at center.</p>
-                    </div>}
-                    icon={<Grid3X3 className="w-16 h-16 text-primary" />}
-                />
+                <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                    <GameStartScreen
+                        title="Schulte Table"
+                        description="Focus Training. Find items in the grid sequence. Keep eyes on center. Expand your peripheral vision."
+                        onStart={() => {
+                            setHasSelectedPreferences(true)
+                            router.replace(`${pathname}?mode=play`)
+                        }}
+                        instructions={<div className="space-y-2 text-sm text-muted-foreground">
+                            <p>Grid stops at 25.</p>
+                            <p>Use peripheral vision.</p>
+                            <p>Don&apos;t scan with eyes, stare at center.</p>
+                        </div>}
+                        icon={<Grid3X3 className="w-16 h-16 text-primary" />}
+                    />
+                </div>
             )
         }
 
         return (
-            <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto gap-8 min-h-[50vh]">
-                <div className="text-center space-y-4">
-                    <h2 className="text-2xl font-mono font-bold uppercase tracking-tight">Configure Protocol</h2>
-                    <p className="text-muted-foreground text-sm">Select your training parameters.</p>
-                </div>
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto gap-8 min-h-[50vh]">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-2xl font-mono font-bold uppercase tracking-tight">Configure Protocol</h2>
+                        <p className="text-muted-foreground text-sm">Select your training parameters.</p>
+                    </div>
 
-                <div className="w-full max-w-sm space-y-6 p-8 border bg-card/50 backdrop-blur-sm">
-                    <div className="space-y-4">
-                        <div className="space-y-2">
-                            <label className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">Type</label>
-                            <Select value={gameType} onValueChange={(v: GameType) => setGameType(v)}>
-                                <SelectTrigger className="font-mono uppercase transition-colors hover:border-primary/50 h-10 w-full rounded-none">
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="digits" className="font-mono uppercase">Digits (1-25)</SelectItem>
-                                    <SelectItem value="letters" className="font-mono uppercase">Letters (A-Y)</SelectItem>
-                                    <SelectItem value="gorbov" className="font-mono uppercase">Gorbov (Red/Black)</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        {gameType !== "gorbov" && (
+                    <div className="w-full max-w-sm space-y-6 p-8 border bg-card/50 backdrop-blur-sm">
+                        <div className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">Mode</label>
-                                <Select value={gameMode} onValueChange={(v: GameMode) => setGameMode(v)}>
+                                <label className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">Type</label>
+                                <Select value={gameType} onValueChange={(v: GameType) => setGameType(v)}>
                                     <SelectTrigger className="font-mono uppercase transition-colors hover:border-primary/50 h-10 w-full rounded-none">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="direct" className="font-mono uppercase">Direct (Ascending)</SelectItem>
-                                        <SelectItem value="reverse" className="font-mono uppercase">Reverse (Descending)</SelectItem>
-                                        <SelectItem value="random" className="font-mono uppercase">Random (Find X)</SelectItem>
+                                        <SelectItem value="digits" className="font-mono uppercase">Digits (1-25)</SelectItem>
+                                        <SelectItem value="letters" className="font-mono uppercase">Letters (A-Y)</SelectItem>
+                                        <SelectItem value="gorbov" className="font-mono uppercase">Gorbov (Red/Black)</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
-                        )}
-                    </div>
 
-                    <Button size="lg" onClick={startNewGame} className="w-full font-mono uppercase tracking-widest gap-2 bg-primary hover:bg-primary/90 text-primary-foreground h-12 rounded-none">
-                        Start Training
-                    </Button>
+                            {gameType !== "gorbov" && (
+                                <div className="space-y-2">
+                                    <label className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">Mode</label>
+                                    <Select value={gameMode} onValueChange={(v: GameMode) => setGameMode(v)}>
+                                        <SelectTrigger className="font-mono uppercase transition-colors hover:border-primary/50 h-10 w-full rounded-none">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="direct" className="font-mono uppercase">Direct (Ascending)</SelectItem>
+                                            <SelectItem value="reverse" className="font-mono uppercase">Reverse (Descending)</SelectItem>
+                                            <SelectItem value="random" className="font-mono uppercase">Random (Find X)</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
+                        </div>
+
+                        <Button size="lg" onClick={startNewGame} className="w-full font-mono uppercase tracking-widest gap-2 bg-primary hover:bg-primary/90 text-primary-foreground h-12 rounded-none">
+                            Start Training
+                        </Button>
+                    </div>
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto gap-8">
-            <div className="w-full flex justify-between items-end">
-                <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">
-                    {gameType === "gorbov" ? "Gorbov-Schulte" : `Schulte ${gameType}`}
-                </span>
-                <span className="text-xs font-mono text-muted-foreground uppercase opacity-50">
-                    {gameType !== "gorbov" ? gameMode : "Alternating"}
-                </span>
+        <div className="flex flex-col items-center justify-start w-full max-w-2xl mx-auto gap-8">
+            <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col">
+                    <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">
+                        {gameType === "gorbov" ? "Gorbov-Schulte" : `Schulte ${gameType}`}
+                    </span>
+                    <span className="text-xs font-mono text-muted-foreground uppercase opacity-50">
+                        {gameType !== "gorbov" ? gameMode : "Alternating"}
+                    </span>
+                </div>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Header */}

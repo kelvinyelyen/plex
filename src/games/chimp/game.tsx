@@ -4,7 +4,8 @@ import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Eye, RotateCcw, Home, Skull } from "lucide-react"
+import { Eye, RotateCcw, Home, Skull, ArrowLeft } from "lucide-react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 
@@ -117,24 +118,32 @@ export function ChimpGame() {
 
     if (gameState === "MENU") {
         return (
-            <GameStartScreen
-                title="Chimp Test"
-                description="Spatial Memory. Memorize the positions of the numbers. Click '1' and the rest will disappear. Find them in order."
-                onStart={startGame}
-                instructions={<div className="space-y-2 text-sm text-muted-foreground">
-                    <p>Level increases number count.</p>
-                    <p>Click <span className="font-bold">1</span> &rarr; Visually memorize others.</p>
-                    <p>Tap blank squares in sequence (2, 3, 4...).</p>
-                </div>}
-                icon={<Eye className="w-16 h-16 text-primary" />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Chimp Test"
+                    description="Spatial Memory. Memorize the positions of the numbers. Click '1' and the rest will disappear. Find them in order."
+                    onStart={() => {
+                        startGame()
+                        router.replace(`${pathname}?mode=play`)
+                    }}
+                    instructions={<div className="space-y-2 text-sm text-muted-foreground">
+                        <p>Level increases number count.</p>
+                        <p>Click <span className="font-bold">1</span> &rarr; Visually memorize others.</p>
+                        <p>Tap blank squares in sequence (2, 3, 4...).</p>
+                    </div>}
+                    icon={<Eye className="w-16 h-16 text-primary" />}
+                />
+            </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto gap-8">
-            <div className="w-full text-left">
+        <div className="flex flex-col items-center justify-start w-full max-w-2xl mx-auto gap-8">
+            <div className="w-full flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Chimp Test</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Header */}

@@ -1,15 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Home, Gamepad2, Trophy, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function MobileNav() {
     const pathname = usePathname()
+    const searchParams = useSearchParams()
 
-    // Hide on starter page (Root)
-    if (pathname === "/") return null
+    // Hide on starter page (Root) or if in play mode
+    if (pathname === "/" || searchParams?.get("mode") === "play") return null
 
 
 

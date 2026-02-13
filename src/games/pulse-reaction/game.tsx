@@ -5,35 +5,51 @@ import { GameStartScreen } from "@/components/game/start-screen"
 import { motion } from "framer-motion"
 import { usePulseGame } from "./use-pulse-game"
 import { PulseCompletionDialog } from "./components/completion-dialog"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 export function PulseReactionGame() {
     const { gameState, startGame, handleTap } = usePulseGame()
     const { phase, round, totalRounds, scores, averageScore } = gameState
     const [hasStarted, setHasStarted] = useState(false)
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const handleQuit = () => {
+        setHasStarted(false)
+        router.replace(pathname)
+    }
 
     if (!hasStarted) {
         return (
-            <GameStartScreen
-                title="Pulse Reaction"
-                description="A test of cognitive latency. Tap exactly when the circle reaches peak brightness."
-                onStart={() => {
-                    setHasStarted(true)
-                    startGame()
-                }}
-                instructions={<div className="space-y-2 text-sm text-muted-foreground p-4 bg-muted/20 rounded-none border border-border/50">
-                    <p>1. Wait for the circle to pulse.</p>
-                    <p>2. It will brighten and fade.</p>
-                    <p>3. Tap/Click EXACTLY when it is brightest.</p>
-                </div>}
-                icon={<div className="w-16 h-16 rounded-full bg-primary/20 animate-pulse" />}
-            />
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+                <GameStartScreen
+                    title="Pulse Reaction"
+                    description="A test of cognitive latency. Tap exactly when the circle reaches peak brightness."
+                    onStart={() => {
+                        setHasStarted(true)
+                        router.replace(`${pathname}?mode=play`)
+                        startGame()
+                    }}
+                    instructions={<div className="space-y-2 text-sm text-muted-foreground p-4 bg-muted/20 rounded-none border border-border/50">
+                        <p>1. Wait for the circle to pulse.</p>
+                        <p>2. It will brighten and fade.</p>
+                        <p>3. Tap/Click EXACTLY when it is brightest.</p>
+                    </div>}
+                    icon={<div className="w-16 h-16 rounded-full bg-primary/20 animate-pulse" />}
+                />
+            </div>
         )
     }
 
     return (
-        <div className="flex flex-col items-center justify-center max-w-2xl mx-auto w-full min-h-[60vh]">
-            <div className="w-full text-left mb-6">
+        <div className="flex flex-col items-center justify-start max-w-2xl mx-auto w-full min-h-[60vh]">
+            <div className="w-full flex items-center justify-between mb-6">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Pulse Reaction</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={handleQuit}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Minimal Header */}
@@ -105,12 +121,12 @@ export function PulseReactionGame() {
                     </div>
                 )}
 
-                <PulseCompletionDialog
+                <CompletionDialog
                     open={phase === "COMPLETE"}
-                    averageScore={averageScore || 0}
+                    score={averageScore || 0}
                     onPlayAgain={startGame}
-                    onClose={() => { }} // Can't really close it without action
-                    onQuit={() => setHasStarted(false)}
+                    onClose={() => setHasStarted(false)}
+                    onQuit={handleQuit}
                 />
 
 
