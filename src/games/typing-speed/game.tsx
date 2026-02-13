@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Keyboard, Home, ArrowLeft, RefreshCcw } from "lucide-react"
-import { useRouter, usePathname } from "next/navigation"
+import { Keyboard, Home, ArrowLeft, RefreshCcw, Users } from "lucide-react"
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { MultiplayerTypingGame } from "./multiplayer"
 
 const SENTENCES = [
     "The quick brown fox jumps over the lazy dog.",
@@ -19,6 +20,14 @@ const SENTENCES = [
 ]
 
 export function TypingSpeedGame() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <TypingSpeedGameContent />
+        </Suspense>
+    )
+}
+
+function TypingSpeedGameContent() {
     const [gameState, setGameState] = useState<"MENU" | "PLAYING" | "GAME_OVER">("MENU")
     const [wpm, setWpm] = useState(0)
     const [accuracy, setAccuracy] = useState(100)
@@ -108,9 +117,16 @@ export function TypingSpeedGame() {
 
     const setScore = (val: number) => setWpm(val) // alias for consistency
 
+    const searchParams = useSearchParams()
+    const mode = searchParams.get("mode")
+
+    if (mode === "multiplayer") {
+        return <MultiplayerTypingGame onBack={() => router.replace(pathname)} />
+    }
+
     if (gameState === "MENU") {
         return (
-            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center">
+            <div className="w-full min-h-[calc(100vh-14rem)] flex flex-col items-center justify-center gap-4">
                 <GameStartScreen
                     title="Typing Speed"
                     description="Clerical Speed. Type the text as fast as possible. Efficiency is key."
@@ -125,6 +141,11 @@ export function TypingSpeedGame() {
                     </div>}
                     icon={<Keyboard className="w-16 h-16 text-primary" />}
                 />
+
+                <Button variant="outline" className="gap-2" onClick={() => router.push(`${pathname}?mode=multiplayer`)}>
+                    <Users className="w-4 h-4" />
+                    Multiplayer Beta
+                </Button>
             </div>
         )
     }
