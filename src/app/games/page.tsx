@@ -588,6 +588,6 @@ export default function GamesPage() {
                     </Link>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }

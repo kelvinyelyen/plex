@@ -1,12 +1,11 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
 import { Hash, RotateCcw, Home, Skull, ArrowLeft, ArrowRight } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 
@@ -18,7 +17,7 @@ export function NumberMemoryGame() {
     const [score, setScore] = useState(0)
 
     // Progress bar for showing time
-    const [timeLeft, setTimeLeft] = useState(0)
+    // const [timeLeft, setTimeLeft] = useState(0) // Removed unused
 
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
@@ -52,7 +51,7 @@ export function NumberMemoryGame() {
         // Let's do 1000ms + 500ms * length
         const showTime = 1000 + (lvl * 600)
 
-        setTimeLeft(100)
+        // setTimeLeft(100) // Removed
 
         // Animate progress bar?
         // Or just setTimeout. framer motion layoutId is cool but let's use simple timeout for logic.
@@ -182,6 +181,7 @@ export function NumberMemoryGame() {
                                     className="text-center text-4xl font-mono font-bold h-20 tracking-widest"
                                     autoFocus
                                     autoComplete="off"
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <Button size="lg" className="w-full h-12 uppercase tracking-widest font-bold">
                                     Submit <ArrowRight className="ml-2 w-4 h-4" />

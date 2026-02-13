@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Palette, RotateCcw, Home, Skull, ArrowLeft, Check, X } from "lucide-react"
+import { Palette, RotateCcw, Home, ArrowLeft, Check, X } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
@@ -231,7 +231,7 @@ export function ColorMatchGame() {
                             <Palette className="w-8 h-8" />
                         </div>
                         <div className="space-y-1 text-center">
-                            <DialogTitle className="text-2xl font-bold font-mono uppercase tracking-widest">Time's Up</DialogTitle>
+                            <DialogTitle className="text-2xl font-bold font-mono uppercase tracking-widest">Time&apos;s Up</DialogTitle>
                             <DialogDescription>
                                 Cognitive flexibility assessment complete.
                             </DialogDescription>

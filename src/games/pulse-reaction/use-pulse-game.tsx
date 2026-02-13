@@ -128,17 +128,11 @@ export function usePulseGame() {
     useEffect(() => { handleTapRef.current = handleTapFixed }, [handleTapFixed])
 
     // Cleanup
-    useEffect(() => {
-        return () => {
-            if (timeoutRef.current) clearTimeout(timeoutRef.current)
-            if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
-        }
-    }, [])
-
-    // Fix cleanup for animationFrameRef
+    // Cleanup
     useEffect(() => {
         const frameId = animationFrameRef.current
         return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current)
             if (frameId) cancelAnimationFrame(frameId)
         }
     }, [])

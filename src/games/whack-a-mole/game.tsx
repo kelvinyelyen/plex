@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 // Config
 const GRID_SIZE = 9 // 3x3
 const GAME_DURATION = 30
-const INITIAL_SPAWN_Rate = 1000
 
 export function WhackAMoleGame() {
     const [gameState, setGameState] = useState<"MENU" | "PLAYING" | "GAME_OVER">("MENU")
@@ -120,7 +119,7 @@ export function WhackAMoleGame() {
                     }}
                     instructions={<div className="space-y-2 text-sm text-muted-foreground">
                         <p>1. Tap the green targets instantly.</p>
-                        <p>2. Don't tap the red bombs.</p>
+                        <p>2. Don&apos;t tap the red bombs.</p>
                         <p>3. Build streaks for multipliers.</p>
                     </div>}
                     icon={<Target className="w-16 h-16 text-primary" />}
@@ -204,7 +203,7 @@ export function WhackAMoleGame() {
                         </div>
                         <div className="space-y-1 text-center">
                             <DialogTitle className="text-2xl font-bold font-mono uppercase tracking-widest">
-                                Time's Up
+                                Time&apos;s Up
                             </DialogTitle>
                             <DialogDescription>
                                 Good reflexes.

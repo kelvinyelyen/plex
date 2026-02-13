@@ -1,20 +1,16 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { ScanSearch, RotateCcw, Home, Skull, ArrowLeft, Check, X } from "lucide-react"
+import { ScanSearch, RotateCcw, Home, Skull, ArrowLeft } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 
 // Symbol sets for matching
 const SYMBOLS = ["◆", "●", "■", "▲", "▼", "★", "✚", "✖"]
-// Or rotation based? e.g. "R" vs "P"?
-// Let's do "Find the duplicate" in a grid of unique items?
-// OR "Find the target" 
-// Let's do: Target symbol is shown. Grid appears. Tap the target.
 
 export function VisualMatchGame() {
     const [gameState, setGameState] = useState<"MENU" | "SHOW_TARGET" | "SEARCH" | "GAME_OVER">("MENU")
@@ -36,14 +32,7 @@ export function VisualMatchGame() {
         router.replace(pathname)
     }
 
-    const startGame = () => {
-        setLevel(1)
-        setScore(0)
-        setLives(3)
-        startLevel(1)
-    }
-
-    const startLevel = (lvl: number) => {
+    const startLevel = useCallback((lvl: number) => {
         // difficulty: more items, less time, more similar items
         const numItems = Math.min(25, 4 + lvl) // Start with 5, cap at 25
         const availableSymbols = SYMBOLS // could expand this list
@@ -74,7 +63,28 @@ export function VisualMatchGame() {
             // Time bonus based on level?
             setTimeLeft(5 + lvl * 0.5) // e.g. 5.5s
         }, 1500) // 1.5s to see target
+    }, [])
+
+    const startGame = () => {
+        setLevel(1)
+        setScore(0)
+        setLives(3)
+        startLevel(1)
     }
+
+    const handleWrong = useCallback(() => {
+        setLives(prev => {
+            const next = prev - 1
+            if (next <= 0) {
+                setGameState("GAME_OVER")
+            } else {
+                // Retry level or next? usually retry implies re-finding same target or new?
+                // Let's generate new level to avoid frustration of "where was it"
+                startLevel(level)
+            }
+            return next
+        })
+    }, [level, startLevel])
 
     useEffect(() => {
         if (gameState === "SEARCH") {
@@ -92,21 +102,7 @@ export function VisualMatchGame() {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current)
         }
-    }, [gameState])
-
-    const handleWrong = () => {
-        setLives(prev => {
-            const next = prev - 1
-            if (next <= 0) {
-                setGameState("GAME_OVER")
-            } else {
-                // Retry level or next? usually retry implies re-finding same target or new?
-                // Let's generate new level to avoid frustration of "where was it"
-                startLevel(level)
-            }
-            return next
-        })
-    }
+    }, [gameState, handleWrong])
 
     const handleCardClick = (symbol: string) => {
         if (gameState !== "SEARCH") return

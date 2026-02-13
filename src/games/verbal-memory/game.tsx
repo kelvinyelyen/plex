@@ -30,7 +30,6 @@ export function VerbalMemoryGame() {
     const [isSeen, setIsSeen] = useState(false) // Whether current word is actually seen
 
     // Game logic state
-    const [roundCount, setRoundCount] = useState(0)
 
     const router = useRouter()
     const pathname = usePathname()
@@ -44,7 +43,6 @@ export function VerbalMemoryGame() {
         setScore(0)
         setLives(3)
         setSeenWords(new Set())
-        setRoundCount(0)
         setGameState("PLAYING")
         nextWord(new Set())
     }
@@ -143,9 +141,9 @@ export function VerbalMemoryGame() {
                     }}
                     instructions={<div className="space-y-2 text-sm text-muted-foreground">
                         <p>Words appear one by one.</p>
-                        <p>If you've seen the word in this game, click <span className="font-bold text-primary">SEEN</span>.</p>
-                        <p>If it's a new word, click <span className="font-bold text-foreground">NEW</span>.</p>
-                        <p>3 Strikes and you're out.</p>
+                        <p>If you&apos;ve seen the word in this game, click <span className="font-bold text-primary">SEEN</span>.</p>
+                        <p>If it&apos;s a new word, click <span className="font-bold text-foreground">NEW</span>.</p>
+                        <p>3 Strikes and you&apos;re out.</p>
                     </div>}
                     icon={<BookOpen className="w-16 h-16 text-primary" />}
                 />

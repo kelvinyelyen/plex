@@ -21,7 +21,7 @@ export function AimTrainerGame() {
     const [timeLeft, setTimeLeft] = useState(30)
     const [targets, setTargets] = useState<Target[]>([])
     const [accuracy, setAccuracy] = useState(100)
-    const [clicks, setClicks] = useState(0)
+    const [, setClicks] = useState(0)
     const [hits, setHits] = useState(0)
 
     const router = useRouter()
@@ -84,7 +84,7 @@ export function AimTrainerGame() {
         })
     }
 
-    const handleTargetClick = (e: React.MouseEvent, id: number) => {
+    const handleTargetClick = (e: React.MouseEvent) => {
         e.stopPropagation() // Prevent background click from registering as miss if we want to separate logic, but actually we want to count it as a click
         if (gameState !== "PLAYING") return
 
@@ -111,8 +111,8 @@ export function AimTrainerGame() {
                     }}
                     instructions={<div className="space-y-2 text-sm text-muted-foreground">
                         <p>Hit 30 targets as fast as you can (or infinite in time limit).</p>
-                        <p>Actually, let's do: <span className="font-bold">Score as many hits as possible in 30s</span>.</p>
-                        <p>Don't miss! Accuracy counts.</p>
+                        <p>Actually, let&apos;s do: <span className="font-bold">Score as many hits as possible in 30s</span>.</p>
+                        <p>Don&apos;t miss! Accuracy counts.</p>
                     </div>}
                     icon={<Crosshair className="w-16 h-16 text-primary" />}
                 />
@@ -172,7 +172,7 @@ export function AimTrainerGame() {
                                 top: `${target.y}%`,
                             }}
                             className="absolute w-12 h-12 -ml-6 -mt-6 rounded-full bg-primary border-4 border-background shadow-[0_0_15px_rgba(var(--primary),0.5)] flex items-center justify-center group"
-                            onClick={(e) => handleTargetClick(e, target.id)}
+                            onClick={(e) => handleTargetClick(e)}
                         >
                             <div className="w-2 h-2 bg-background rounded-full group-hover:scale-125 transition-transform" />
                         </motion.button>

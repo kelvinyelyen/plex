@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
@@ -10,15 +10,8 @@ import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 
 // Disk colors/sizes
-const DISKS = [
-    { id: 1, width: "w-8", color: "bg-red-500" },
-    { id: 2, width: "w-12", color: "bg-orange-500" },
-    { id: 3, width: "w-16", color: "bg-yellow-500" },
-    { id: 4, width: "w-20", color: "bg-green-500" },
-    { id: 5, width: "w-24", color: "bg-blue-500" },
-    { id: 6, width: "w-28", color: "bg-indigo-500" }, // For hard mode?
-    { id: 7, width: "w-32", color: "bg-violet-500" },
-]
+// Disk colors/sizes
+// Removed unused DISKS array
 
 type TowerId = 0 | 1 | 2
 

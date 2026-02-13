@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Keyboard, RotateCcw, Home, Skull, ArrowLeft, RefreshCcw } from "lucide-react"
+import { Keyboard, Home, ArrowLeft, RefreshCcw } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
@@ -31,7 +30,6 @@ export function TypingSpeedGame() {
     // Split text into characters for rendering
     const [parsedText, setParsedText] = useState<string[]>([])
 
-    const inputRef = useRef<HTMLInputElement>(null) // Or keep focus on window/hidden input
     const router = useRouter()
     const pathname = usePathname()
 

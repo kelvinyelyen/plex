@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useCallback } from "react"
+import { motion } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
 import { Grid3X3, RotateCcw, Home, Skull, ArrowLeft } from "lucide-react"
@@ -34,10 +34,10 @@ export function SequenceMemoryGame() {
         setPlayerSequence([])
         setGameState("PLAYING")
         // Start first level
-        startLevel(1)
+        startLevel()
     }
 
-    const startLevel = useCallback((lvl: number) => {
+    const startLevel = useCallback(() => {
         setGameState("SHOWING_SEQUENCE")
         setPlayerSequence([])
 
@@ -84,7 +84,7 @@ export function SequenceMemoryGame() {
                 setTimeout(() => {
                     setLevel(prev => {
                         const next = prev + 1
-                        startLevel(next)
+                        startLevel()
                         return next
                     })
                 }, 1000)

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
-import { Home, Play, RotateCcw, ArrowLeft, Trophy, Skull } from "lucide-react"
+import { Home, RotateCcw, ArrowLeft, Skull } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
@@ -21,7 +21,6 @@ export function SnakeGame() {
     const [gameState, setGameState] = useState<"MENU" | "PLAYING" | "GAME_OVER">("MENU")
     const [snake, setSnake] = useState<Point[]>([{ x: 10, y: 10 }])
     const [food, setFood] = useState<Point>({ x: 15, y: 10 })
-    const [direction, setDirection] = useState<Direction>("RIGHT")
     const [score, setScore] = useState(0)
     const [highScore, setHighScore] = useState(0)
     const [speed, setSpeed] = useState(INITIAL_SPEED)
@@ -41,7 +40,6 @@ export function SnakeGame() {
     const initGame = () => {
         setSnake([{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }])
         setFood(generateFood([{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }]))
-        setDirection("RIGHT")
         directionRef.current = "RIGHT"
         setScore(0)
         setSpeed(INITIAL_SPEED)
@@ -61,11 +59,11 @@ export function SnakeGame() {
         return newFood
     }
 
-    const gameOver = () => {
+    const gameOver = useCallback(() => {
         setGameState("GAME_OVER")
         if (score > highScore) setHighScore(score)
         if (gameLoopRef.current) clearInterval(gameLoopRef.current)
-    }
+    }, [score, highScore])
 
     const moveSnake = useCallback(() => {
         setSnake(prevSnake => {
@@ -104,7 +102,7 @@ export function SnakeGame() {
 
             return newSnake
         })
-    }, [food])
+    }, [food, gameOver])
 
     // Game Loop
     useEffect(() => {
