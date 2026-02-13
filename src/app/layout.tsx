@@ -1,3 +1,4 @@
+import React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
@@ -54,7 +55,11 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
-            <MobileNav />
+            <div className="md:hidden">
+              <React.Suspense fallback={null}>
+                <MobileNav />
+              </React.Suspense>
+            </div>
             <Toaster />
           </div>
         </Providers>
