@@ -6,13 +6,21 @@ import { useSplitDecision, GameMode } from "./use-split-decision"
 import { cn } from "@/lib/utils"
 import { Activity, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { SplitCompletionDialog } from "./components/completion-dialog"
 
 export function SplitDecisionGame() {
     const { gameState, stats, timeLeft, currentItem, mode, startGame, resetGame, handleAction, config, feedback } = useSplitDecision()
     const [hasSelectedMode, setHasSelectedMode] = useState(false)
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const handleQuit = () => {
+        setHasSelectedMode(false)
+        router.replace(pathname)
+        resetGame()
+    }
 
     // Keyboard controls
     useEffect(() => {
@@ -170,7 +178,7 @@ export function SplitDecisionGame() {
 
             {/* Game Over Overlay */}
             {/* Game Over Dialog */}
-            <CompletionDialog
+            <SplitCompletionDialog
                 open={gameState === "GAME_OVER"}
                 score={stats.correct} // Assuming score is correct answers
                 mistakes={stats.incorrect} // Assuming mistakes is incorrect answers

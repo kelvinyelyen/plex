@@ -7,7 +7,7 @@ import { usePulseGame } from "./use-pulse-game"
 import { PulseCompletionDialog } from "./components/completion-dialog"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 export function PulseReactionGame() {
     const { gameState, startGame, handleTap } = usePulseGame()
@@ -121,7 +121,7 @@ export function PulseReactionGame() {
                     </div>
                 )}
 
-                <CompletionDialog
+                <PulseCompletionDialog
                     open={phase === "COMPLETE"}
                     score={averageScore || 0}
                     onPlayAgain={startGame}

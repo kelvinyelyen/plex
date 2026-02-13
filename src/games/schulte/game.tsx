@@ -8,7 +8,7 @@ import { Grid3X3, RotateCcw, Home, Trophy, ArrowLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 type GameType = "digits" | "letters" | "gorbov"
 type GameMode = "direct" | "reverse" | "random"
