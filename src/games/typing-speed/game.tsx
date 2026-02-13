@@ -121,7 +121,7 @@ function TypingSpeedGameContent() {
     const mode = searchParams.get("mode")
 
     if (mode === "multiplayer") {
-        return <MultiplayerTypingGame onBack={() => router.replace(pathname)} />
+        return <MultiplayerTypingGame />
     }
 
     if (gameState === "MENU") {
