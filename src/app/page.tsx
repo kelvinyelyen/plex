@@ -24,7 +24,7 @@ export default function StarterPage() {
           <Link href="/home" className="w-full">
             <Button
               size="lg"
-              className="w-full rounded-none font-mono uppercase tracking-wider text-sm h-14 font-bold"
+              className="w-full font-mono uppercase tracking-wider text-sm h-14 font-bold"
             >
               Start Playing
             </Button>
@@ -34,7 +34,7 @@ export default function StarterPage() {
             <Button
               variant="outline"
               size="lg"
-              className="w-full rounded-none font-mono uppercase tracking-wider text-sm h-14 font-bold"
+              className="w-full font-mono uppercase tracking-wider text-sm h-14 font-bold"
             >
               View Data
             </Button>

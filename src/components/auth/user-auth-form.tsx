@@ -145,7 +145,7 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
                             autoComplete="email"
                             autoCorrect="off"
                             disabled={isLoading || isGoogleLoading}
-                            className="rounded-none font-mono placeholder:text-muted-foreground/50"
+                            className="font-mono placeholder:text-muted-foreground/50"
                             {...register("email")}
                         />
                         {errors?.email && (
@@ -165,7 +165,7 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
                             autoCapitalize="none"
                             autoCorrect="off"
                             disabled={isLoading || isGoogleLoading}
-                            className="rounded-none font-mono placeholder:text-muted-foreground/50"
+                            className="font-mono placeholder:text-muted-foreground/50"
                             {...register("password")}
                         />
                         {errors?.password && (
@@ -174,7 +174,7 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
                             </p>
                         )}
                     </div>
-                    <Button disabled={isLoading} className="rounded-none font-mono uppercase tracking-wider text-xs h-10">
+                    <Button disabled={isLoading} className="font-mono uppercase tracking-wider text-xs h-10">
                         {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )}
@@ -200,7 +200,7 @@ export function UserAuthForm({ className, mode = "login", ...props }: UserAuthFo
                     setIsGoogleLoading(true)
                     signIn("google")
                 }}
-                className="rounded-none font-mono uppercase tracking-wider text-xs h-10"
+                className="font-mono uppercase tracking-wider text-xs h-10"
             >
                 {isGoogleLoading ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

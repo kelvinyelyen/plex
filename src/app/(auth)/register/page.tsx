@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
     return (
         <>
-            <Card className="border-none shadow-none sm:border-border/50 sm:shadow-sm rounded-none w-full">
+            <Card className="border-none shadow-none sm:border-border/50 sm:shadow-sm w-full">
                 <CardContent>
                     <Suspense fallback={<div>Loading...</div>}>
                         <UserAuthForm mode="register" />

@@ -4,16 +4,14 @@ import { Trophy, ArrowUpRight } from "lucide-react"
 
 export default function LeaderboardIndexPage() {
     return (
-        <div className="container min-h-screen bg-background py-16">
-            <div className="space-y-12">
-                <div className="flex items-end justify-between border-b pb-8">
-                    <div className="space-y-4">
-                        <h1 className="text-4xl md:text-6xl font-mono font-bold uppercase tracking-tight">Archives</h1>
-                        <p className="text-muted-foreground max-w-md text-lg leading-relaxed">
-                            Review global performance metrics and rankings.
-                        </p>
-                    </div>
+        <div className="container min-h-screen bg-background py-8">
+            <div className="space-y-8">
+                <div>
+                    <h1 className="text-3xl font-mono font-bold uppercase tracking-tighter">Archives</h1>
+                    <p className="text-muted-foreground text-sm">Review global performance metrics and rankings.</p>
                 </div>
+
+                <hr className="border-border" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Sudoku Archive Card */}
@@ -52,7 +50,7 @@ export default function LeaderboardIndexPage() {
                                 Global performance index for Sudoku. Top percentile analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -95,7 +93,7 @@ export default function LeaderboardIndexPage() {
                                 Retention capacity metrics. Level progression analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -138,7 +136,7 @@ export default function LeaderboardIndexPage() {
                                 Arithmetic efficiency ratings. Solution speed analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -169,7 +167,7 @@ export default function LeaderboardIndexPage() {
                                 Peripheral scan speed data. Focus retention metrics.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -200,7 +198,7 @@ export default function LeaderboardIndexPage() {
                                 Working memory capacity. Sequential recall stats.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -243,7 +241,7 @@ export default function LeaderboardIndexPage() {
                                 Cognitive latency metrics. Reaction precision analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>
@@ -283,7 +281,7 @@ export default function LeaderboardIndexPage() {
                                 Sorting efficiency index. Cognitive branch analysis.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     View Leaderboard
                                 </Button>
                             </div>

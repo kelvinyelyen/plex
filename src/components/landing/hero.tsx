@@ -22,12 +22,12 @@ export function Hero() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
                         <Link href="/games" className="w-full sm:w-auto">
-                            <Button size="lg" className="w-full sm:w-auto rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
+                            <Button size="lg" className="w-full sm:w-auto font-mono uppercase tracking-wider text-xs h-12 px-8">
                                 Start Playing
                             </Button>
                         </Link>
                         <Link href="/leaderboard" className="w-full sm:w-auto">
-                            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-none font-mono uppercase tracking-wider text-xs h-12 px-8">
+                            <Button variant="outline" size="lg" className="w-full sm:w-auto font-mono uppercase tracking-wider text-xs h-12 px-8">
                                 View Data
                             </Button>
                         </Link>
@@ -66,7 +66,7 @@ export function Hero() {
                     {[...Array(4)].map((_, i) => (
                         <motion.div
                             key={`node-${i}`}
-                            className="absolute w-24 h-8 bg-background border border-foreground/10 flex items-center justify-center text-[10px] font-mono shadow-sm"
+                            className="absolute w-24 h-8 bg-background border border-foreground/10 flex items-center justify-center text-[10px] font-mono shadow-sm rounded-md"
                             style={{
                                 top: `${20 + i * 20}%`,
                                 left: i % 2 === 0 ? '-20%' : '80%'

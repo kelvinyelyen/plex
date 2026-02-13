@@ -40,7 +40,7 @@ export function Header() {
                             <UserNav user={session.user} />
                         ) : (
                             <Link href="/login">
-                                <Button variant="ghost" size="sm" className="font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="ghost" size="sm" className="font-mono uppercase text-xs tracking-wider">
                                     Login
                                 </Button>
                             </Link>

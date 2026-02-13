@@ -4,16 +4,14 @@ import { ArrowUpRight } from "lucide-react"
 
 export default function GamesPage() {
     return (
-        <div className="container min-h-screen bg-background py-16">
-            <div className="space-y-12">
-                <div className="flex items-end justify-between border-b pb-8">
-                    <div className="space-y-4">
-                        <h1 className="text-4xl md:text-6xl font-mono font-bold uppercase tracking-tight">Games</h1>
-                        <p className="text-muted-foreground max-w-md text-lg leading-relaxed">
-                            Choose a game to begin training.
-                        </p>
-                    </div>
+        <div className="container min-h-screen bg-background py-8">
+            <div className="space-y-8">
+                <div>
+                    <h1 className="text-3xl font-mono font-bold uppercase tracking-tighter">Games</h1>
+                    <p className="text-muted-foreground text-sm">Choose a game to begin training.</p>
                 </div>
+
+                <hr className="border-border" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Sudoku Module Card */}
@@ -46,7 +44,7 @@ export default function GamesPage() {
                                 Classic numerical placement puzzle. Optimizes pattern recognition and logical deduction.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -83,7 +81,7 @@ export default function GamesPage() {
                                 Visual pattern retention game. Enhances short-term memory and spatial recall.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -116,7 +114,7 @@ export default function GamesPage() {
                                 Arithmetic puzzle challenge. Combine numbers to reach the target.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -144,7 +142,7 @@ export default function GamesPage() {
                                 Peripheral vision trainer. Find numbers 1-25 in ascending order.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -172,7 +170,7 @@ export default function GamesPage() {
                                 Primate-level memory test. Recall hidden variances.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -201,7 +199,7 @@ export default function GamesPage() {
                                 Cognitive latency calibration. Sync with optimal brightness.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
@@ -234,7 +232,7 @@ export default function GamesPage() {
                                 Rapid categorization protocols. Test mental flexibility.
                             </p>
                             <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider rounded-none">
+                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
                                     Play Now
                                 </Button>
                             </div>
