@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function PulseReactionPage() {
     return (
-        <div className="container flex-1 py-12">
+        <div className="container flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] py-8">
             <PulseReactionGame />
         </div>
     )

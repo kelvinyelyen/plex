@@ -49,7 +49,7 @@ export function MobileNav() {
                                 "flex flex-col items-center justify-center gap-1 px-4 py-2 transition-colors",
                                 isActive
                                     ? "text-primary"
-                                    : "text-muted-foreground hover:text-foreground"
+                                    : "text-muted-foreground"
                             )}
                         >
                             <Icon className={cn("h-5 w-5", isActive && "fill-current")} />

@@ -22,7 +22,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, ArrowLeft } from "lucide-react"
 
 export function SudokuGame() {
     const [difficulty, setDifficulty] = useState<Difficulty>("Easy")
@@ -277,8 +277,11 @@ export function SudokuGame() {
                 onQuit={() => setHasStarted(false)}
             />
 
-            <div className="w-full max-w-4xl text-left">
+            <div className="w-full max-w-4xl flex items-center justify-between">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Sudoku</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={() => setHasStarted(false)}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Minimal Header */}

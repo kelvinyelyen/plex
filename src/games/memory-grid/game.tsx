@@ -7,6 +7,8 @@ import { MemoryAnimation } from "@/components/ui/game-animations"
 import { useMemoryGame } from "./use-memory-game"
 import { Grid } from "./components/grid"
 import { GameOverDialog } from "./components/game-over-dialog"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
 
 export function MemoryGame() {
     const { gameState, startGame, handleCellClick, resetToIdle } = useMemoryGame()
@@ -31,8 +33,11 @@ export function MemoryGame() {
 
     return (
         <div className="flex flex-col items-center justify-center max-w-2xl mx-auto">
-            <div className="w-full text-left mb-6 ">
+            <div className="w-full flex items-center justify-between mb-6">
                 <span className="text-sm font-mono font-bold tracking-[0.2em] text-muted-foreground uppercase">Memory Grid</span>
+                <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-background/50 backdrop-blur-md hover:bg-background/80" onClick={() => setHasStarted(false)}>
+                    <ArrowLeft className="h-4 w-4" />
+                </Button>
             </div>
 
             {/* Minimal Header */}
