@@ -29,6 +29,7 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  viewportFit: "cover",
 }
 
 export default function RootLayout({
@@ -49,9 +50,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col pb-24 md:pb-0">
             <Header />
-            <main className="flex-1 pb-16 md:pb-0">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
             <MobileNav />
             <Toaster />
