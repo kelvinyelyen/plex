@@ -180,20 +180,17 @@ export function SplitDecisionGame() {
             {/* Game Over Dialog */}
             <SplitCompletionDialog
                 open={gameState === "GAME_OVER"}
-                score={stats.correct} // Assuming score is correct answers
-                mistakes={stats.incorrect} // Assuming mistakes is incorrect answers
+                stats={stats}
+                mode={mode}
                 onPlayAgain={() => {
-                    // Assuming setGameState and handleQuit are available from useSplitDecision or context
-                    // This change implies a different state management or prop structure for CompletionDialog
-                    // For now, we'll use the existing resetGame and setHasSelectedMode to approximate the intent
                     resetGame();
                     setHasSelectedMode(true);
                 }}
                 onClose={() => {
-                    resetGame(); // Reset game and go back to menu
+                    resetGame();
                     setHasSelectedMode(true);
                 }}
-                onQuit={handleQuit} // Assuming handleQuit is defined in the component or hook
+                onChangeProtocol={handleQuit}
             />
         </div>
     )
