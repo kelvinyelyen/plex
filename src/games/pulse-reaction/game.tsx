@@ -123,7 +123,7 @@ export function PulseReactionGame() {
 
                 <PulseCompletionDialog
                     open={phase === "COMPLETE"}
-                    score={averageScore || 0}
+                    averageScore={averageScore || 0}
                     onPlayAgain={startGame}
                     onClose={() => setHasStarted(false)}
                     onQuit={handleQuit}
