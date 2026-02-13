@@ -9,7 +9,7 @@ import { Grid } from "./components/grid"
 import { GameOverDialog } from "./components/game-over-dialog"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 export function MemoryGame() {
     const { gameState, startGame, handleCellClick, resetToIdle } = useMemoryGame()

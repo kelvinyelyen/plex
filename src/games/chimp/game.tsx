@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { GameStartScreen } from "@/components/game/start-screen"
 import { Button } from "@/components/ui/button"
 import { Eye, RotateCcw, Home, Skull, ArrowLeft } from "lucide-react"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 
@@ -24,6 +24,14 @@ export function ChimpGame() {
     const [cells, setCells] = useState<CellData[]>([])
     const [nextExpected, setNextExpected] = useState(1)
     const [score, setScore] = useState(0)
+
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const handleQuit = () => {
+        setGameState("MENU")
+        router.replace(pathname)
+    }
 
     const startLevel = useCallback((lvl: number) => {
         const count = 4 + lvl // Level 1 = 5 nums, Level 2 = 6...
