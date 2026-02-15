@@ -35,7 +35,7 @@ export default function SettingsPage() {
                         <div>
                             <span className="block font-medium">Purpose</span>
                             <p className="text-sm text-muted-foreground mt-1">
-                                Plex is a cognitive calibration tool designed to enhance latency and pattern recognition through competitive frameworks. Built for the Academic City University community
+                                Plex is a cognitive calibration tool designed to enhance latency and pattern recognition through competitive frameworks. Built for the <strong>Academic City University community (MPRC)</strong>.
                             </p>
                         </div>
                         <div>
