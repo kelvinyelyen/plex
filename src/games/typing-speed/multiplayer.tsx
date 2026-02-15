@@ -195,7 +195,7 @@ export function MultiplayerTypingGame() {
         if (e.key.length !== 1) return
 
         const nextChar = e.key
-        const currentLength = input.length
+        // const currentLength = input.length
 
         // Optional: Block incorrect input? Or allow it and mark red?
         // Game.tsx allows it. Let's filter for now to match game.tsx logic if we want,
