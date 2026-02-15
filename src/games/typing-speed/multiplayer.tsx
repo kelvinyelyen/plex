@@ -13,9 +13,43 @@ import { cn } from "@/lib/utils"
 const SENTENCES = [
     "The quick brown fox jumps over the lazy dog.",
     "Pack my box with five dozen liquor jugs.",
-    "Adjusting to the new normal requires flexibility.",
-    "Cognitive processing speed is a key indicator.",
-    "Technological advancement accelerates daily.",
+    "Adjusting to the new normal requires flexibility and resilience in the face of constant change.",
+    "Cognitive processing speed is a key indicator of overall mental acuity and executive function.",
+    "Technological advancement accelerates at an exponential rate creating new paradigms in every sector.",
+    "Precision and accuracy are paramount when executing complex maneuvers under high pressure conditions.",
+    "The intricate dance of neural pathways determines our ability to learn and adapt to novel stimuli.",
+    "Quantum entanglement suggests that particles can remain connected regardless of the distance separating them.",
+    "The architectural design of the new library emphasizes sustainable materials and natural lighting.",
+    "Understanding the nuances of diplomatic protocol is essential for international relations.",
+    "The symphony orchestra performed a mesmerizing rendition of Beethoven's Ninth Symphony.",
+    "Artificial intelligence algorithms are becoming increasingly sophisticated in their pattern recognition capabilities.",
+    "The Great Barrier Reef is the largest living structure on Earth and is visible from space.",
+    "Cryptographic protocols ensure the security and integrity of digital transactions across global networks.",
+    "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods.",
+    "The concept of neuroplasticity demonstrates the brain's ability to reorganize itself by forming new neural connections.",
+    "Sustainable energy solutions are critical for mitigating the long-term impacts of climate change.",
+    "The exploration of Mars has provided humanity with unprecedented insights into the geology of the Red Planet.",
+    "Effective communication requires not only speaking clearly but also listening with empathy and attention.",
+    "The history of civilization is marked by the rise and fall of great empires and the exchange of cultural ideas.",
+    "The minimalist design philosophy advocates for simplicity and the elimination of unnecessary elements.",
+    "Bioluminescence is a chemical reaction that allows certain living organisms to produce light in the darkness.",
+    "The concept of time dilation in relativity theory explains how time passes differently depending on speed.",
+    "Global economic interdependence means that financial events in one region can have ripple effects worldwide.",
+    "The evolution of language reflects the dynamic nature of human society and the constant influx of new concepts.",
+    "Urban planning initiatives aim to create sustainable cities that prioritize public transportation and green spaces.",
+    "The discovery of penicillin revolutionized medicine and paved the way for the treatment of bacterial infections.",
+    "Deep reinforcement learning has enabled computers to master complex games like Go and Chess.",
+    "The psychology of color explores how different hues can influence human emotion and behavior.",
+    "Renewable energy technologies such as solar and wind power are essential for a clean energy future.",
+    "The intricate ecosystem of a coral reef supports a vast array of marine life forms.",
+    "Nanotechnology involves the manipulation of matter on an atomic and molecular scale.",
+    "The philosophy of stoicism teaches the development of self-control and fortitude as a means of overcoming emotions.",
+    "Virtual reality technology is transforming industries ranging from entertainment to healthcare training.",
+    "The conservation of biodiversity is crucial for maintaining the resilience of natural ecosystems.",
+    "Historical linguistics studies the development and relationship of languages over time.",
+    "The Doppler effect explains the change in frequency of a wave in relation to an observer.",
+    "Cybersecurity measures are vital for protecting sensitive information in an increasingly digital world.",
+    "The art of storytelling has been a fundamental part of human culture for thousands of years."
 ]
 
 type PlayerState = {
@@ -24,6 +58,8 @@ type PlayerState = {
     progress: number
     isReady: boolean
     username: string
+    isFinished: boolean
+    finishTime: number
 }
 
 export function MultiplayerTypingGame() {
@@ -84,7 +120,9 @@ export function MultiplayerTypingGame() {
                         username: presence.username,
                         wpm: presence.wpm || 0,
                         progress: presence.progress || 0,
-                        isReady: presence.isReady || false
+                        isReady: presence.isReady || false,
+                        isFinished: presence.isFinished || false,
+                        finishTime: presence.finishTime || 0
                     }
                 })
                 setPlayers(newPlayers)
@@ -105,7 +143,9 @@ export function MultiplayerTypingGame() {
                         username,
                         wpm: 0,
                         progress: 0,
-                        isReady: false
+                        isReady: false,
+                        isFinished: false,
+                        finishTime: 0
                     })
                 }
             })
@@ -118,44 +158,109 @@ export function MultiplayerTypingGame() {
             username,
             wpm: current.wpm,
             progress: current.progress,
-            isReady: !current.isReady
+            isReady: !current.isReady,
+            isFinished: current.isFinished || false,
+            finishTime: current.finishTime || 0
         })
     }
 
     const startGame = async () => {
         const selectedText = SENTENCES[Math.floor(Math.random() * SENTENCES.length)]
+
+        // Broadcast to others
         await channelRef.current.send({
             type: 'broadcast',
             event: 'game_start',
             payload: { text: selectedText }
         })
+
+        // Initialize locally for host
+        setText(selectedText)
+        setStartTime(Date.now())
+        setGameState("PLAYING")
+        setInput("")
     }
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value
-        setInput(val)
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (gameState !== "PLAYING") return
 
-        // Calculate progress
-        const progress = Math.min(100, Math.round((val.length / text.length) * 100))
+        // Ignore modifier keys
+        if (e.ctrlKey || e.metaKey || e.altKey) return
 
-        // Calculate WPM
+        if (e.key === "Backspace") {
+            setInput(prev => prev.slice(0, -1))
+            return
+        }
+
+        if (e.key.length !== 1) return
+
+        const nextChar = e.key
+        const currentLength = input.length
+
+        // Optional: Block incorrect input? Or allow it and mark red?
+        // Game.tsx allows it. Let's filter for now to match game.tsx logic if we want,
+        // or just append. Let's append.
+
+        const newInput = input + nextChar
+        setInput(newInput)
+
+        // Calculate stats
+        const progress = Math.min(100, Math.round((newInput.length / text.length) * 100))
         const elapsedMin = (Date.now() - startTime) / 60000
-        const wpm = Math.round((val.length / 5) / elapsedMin) || 0
+        const wpm = Math.round((newInput.length / 5) / elapsedMin) || 0
 
-        // Broadcast update
+        const isFinished = newInput === text
+        const finishTime = isFinished ? Date.now() - startTime : 0
+
         if (channelRef.current) {
             channelRef.current.track({
                 username,
                 wpm,
                 progress,
-                isReady: true // Locked in
+                isReady: true,
+                isFinished,
+                finishTime
             })
         }
 
-        if (val === text) {
-            // Finished
-            // Could trigger game over for self
+        if (isFinished) {
+            setGameState("GAME_OVER")
         }
+    }
+
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown)
+        return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [gameState, input, startTime, text, username])
+
+    // Check for Game Over (all players finished) - disable auto game over for everyone
+    // We now just show game over for self when finished
+    // useEffect(() => {
+    //     if (gameState !== "PLAYING") return
+
+    //     const allPlayers = Object.values(players)
+    //     if (allPlayers.length > 0 && allPlayers.every(p => p.isFinished)) {
+    //         setGameState("GAME_OVER")
+    //     }
+    // }, [players, gameState])
+
+    const resetGame = async () => {
+        if (!channelRef.current) return
+
+        // Reset local self
+        await channelRef.current.track({
+            username,
+            wpm: 0,
+            progress: 0,
+            isReady: false,
+            isFinished: false,
+            finishTime: 0
+        })
+
+        // We don't change gameState to LOBBY immediately for everyone unless we broadcast it?
+        // But the previous flow puts us in LOBBY when we join.
+        // Let's just reset local state to LOBBY
+        setGameState("LOBBY")
     }
 
     // Unsubscribe on unmount
@@ -255,6 +360,52 @@ export function MultiplayerTypingGame() {
         )
     }
 
+    if (gameState === "GAME_OVER") {
+        const sortedPlayers = Object.values(players).sort((a, b) => {
+            if (a.isFinished && b.isFinished) return a.finishTime - b.finishTime
+            if (a.isFinished) return -1
+            if (b.isFinished) return 1
+            return b.wpm - a.wpm
+        })
+
+        return (
+            <div className="flex flex-col items-center justify-center gap-8 w-full max-w-md mx-auto min-h-[calc(100vh-14rem)]">
+                <div className="text-center space-y-2">
+                    <h1 className="text-4xl font-bold font-mono tracking-tighter text-primary uppercase">Game Over</h1>
+                    <p className="text-muted-foreground">Final Standings</p>
+                </div>
+
+                <Card className="w-full bg-muted/10 border-border/50">
+                    <CardContent className="p-0">
+                        {sortedPlayers.map((p, i) => (
+                            <div key={p.id} className={cn("flex items-center justify-between p-4 border-b border-border/50 last:border-0", p.id === playerId && "bg-primary/5")}>
+                                <div className="flex items-center gap-4">
+                                    <div className="font-mono text-xl font-bold text-muted-foreground w-6">#{i + 1}</div>
+                                    <div className="flex flex-col">
+                                        <div className="font-mono font-bold flex items-center gap-2">
+                                            {p.username}
+                                            {p.id === playerId && <span className="text-[10px] bg-primary/20 text-primary px-1 rounded">YOU</span>}
+                                        </div>
+                                        <div className="text-xs text-muted-foreground">
+                                            {p.isFinished ? `${(p.finishTime / 1000).toFixed(2)}s` : "DNF"}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-2xl font-mono font-bold">
+                                    {p.wpm} <span className="text-xs font-normal text-muted-foreground">WPM</span>
+                                </div>
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+
+                <Button size="lg" className="w-full" onClick={resetGame}>
+                    Back to Lobby
+                </Button>
+            </div>
+        )
+    }
+
     return (
         <div className="flex flex-col items-center gap-8 w-full max-w-4xl mx-auto">
             {/* Header / Progress Bars */}
@@ -276,24 +427,27 @@ export function MultiplayerTypingGame() {
                 ))}
             </div>
 
-            {/* Game Text */}
-            <div className="w-full p-8 text-2xl font-mono leading-relaxed bg-muted/10 rounded-xl border border-border/50">
+            <div className="relative w-full p-8 text-2xl md:text-3xl font-mono leading-relaxed bg-muted/10 rounded-xl border border-border/50 break-words whitespace-pre-wrap">
                 {text.split("").map((char, i) => {
-                    let color = "text-muted-foreground/50"
+                    let className = "text-muted-foreground/50"
                     if (i < input.length) {
-                        color = input[i] === char ? "text-primary" : "text-destructive"
+                        className = input[i] === char ? "text-primary" : "text-destructive"
                     }
-                    return <span key={i} className={color}>{char}</span>
+
+                    // Cursor
+                    const isCurrent = i === input.length
+
+                    return (
+                        <span key={i} className={cn(className, isCurrent && "bg-primary/20 animate-pulse")}>
+                            {char}
+                        </span>
+                    )
                 })}
             </div>
 
-            <Input
-                autoFocus
-                value={input}
-                onChange={handleInput}
-                className="text-center text-xl font-mono h-16 tracking-widest"
-                placeholder="Type here..."
-            />
+            <div className="text-sm text-muted-foreground uppercase tracking-widest animate-pulse">
+                {gameState === "PLAYING" ? "Type the text above..." : "Waiting to start..."}
+            </div>
         </div>
     )
 }

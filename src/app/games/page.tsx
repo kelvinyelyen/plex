@@ -392,6 +392,7 @@ export default function GamesPage() {
                             </CardHeader>
                         </Card>
                     </Link>
+
                 </div>
             </div>
         </div>
