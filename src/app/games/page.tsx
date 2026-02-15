@@ -1,7 +1,153 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import {
+    SudokuAnimation,
+    MemoryAnimation,
+    ConundraAnimation,
+    SchulteAnimation,
+    ChimpAnimation,
+    PulseAnimation,
+    SplitAnimation
+} from "@/components/ui/game-animations"
+import { motion } from "framer-motion"
+
+// Inline animations for games that don't have them in game-animations.tsx yet
+const SequenceAnimation = () => (
+    <div className="grid grid-cols-3 gap-1 w-24 h-24 p-2 bg-muted/20 rounded-md">
+        {[...Array(9)].map((_, i) => (
+            <motion.div
+                key={i}
+                className={cn("w-full h-full rounded-sm", i === 4 ? "bg-primary" : "bg-primary/20")}
+                animate={{ opacity: [0.2, 1, 0.2] }}
+                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
+            />
+        ))}
+    </div>
+)
+
+const AimAnimation = () => (
+    <div className="relative w-24 h-24 p-2 bg-muted/20 rounded-md flex items-center justify-center">
+        <div className="absolute w-16 h-16 border border-primary/30 rounded-full" />
+        <div className="absolute w-10 h-10 border border-primary/50 rounded-full" />
+        <motion.div
+            className="w-2 h-2 bg-primary rounded-full absolute"
+            animate={{ x: [0, 20, -15, 10, 0], y: [0, -20, 10, -15, 0] }}
+            transition={{ duration: 3, repeat: Infinity }}
+        />
+    </div>
+)
+
+const ColorAnimation = () => (
+    <div className="flex flex-col items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md gap-1">
+        <motion.span
+            className="font-black text-xl"
+            style={{ color: "hsl(var(--primary))" }}
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+        >
+            BLUE
+        </motion.span>
+        <motion.span
+            className="font-black text-xl text-foreground/50"
+            animate={{ opacity: [1, 0.5, 1] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+        >
+            RED
+        </motion.span>
+    </div>
+)
+
+const NumberAnimation = () => (
+    <div className="flex items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md">
+        <motion.span
+            className="text-3xl font-black font-mono tracking-tighter text-primary/80"
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+        >
+            472
+        </motion.span>
+    </div>
+)
+
+const VerbalAnimation = () => (
+    <div className="flex flex-col items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md gap-1">
+        <span className="text-[10px] font-mono text-foreground/40 uppercase">House</span>
+        <motion.span
+            className="text-xs font-mono font-bold text-primary uppercase"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+        >
+            Tree
+        </motion.span>
+        <span className="text-[10px] font-mono text-foreground/40 uppercase line-through decoration-primary">House</span>
+    </div>
+)
+
+const HanoiAnimation = () => (
+    <div className="flex flex-col items-center justify-center gap-1 w-24 h-24 p-2 bg-muted/20 rounded-md">
+        <div className="w-4 h-1.5 bg-primary rounded-full" />
+        <div className="w-8 h-1.5 bg-primary rounded-full" />
+        <div className="w-12 h-1.5 bg-primary rounded-full" />
+        <div className="w-16 h-1.5 bg-primary/30 rounded-full" />
+    </div>
+)
+
+const MinesAnimation = () => (
+    <div className="grid grid-cols-3 gap-1 w-24 h-24 p-2 bg-muted/20 rounded-md icon-grid">
+        <div className="flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20 bg-background rounded-sm">1</div>
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+        <div className="flex items-center justify-center text-[10px] font-bold text-primary border border-primary/20 bg-background rounded-sm">2</div>
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+        <div className="flex items-center justify-center text-[10px] text-destructive border border-destructive/20 bg-destructive/10 rounded-sm">!</div>
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+        <div className="flex items-center justify-center bg-primary/10 rounded-sm" />
+    </div>
+)
+
+const SnakeAnimation = () => (
+    <div className="relative w-24 h-24 p-2 bg-muted/20 rounded-md border border-primary/10">
+        <div className="absolute top-6 left-6 w-2 h-2 bg-primary rounded-sm" />
+        <div className="absolute top-6 left-8 w-2 h-2 bg-primary/60 rounded-sm" />
+        <div className="absolute top-6 left-10 w-2 h-2 bg-primary/40 rounded-sm" />
+        <div className="absolute bottom-6 right-6 w-2 h-2 bg-primary border border-primary rounded-sm animate-pulse" />
+    </div>
+)
+
+const WhackAnimation = () => (
+    <div className="grid grid-cols-2 gap-2 w-24 h-24 p-4 bg-muted/20 rounded-md">
+        <div className="rounded-full border border-primary/30" />
+        <motion.div
+            className="rounded-full bg-primary"
+            animate={{ scale: [0, 1, 0] }}
+            transition={{ duration: 1, repeat: Infinity, repeatDelay: 0.5 }}
+        />
+        <div className="rounded-full border border-primary/30" />
+        <div className="rounded-full border border-primary/30" />
+    </div>
+)
+
+const TypingAnimation = () => (
+    <div className="flex items-center justify-center w-24 h-24 p-2 bg-muted/20 rounded-md">
+        <span className="font-mono text-xl font-black text-primary/50 tracking-widest animate-pulse">_WPM</span>
+    </div>
+)
+
+const VisualAnimation = () => (
+    <div className="grid grid-cols-2 gap-2 w-24 h-24 p-4 bg-muted/20 rounded-md">
+        <div className="text-xl text-primary/30 flex items-center justify-center">◆</div>
+        <div className="text-xl text-primary flex items-center justify-center">◆</div>
+        <div className="text-xl text-primary/30 flex items-center justify-center">◆</div>
+        <div className="text-xl text-primary/30 flex items-center justify-center">◆</div>
+    </div>
+)
+
 
 export default function GamesPage() {
     return (
@@ -14,577 +160,239 @@ export default function GamesPage() {
 
                 <hr className="border-border" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {/* Sudoku Module Card */}
-                    <Link href="/games/sudoku" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Logic
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-3 gap-2 w-48 h-48">
-                                {[...Array(9)].map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="bg-foreground w-full h-full"
-                                        style={{ opacity: Math.random() * 0.5 + 0.2 }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Sudoku</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Classic numerical placement puzzle. Optimizes pattern recognition and logical deduction.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Memory Grid Module Card */}
-                    <Link href="/games/memory-grid" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Memory
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-4 gap-2 w-48 h-48">
-                                {[...Array(16)].map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="bg-foreground w-full h-full"
-                                        style={{ opacity: Math.random() * 0.5 + 0.2 }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Memory Grid</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Visual pattern retention game. Enhances short-term memory and spatial recall.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Conundra Module Card */}
-                    <Link href="/games/conundra" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Math
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="flex gap-4 text-6xl font-bold font-mono">
-                                <span>+</span>
-                                <span>-</span>
-                                <span>×</span>
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Conundra</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Arithmetic puzzle challenge. Combine numbers to reach the target.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Schulte Table Module Card */}
-                    <Link href="/games/schulte" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Focus
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-5 gap-1 w-48 h-48">
-                                {[...Array(25)].map((_, i) => (
-                                    <div key={i} className="bg-foreground w-full h-full" style={{ opacity: Math.random() > 0.5 ? 0.8 : 0.2 }} />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Schulte</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Peripheral vision trainer. Find numbers 1-25 in ascending order.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Chimp Test Module Card */}
-                    <Link href="/games/chimp" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Working Memory
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-3 gap-4 w-48 h-48">
-                                {[...Array(9)].map((_, i) => (
-                                    <div key={i} className="bg-foreground w-full h-full" style={{ opacity: i % 2 === 0 ? 1 : 0 }} />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Chimp</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Primate-level memory test. Recall hidden variances.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Pulse Reaction Module Card */}
-                    <Link href="/games/pulse-reaction" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Latency
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="w-32 h-32 rounded-full border-[16px] border-foreground/50" />
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Pulse Rxn</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Cognitive latency calibration. Sync with optimal brightness.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Split Decision Module Card */}
-                    <Link href="/games/split-decision" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Attention
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="relative w-32 h-48">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 border-2 border-foreground" />
-                                <div className="absolute bottom-0 left-0 w-8 h-1 bg-foreground" />
-                                <div className="absolute bottom-0 right-0 w-8 h-1 bg-foreground" />
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Split Dec</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Rapid categorization protocols. Test mental flexibility.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Sequence Memory Module Card */}
-                    <Link href="/games/sequence-memory" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Pattern
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-3 gap-2 w-32 h-32">
-                                {[...Array(9)].map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className={cn("w-full h-full border-2 border-foreground", i === 4 ? "bg-foreground" : "")}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Sequence</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Pattern retention. Memorize and repeat the flashing sequence.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Aim Trainer Module Card */}
-                    <Link href="/games/aim-trainer" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Precision
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="relative w-48 h-48 border border-foreground/20 rounded-full flex items-center justify-center">
-                                <div className="w-32 h-32 border border-foreground/40 rounded-full flex items-center justify-center">
-                                    <div className="w-16 h-16 border border-foreground/60 rounded-full flex items-center justify-center">
-                                        <div className="w-2 h-2 bg-foreground rounded-full" />
-                                    </div>
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {/* Sudoku */}
+                    <Link href="/games/sudoku" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><SudokuAnimation /></div>
                                 </div>
-                                <div className="absolute w-full h-[1px] bg-foreground/20" />
-                                <div className="absolute h-full w-[1px] bg-foreground/20" />
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Aim Trainer</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Reaction & Precision. Hit targets as quickly as possible.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Sudoku</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Classic numerical placement puzzle.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Color Match (Stroop) Module Card */}
-                    <Link href="/games/color-match" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Attention
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="flex flex-col items-center gap-2 font-black text-6xl uppercase tracking-tighter">
-                                <span className="text-foreground/50">RED</span>
-                                <span className="text-foreground/80">BLUE</span>
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Color Match</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Stroop Test. Does the meaning match the color?
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Memory Grid */}
+                    <Link href="/games/memory-grid" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><MemoryAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Memory Grid</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Visual pattern retention game.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Number Memory Module Card */}
-                    <Link href="/games/number-memory" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Memory
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="text-8xl font-black font-mono tracking-tighter text-foreground/50">
-                                472
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Number Mem</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Digit span test. Memorize and recall increasing numbers.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Conundra */}
+                    <Link href="/games/conundra" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><ConundraAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Conundra</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Arithmetic puzzle challenge.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Verbal Memory Module Card */}
-                    <Link href="/games/verbal-memory" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        {/* Card Header */}
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Language
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-
-                        {/* Abstract Visual */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="flex flex-col gap-2 font-mono text-sm text-foreground/50 uppercase tracking-widest text-center">
-                                <span>House</span>
-                                <span>Tree</span>
-                                <span>Apple</span>
-                                <span className="line-through decoration-2">House</span>
-                            </div>
-                        </div>
-
-                        {/* Card Footer / Content */}
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Verbal Mem</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Word retention. Have you seen this word before?
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Schulte */}
+                    <Link href="/games/schulte" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><SchulteAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Schulte</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Peripheral vision trainer.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-
-
-                    {/* Tower of Hanoi Module Card */}
-                    <Link href="/games/hanoi" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Logic
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="flex flex-col items-center gap-1">
-                                <div className="w-8 h-2 bg-foreground rounded-full" />
-                                <div className="w-16 h-2 bg-foreground rounded-full" />
-                                <div className="w-24 h-2 bg-foreground rounded-full" />
-                                <div className="w-32 h-2 bg-foreground/50 rounded-full" />
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Hanoi</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Ancient logic puzzle. Move the stack to the target beat by beat.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Chimp */}
+                    <Link href="/games/chimp" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><ChimpAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Chimp</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Primate-level memory test.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-
-
-                    {/* Minesweeper Module Card */}
-                    <Link href="/games/minesweeper" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Logic
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-3 gap-2">
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center">1</div>
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center bg-foreground/20" />
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center">2</div>
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center bg-foreground/20" />
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center text-red-500">⚠</div>
-                                <div className="w-8 h-8 border border-foreground/50 flex items-center justify-center bg-foreground/20" />
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Mines</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Deduction puzzle. Clear the field without detonation.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Pulse Reaction */}
+                    <Link href="/games/pulse-reaction" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><PulseAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Pulse Rxn</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Cognitive latency calibration.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Snake Module Card */}
-                    <Link href="/games/snake" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Focus
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="relative w-32 h-32 border border-foreground/20">
-                                <div className="absolute top-4 left-4 w-4 h-4 bg-foreground" />
-                                <div className="absolute top-4 left-8 w-4 h-4 bg-foreground/50" />
-                                <div className="absolute top-4 left-12 w-4 h-4 bg-foreground/50" />
-                                <div className="absolute bottom-8 right-8 w-4 h-4 bg-foreground border border-foreground" />
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Snake</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Spatial navigation. Consume and grow without collision.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Split Decision */}
+                    <Link href="/games/split-decision" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><SplitAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Split Dec</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Rapid categorization protocols.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Whack-a-Mole Module Card */}
-                    <Link href="/games/whack-a-mole" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Reflex
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="w-12 h-12 rounded-full border border-foreground/50" />
-                                <div className="w-12 h-12 rounded-full bg-foreground" />
-                                <div className="w-12 h-12 rounded-full border border-foreground/50" />
-                                <div className="w-12 h-12 rounded-full border border-foreground/50" />
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Grid Rxn</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Rapid target acquisition. Hit the targets, duplicate the bomb.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Sequence Memory */}
+                    <Link href="/games/sequence-memory" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><SequenceAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Sequence</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Pattern retention.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Typing Speed Module Card */}
-                    <Link href="/games/typing-speed" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Proficiency
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="font-mono text-6xl font-black text-foreground/50 tracking-wides">
-                                _WPM
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Typing</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Keyboard proficiency. Type the given text with speed and accuracy.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Aim Trainer */}
+                    <Link href="/games/aim-trainer" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><AimAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Aim Trainer</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Reaction & Precision.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
 
-                    {/* Visual Match Module Card */}
-                    <Link href="/games/visual-match" className="group relative block h-[400px] border bg-card hover:border-primary/50 transition-colors overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10">
-                            <div className="text-[10px] font-bold font-mono text-muted-foreground uppercase tracking-widest">
-                                Scanning
-                            </div>
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                            <div className="grid grid-cols-2 gap-2">
-                                <div className="text-4xl text-foreground/50">◆</div>
-                                <div className="text-4xl text-foreground">◆</div>
-                                <div className="text-4xl text-foreground/50">◆</div>
-                                <div className="text-4xl text-foreground/50">◆</div>
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 space-y-4 bg-gradient-to-t from-background via-background to-transparent">
-                            <h2 className="text-3xl font-mono font-bold uppercase tracking-tighter">Visual Match</h2>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Visual search. Locate the target symbol among distractors.
-                            </p>
-                            <div className="pt-4">
-                                <Button variant="outline" className="w-full font-mono uppercase text-xs tracking-wider">
-                                    Play Now
-                                </Button>
-                            </div>
-                        </div>
+                    {/* Color Match */}
+                    <Link href="/games/color-match" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><ColorAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Color Match</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Stroop Test.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Number Memory */}
+                    <Link href="/games/number-memory" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><NumberAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Number Mem</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Digit span test.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Verbal Memory */}
+                    <Link href="/games/verbal-memory" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><VerbalAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Verbal Mem</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Word retention.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Tower of Hanoi */}
+                    <Link href="/games/hanoi" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><HanoiAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Hanoi</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Ancient logic puzzle.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Minesweeper */}
+                    <Link href="/games/minesweeper" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><MinesAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Mines</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Deduction puzzle.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Snake */}
+                    <Link href="/games/snake" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><SnakeAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Snake</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Spatial navigation.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Whack-a-Mole */}
+                    <Link href="/games/whack-a-mole" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><WhackAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Grid Rxn</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Rapid target acquisition.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Typing Speed */}
+                    <Link href="/games/typing-speed" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><TypingAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Typing</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Keyboard proficiency.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+
+                    {/* Visual Match */}
+                    <Link href="/games/visual-match" className="w-full">
+                        <Card className="h-full transition-all md:hover:bg-muted/50 md:hover:border-primary/50 group overflow-hidden rounded-xl border-foreground/10">
+                            <CardHeader className="relative z-10 pt-6 pb-6 px-4">
+                                <div className="flex justify-center items-center scale-75 origin-center -mb-2">
+                                    <div className="mx-auto mb-4"><VisualAnimation /></div>
+                                </div>
+                                <CardTitle className="text-center group-hover:text-primary transition-colors font-mono uppercase tracking-widest text-sm pt-2">Visual Match</CardTitle>
+                                <CardDescription className="text-center text-xs pt-2 line-clamp-1">Visual search.</CardDescription>
+                            </CardHeader>
+                        </Card>
                     </Link>
                 </div>
             </div>
